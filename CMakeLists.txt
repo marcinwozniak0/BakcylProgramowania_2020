@@ -26,12 +26,12 @@ target_link_libraries(bakcyl_2020_ut ${GTEST_MAIN_LIBRARY}
                                      ${GMOCK_LIBRARY})
 
 
-
 set(PROJECT_SOURCES
     main.cpp
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    logger.cpp
 )
 
 add_executable(Deckbuilder ${PROJECT_SOURCES})
