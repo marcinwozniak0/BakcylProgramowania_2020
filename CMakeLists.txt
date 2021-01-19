@@ -10,7 +10,7 @@ set(CMAKE_CXX_FLAGS "-g3 -pthread -fconcepts -Wall -pedantic")
 
 include(External_GTest.cmake)
 
-add_executable(bakcyl_2020 "main.cpp")
+add_executable(bakcyl_2020 "main.cpp" "logger.cpp")
 
 add_executable(bakcyl_2020_ut "test.cpp")
 
