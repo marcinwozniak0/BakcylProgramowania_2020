@@ -3,15 +3,13 @@
 
 #include "Logger.hpp"
 
-using namespace std;
-
-void Logger::log(string msg)
+void Logger::log(std::string msg)
 {
-    fstream logs;
+    std::fstream logs;
 
     if (logs.good())
     {
-        logs.open("logs.txt", ios::app);
+        logs.open("logs.txt", std::ios::app);
         
         logs<<msg<<"\n";
 
@@ -19,9 +17,9 @@ void Logger::log(string msg)
     }
     else
     {
-        ofstream outfile("logs.txt");
+        std::ofstream outfile("logs.txt");
 
-        logs.open("logs.txt", ios::app);
+        logs.open("logs.txt", std::ios::app);
         
         logs<<msg<<"\n";
 
@@ -29,6 +27,6 @@ void Logger::log(string msg)
     }
     
 
-    cout<<msg<<endl;
+    std::cout<<msg<<std::endl;
 } 
 

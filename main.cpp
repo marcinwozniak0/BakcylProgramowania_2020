@@ -3,7 +3,7 @@
 #include <QApplication>
 #include "Logger.hpp"
 
-int main(int argc, char *argv[])
+int main()
 {
     QApplication a(argc, argv);
     MainWindow w;
