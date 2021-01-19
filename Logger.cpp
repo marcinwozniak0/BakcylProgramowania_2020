@@ -5,15 +5,11 @@
 
 void Logger::log(std::string msg)
 {
-    std::fstream logs;
-
     if (logs.good())
     {
         logs.open("logs.txt", std::ios::app);
         
         logs << msg << "\n";
-
-        logs.close();
     }
     else
     {
@@ -22,11 +18,9 @@ void Logger::log(std::string msg)
         logs.open("logs.txt", std::ios::app);
         
         logs << msg << "\n";
-
-        logs.close();
     }
     
 
     std::cout << msg << std::endl;
-} 
+}
 
