@@ -3,8 +3,6 @@
 
 #include "Logger.hpp"
 
-using namespace std;
-
 
 int main()
 {
