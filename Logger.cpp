@@ -11,7 +11,7 @@ void Logger::log(std::string msg)
     {
         logs.open("logs.txt", std::ios::app);
         
-        logs<<msg<<"\n";
+        logs << msg << "\n";
 
         logs.close();
     }
@@ -21,12 +21,12 @@ void Logger::log(std::string msg)
 
         logs.open("logs.txt", std::ios::app);
         
-        logs<<msg<<"\n";
+        logs << msg << "\n";
 
         logs.close();
     }
     
 
-    std::cout<<msg<<std::endl;
+    std::cout << msg << std::endl;
 } 
 
