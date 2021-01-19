@@ -1,9 +1,7 @@
 #include <iostream>
 
-using namespace std;
-
 struct Logger
 {
-   void log(string msg);
+   void log(std::string msg);
 };
 
