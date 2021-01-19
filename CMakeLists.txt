@@ -10,14 +10,31 @@ set(CMAKE_CXX_FLAGS "-g3 -pthread -fconcepts -Wall -pedantic")
 
 include(External_GTest.cmake)
 
-add_executable(bakcyl_2020 "main.cpp")
-
 add_executable(bakcyl_2020_ut "test.cpp")
 
 target_link_libraries(bakcyl_2020_ut ${GTEST_MAIN_LIBRARY}
                                      ${GTEST_LIBRARY}
                                      ${GMOCK_MAIN_LIBRARY}
                                      ${GMOCK_LIBRARY})
+
+#Qt
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
+
+set(PROJECT_SOURCES
+        main.cpp
+        mainwindow.cpp
+        mainwindow.h
+        mainwindow.ui
+)
+
+add_executable(Deckbuilder ${PROJECT_SOURCES})
+    
+target_link_libraries(Deckbuilder PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 # Valgrind
 find_program(VALGRIND "valgrind")
