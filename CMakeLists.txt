@@ -13,6 +13,10 @@ include(External_GTest.cmake)
 add_executable(bakcyl_2020 "main.cpp")
 
 add_executable(bakcyl_2020_ut "test.cpp")
+add_subdirectory(lib/sqlite3)
+find_package(SQLite3 REQUIRED CONFIG)
+target_link_libraries(bakcyl_2020 SQLite::SQLite3)
+
 
 target_link_libraries(bakcyl_2020_ut ${GTEST_MAIN_LIBRARY}
                                      ${GTEST_LIBRARY}
