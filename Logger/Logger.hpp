@@ -2,12 +2,8 @@
 
 struct Logger
 {
-    std::fstream logs;
-   void log(std::string msg);
-   
-   ~Logger() {
-   logs.close();
-   };
-   
+   std::fstream logs;
+   void log(const std::string& msg);
+   ~Logger();
 };
 

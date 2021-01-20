@@ -3,12 +3,10 @@
 
 #include "Logger.hpp"
 
-void Logger::log(std::string msg)
+void Logger::log(const std::string& msg)
 {
-    if (logs.good())
-    {
-        logs.open("logs.txt", std::ios::app);
-        
+    if (logs.is_open())
+    {     
         logs << msg << "\n";
     }
     else
@@ -22,5 +20,9 @@ void Logger::log(std::string msg)
     
 
     std::cout << msg << std::endl;
+}
+
+Logger::~Logger() {
+logs.close();
 }
 

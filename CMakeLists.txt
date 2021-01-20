@@ -10,7 +10,7 @@ set(CMAKE_CXX_FLAGS "-g3 -pthread -fconcepts -Wall -pedantic")
       
 
 include_directories(${PROJECT_SOURCE_DIR}/Logger)
-file(GLOB LOGGER_LIB ${PROJECT_SOURCE_DIR}/Logger/Logger.cpp) #Someone needs to fix this later
+file(GLOB LOGGER_LIB ${PROJECT_SOURCE_DIR}/Logger/Logger.cpp)
 
 include(External_GTest.cmake)
 
