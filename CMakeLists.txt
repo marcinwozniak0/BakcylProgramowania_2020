@@ -7,10 +7,14 @@ set(BINARY_OUTPUT_PATH build/)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-g3 -pthread -fconcepts -Wall -pedantic")
+      
+
+include_directories(${PROJECT_SOURCE_DIR}/Logger)
+file(GLOB LOGGER_LIB ${PROJECT_SOURCE_DIR}/Logger/Logger.cpp) #Someone needs to fix this later
 
 include(External_GTest.cmake)
 
-add_executable(bakcyl_2020 "main.cpp" "Logger.cpp")
+add_executable(bakcyl_2020 "main.cpp" ${LOGGER_LIB})
 
 add_executable(bakcyl_2020_ut "test.cpp")
 
