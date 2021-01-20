@@ -25,6 +25,8 @@ target_link_libraries(bakcyl_2020_ut ${GTEST_MAIN_LIBRARY}
                                      ${GMOCK_MAIN_LIBRARY}
                                      ${GMOCK_LIBRARY})
 
+
+
 set(PROJECT_SOURCES
     main.cpp
     mainwindow.cpp
@@ -35,13 +37,6 @@ set(PROJECT_SOURCES
 add_executable(Deckbuilder ${PROJECT_SOURCES})
     
 target_link_libraries(Deckbuilder PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-
-#LOGIC
-
-include_directories(${PROJECT_SOURCE_DIR}/Logger)
-file(GLOB LOGGER_LIB ${PROJECT_SOURCE_DIR}/Logger/Logger.cpp)
-
-add_executable(bakcyl_2020 "main.cpp" ${LOGGER_LIB})
 
 # Valgrind
 find_program(VALGRIND "valgrind")
