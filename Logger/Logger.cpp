@@ -3,7 +3,7 @@
 
 #include "Logger.hpp"
 
-void Logger::log(std::string msg)
+void Logger::log(const std::string& msg)
 {
     if (logs.is_open())
     {     
