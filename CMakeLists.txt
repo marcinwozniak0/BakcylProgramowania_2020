@@ -7,6 +7,10 @@ set(BINARY_OUTPUT_PATH build/)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-g3 -pthread -fconcepts -Wall -pedantic")
+      
+
+include_directories(${PROJECT_SOURCE_DIR}/Logger)
+file(GLOB LOGGER_LIB ${PROJECT_SOURCE_DIR}/Logger/Logger.cpp) #Someone needs to fix this later
 
 #Qt
 set(CMAKE_AUTOUIC ON)
@@ -30,7 +34,7 @@ set(PROJECT_SOURCES
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
-    Logger.cpp
+    ${LOGGER_LIB}
 )
 
 add_executable(Deckbuilder ${PROJECT_SOURCES})
