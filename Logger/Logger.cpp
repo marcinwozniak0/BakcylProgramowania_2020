@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-
 #include "Logger.hpp"
 
 enum exceptionLevel
@@ -11,10 +10,14 @@ enum exceptionLevel
 	fatal = 3
 };
 
-void Logger::log(const std::string& msg)
+void Logger::log(const std::string& msg, const int exc)
 {
     if (logs.is_open())
     {     
+    
+
+    
+    
         logs << msg << "\n";
     }
     else
@@ -26,7 +29,18 @@ void Logger::log(const std::string& msg)
         logs << msg << "\n";
     }
     
-
+    if(exc == exceptionLevel(fine)){
+    	std::cout <<"FINE: "; 
+	}
+    if(exc == exceptionLevel(warning)){
+    	std::cout <<"WARNING: "; 
+	}	
+    if(exc == exceptionLevel(error)){
+    	std::cout <<"ERROR: "; 
+	}
+    if(exc == exceptionLevel(fatal)){
+    	std::cout <<"FATAL ERROR: "; 
+	}
     std::cout << msg << std::endl;
 }
 
