@@ -22,9 +22,6 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 include(External_GTest.cmake)
 
-
-include(External_GTest.cmake)
-
 add_executable(bakcyl_2020 "main.cpp" ${LOGGER_LIB})
 add_executable(bakcyl_2020_ut "test.cpp")
 target_link_libraries(bakcyl_2020_ut ${GTEST_MAIN_LIBRARY}
