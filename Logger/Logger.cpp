@@ -3,6 +3,14 @@
 
 #include "Logger.hpp"
 
+enum exceptionLevel
+{
+	fine = 0,
+	warning = 1,
+	error = 2,
+	fatal = 3
+};
+
 void Logger::log(const std::string& msg)
 {
     if (logs.is_open())
