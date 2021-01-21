@@ -1,14 +1,10 @@
-#include <iostream>
-#include <fstream>
+#include "mainwindow.h"
+#include <QApplication>
 
-#include "Logger.hpp"
-
-
-int main()
+int main(int argc, char *argv[])
 {
-   Logger logger;
-   logger.log("test");
-   logger.log("??"); 
-
-   return 0;
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }
