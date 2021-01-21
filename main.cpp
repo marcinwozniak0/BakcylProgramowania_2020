@@ -1,9 +1,7 @@
 #include "mainwindow.h"
-
 #include <QApplication>
-#include "Logger.hpp"
 
-int main()
+int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
