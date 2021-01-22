@@ -56,11 +56,3 @@ void Logger::log(const std::string& msg, const int exc)
 Logger::~Logger() {
 logs.close();
 }
-
-int main()
-{
-    Logger logger;
-    logger.log("test", 1);
-    logger.log("??", 2);
-    return 0;
-}
