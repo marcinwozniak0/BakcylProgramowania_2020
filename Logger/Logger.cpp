@@ -3,6 +3,28 @@
 #include "Logger.hpp"
 #include "ExceptionLevels.cpp"
 
+void printLogLevel(const int level)
+{
+
+if(level == ExceptionLevel(fine))
+    {
+    	std::cout << "FINE: "; 
+	}
+    if(level == ExceptionLevel(warning))
+    {
+    	std::cout << "WARNING: "; 
+	}	
+    if(level == ExceptionLevel(error))
+    {
+    	std::cout << "ERROR: "; 
+	}
+    if(level == ExceptionLevel(fatal))
+    {
+    	std::cout << "FATAL ERROR: "; 
+	}
+
+}
+
 void Logger::log(const std::string& message, const int level)
 {
     if (logs.is_open())
@@ -19,22 +41,7 @@ void Logger::log(const std::string& message, const int level)
         logs << message << "\n";
     }
     
-    if(level == ExceptionLevel(fine))
-    {
-    	std::cout <<"FINE: "; 
-	}
-    if(level == ExceptionLevel(warning))
-    {
-    	std::cout <<"WARNING: "; 
-	}	
-    if(level == ExceptionLevel(error))
-    {
-    	std::cout <<"ERROR: "; 
-	}
-    if(level == ExceptionLevel(fatal))
-    {
-    	std::cout <<"FATAL ERROR: "; 
-	}
+    printLogLevel(level);
 	
     std::cout << message << std::endl;
     
