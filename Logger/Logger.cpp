@@ -2,7 +2,7 @@
 #include <fstream>
 #include "Logger.hpp"
 
-enum exceptionLevel
+enum ExceptionLevel
 {
 	fine = 0,
 	warning = 1,
@@ -10,15 +10,12 @@ enum exceptionLevel
 	fatal = 3
 };
 
-void Logger::log(const std::string& msg, const int exc)
+void Logger::log(const std::string& message, const int level)
 {
     if (logs.is_open())
     {     
     
-
-    
-    
-        logs << msg << "\n";
+        logs << message << "\n";
     }
     else
     {
@@ -26,22 +23,28 @@ void Logger::log(const std::string& msg, const int exc)
 
         logs.open("logs.txt", std::ios::app);
         
-        logs << msg << "\n";
+        logs << message << "\n";
     }
     
-    if(exc == exceptionLevel(fine)){
+    if(level == ExceptionLevel(fine))
+    {
     	std::cout <<"FINE: "; 
 	}
-    if(exc == exceptionLevel(warning)){
+    if(level == ExceptionLevel(warning))
+    {
     	std::cout <<"WARNING: "; 
 	}	
-    if(exc == exceptionLevel(error)){
+    if(level == ExceptionLevel(error))
+    {
     	std::cout <<"ERROR: "; 
 	}
-    if(exc == exceptionLevel(fatal)){
+    if(level == ExceptionLevel(fatal))
+    {
     	std::cout <<"FATAL ERROR: "; 
 	}
-    std::cout << msg << std::endl;
+	
+    std::cout << message << std::endl;
+    
 }
 
 Logger::~Logger() {
