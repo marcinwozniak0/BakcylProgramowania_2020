@@ -1,14 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "Logger.hpp"
-
-enum ExceptionLevel
-{
-	fine = 0,
-	warning = 1,
-	error = 2,
-	fatal = 3
-};
+#include "ExceptionLevels.cpp"
 
 void Logger::log(const std::string& message, const int level)
 {
