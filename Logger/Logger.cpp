@@ -6,19 +6,19 @@
 void printLogLevel(const int level)
 {
 
-if(level == ExceptionLevel(fine))
+    if(level == ExceptionLevel(fine))
     {
     	std::cout << "FINE: "; 
 	}
-    if(level == ExceptionLevel(warning))
+    else if(level == ExceptionLevel(warning))
     {
     	std::cout << "WARNING: "; 
 	}	
-    if(level == ExceptionLevel(error))
+    else if(level == ExceptionLevel(error))
     {
     	std::cout << "ERROR: "; 
 	}
-    if(level == ExceptionLevel(fatal))
+    else if(level == ExceptionLevel(fatal))
     {
     	std::cout << "FATAL ERROR: "; 
 	}
