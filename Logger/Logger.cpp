@@ -1,24 +1,36 @@
 #include <iostream>
 #include <fstream>
 #include "Logger.hpp"
+#include "ExceptionLevels.cpp"
 
-enum exceptionLevel
+void printLogLevel(const int level)
 {
-	fine = 0,
-	warning = 1,
-	error = 2,
-	fatal = 3
-};
 
-void Logger::log(const std::string& msg, const int exc)
+if(level == ExceptionLevel(fine))
+    {
+    	std::cout << "FINE: "; 
+	}
+    if(level == ExceptionLevel(warning))
+    {
+    	std::cout << "WARNING: "; 
+	}	
+    if(level == ExceptionLevel(error))
+    {
+    	std::cout << "ERROR: "; 
+	}
+    if(level == ExceptionLevel(fatal))
+    {
+    	std::cout << "FATAL ERROR: "; 
+	}
+
+}
+
+void Logger::log(const std::string& message, const int level)
 {
     if (logs.is_open())
     {     
     
-
-    
-    
-        logs << msg << "\n";
+        logs << message << "\n";
     }
     else
     {
@@ -26,22 +38,13 @@ void Logger::log(const std::string& msg, const int exc)
 
         logs.open("logs.txt", std::ios::app);
         
-        logs << msg << "\n";
+        logs << message << "\n";
     }
     
-    if(exc == exceptionLevel(fine)){
-    	std::cout <<"FINE: "; 
-	}
-    if(exc == exceptionLevel(warning)){
-    	std::cout <<"WARNING: "; 
-	}	
-    if(exc == exceptionLevel(error)){
-    	std::cout <<"ERROR: "; 
-	}
-    if(exc == exceptionLevel(fatal)){
-    	std::cout <<"FATAL ERROR: "; 
-	}
-    std::cout << msg << std::endl;
+    printLogLevel(level);
+	
+    std::cout << message << std::endl;
+    
 }
 
 Logger::~Logger() {
