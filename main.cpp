@@ -3,7 +3,6 @@
 int main()
 {
    sqlite3* _db;
-   sqlite3_open(":memory:", &_db);
-
+   sqlite3_open("test.db", &_db);
    return 0;
 }
