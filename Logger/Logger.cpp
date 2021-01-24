@@ -14,9 +14,9 @@ enum exceptionLevel
 
 const std::string currentDateTime() 
 {
-    time_t     now = time(0);
-    struct tm  tstruct;
-    char       currentTime[80];
+    time_t now = time(0);
+    struct tm tstruct;
+    char currentTime[80];
     tstruct = *localtime(&now);
     strftime(currentTime, sizeof(currentTime), "[%Y-%m-%d %X]", &tstruct);
 
