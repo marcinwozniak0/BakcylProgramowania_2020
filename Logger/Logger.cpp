@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include <stdio.h>
-#include <time.h>
+#include <cstdio>
+#include <ctime>
 #include "Logger.hpp"
 
 enum exceptionLevel
