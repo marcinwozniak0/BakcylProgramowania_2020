@@ -1,7 +1,10 @@
 #include <iostream>
 #include <fstream>
+<<<<<<< HEAD
 #include <cstdio>
 #include <ctime>
+=======
+>>>>>>> c0bf52b51258c615b489034738f7da36605fa796
 #include "Logger.hpp"
 
 enum exceptionLevel
@@ -12,6 +15,7 @@ enum exceptionLevel
 	fatal = 3
 };
 
+<<<<<<< HEAD
 const std::string currentDateTime() 
 {
     time_t now = time(0);
@@ -23,11 +27,21 @@ const std::string currentDateTime()
     return currentTime;
 }
 
+=======
+>>>>>>> c0bf52b51258c615b489034738f7da36605fa796
 void Logger::log(const std::string& msg, const int exc)
 {
     if (logs.is_open())
     {     
+<<<<<<< HEAD
         logs << currentDateTime() << " " << msg << "\n\n";
+=======
+    
+
+    
+    
+        logs << msg << "\n";
+>>>>>>> c0bf52b51258c615b489034738f7da36605fa796
     }
     else
     {
