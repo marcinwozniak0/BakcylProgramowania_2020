@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <cstdio>
+#include <ctime>
 #include "Logger.hpp"
 #include "ExceptionLevels.cpp"
 
@@ -24,13 +26,22 @@ void printLogLevel(const int level)
     }
 
 }
+const std::string currentDateTime() 
+{
+    time_t now = time(0);
+    struct tm  tstruct;
+    char currentTime[80];
+    tstruct = *localtime(&now);
+    strftime(currentTime, sizeof(currentTime), "[%Y-%m-%d %X]", &tstruct);
 
-void Logger::log(const std::string& message, const int level)
+    return currentTime;
+}
+
+void Logger::log(const std::string& msg, const int exc)
 {
     if (logs.is_open())
     {     
-    
-        logs << message << "\n";
+        logs << currentDateTime() << " " << msg << "\n\n";
     }
     else
     {
@@ -38,7 +49,7 @@ void Logger::log(const std::string& message, const int level)
 
         logs.open("logs.txt", std::ios::app);
         
-        logs << message << "\n";
+        logs << currentDateTime() << " " << msg << "\n\n";
     }
     
     printLogLevel(level);
@@ -50,4 +61,3 @@ void Logger::log(const std::string& message, const int level)
 Logger::~Logger() {
 logs.close();
 }
-
