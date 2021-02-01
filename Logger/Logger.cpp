@@ -3,15 +3,29 @@
 #include <cstdio>
 #include <ctime>
 #include "Logger.hpp"
+#include "ExceptionLevels.cpp"
 
-enum exceptionLevel
+void printLogLevel(const int level)
 {
-	fine = 0,
-	warning = 1,
-	error = 2,
-	fatal = 3
-};
 
+    if(level == ExceptionLevel(fine))
+    {
+    	std::cout << "FINE: "; 
+    }
+    else if(level == ExceptionLevel(warning))
+    {
+    	std::cout << "WARNING: "; 
+    }	
+    else if(level == ExceptionLevel(error))
+    {
+    	std::cout << "ERROR: "; 
+    }
+    else if(level == ExceptionLevel(fatal))
+    {
+    	std::cout << "FATAL ERROR: "; 
+    }
+
+}
 const std::string currentDateTime() 
 {
     time_t now = time(0);
@@ -38,19 +52,10 @@ void Logger::log(const std::string& msg, const int exc)
         logs << currentDateTime() << " " << msg << "\n\n";
     }
     
-    if(exc == exceptionLevel(fine)){
-    	std::cout <<"FINE: "; 
-	}
-    if(exc == exceptionLevel(warning)){
-    	std::cout <<"WARNING: "; 
-	}	
-    if(exc == exceptionLevel(error)){
-    	std::cout <<"ERROR: "; 
-	}
-    if(exc == exceptionLevel(fatal)){
-    	std::cout <<"FATAL ERROR: "; 
-	}
-    std::cout << msg << std::endl;
+    printLogLevel(level);
+	
+    std::cout << message << std::endl;
+    
 }
 
 Logger::~Logger() {
