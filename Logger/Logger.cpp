@@ -3,14 +3,31 @@
 #include <cstdio>
 #include <ctime>
 #include "Logger.hpp"
+#include "ExceptionLevels.cpp"
 
-enum exceptionLevel
+std::string logLevel(const int level)
 {
-	fine = 0,
-	warning = 1,
-	error = 2,
-	fatal = 3
-};
+    std::string exception;
+    
+    if(level == ExceptionLevel(fine))
+    {
+    	exception = "FINE: "; 
+    }
+    else if(level == ExceptionLevel(warning))
+    {
+    	exception = "WARNING: "; 
+    }	
+    else if(level == ExceptionLevel(error))
+    {
+    	exception = "ERROR: "; 
+    }
+    else if(level == ExceptionLevel(fatal))
+    {
+    	exception = "FATAL ERROR: "; 
+    }
+
+    return exception;
+}
 
 const std::string currentDateTime() 
 {
@@ -23,11 +40,11 @@ const std::string currentDateTime()
     return currentTime;
 }
 
-void Logger::log(const std::string& msg, const int exc)
+void Logger::log(const std::string& message, const int exc)
 {
     if (logs.is_open())
     {     
-        logs << currentDateTime() << " " << msg << "\n\n";
+        logs << currentDateTime() << " " << logLevel(exc) << " " << message << "\n\n";
     }
     else
     {
@@ -35,22 +52,10 @@ void Logger::log(const std::string& msg, const int exc)
 
         logs.open("logs.txt", std::ios::app);
         
-        logs << currentDateTime() << " " << msg << "\n\n";
+        logs << currentDateTime() << " " << logLevel(exc) << " " << message << "\n\n";
     }
     
-    if(exc == exceptionLevel(fine)){
-    	std::cout <<"FINE: "; 
-	}
-    if(exc == exceptionLevel(warning)){
-    	std::cout <<"WARNING: "; 
-	}	
-    if(exc == exceptionLevel(error)){
-    	std::cout <<"ERROR: "; 
-	}
-    if(exc == exceptionLevel(fatal)){
-    	std::cout <<"FATAL ERROR: "; 
-	}
-    std::cout << msg << std::endl;
+    std::cout << currentDateTime() << " " << logLevel(exc) << " " << message << "\n\n";
 }
 
 Logger::~Logger() {
