@@ -5,6 +5,7 @@
 #include "Logger.hpp"
 #include "ExceptionLevels.cpp"
 
+
 std::string logLevel(const int level)
 {
     std::string exception;
