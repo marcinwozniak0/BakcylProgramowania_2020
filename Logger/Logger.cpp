@@ -5,27 +5,31 @@
 #include "Logger.hpp"
 #include "ExceptionLevels.cpp"
 
-void printLogLevel(const int level)
-{
 
+std::string logLevel(const int level)
+{
+    std::string exception;
+    
     if(level == ExceptionLevel(fine))
     {
-    	std::cout << "FINE: "; 
+    	exception = "FINE: "; 
     }
     else if(level == ExceptionLevel(warning))
     {
-    	std::cout << "WARNING: "; 
+    	exception = "WARNING: "; 
     }	
     else if(level == ExceptionLevel(error))
     {
-    	std::cout << "ERROR: "; 
+    	exception = "ERROR: "; 
     }
     else if(level == ExceptionLevel(fatal))
     {
-    	std::cout << "FATAL ERROR: "; 
+    	exception = "FATAL ERROR: "; 
     }
 
+    return exception;
 }
+
 const std::string currentDateTime() 
 {
     time_t now = time(0);
@@ -37,11 +41,11 @@ const std::string currentDateTime()
     return currentTime;
 }
 
-void Logger::log(const std::string& msg, const int exc)
+void Logger::log(const std::string& message, const int exc)
 {
     if (logs.is_open())
     {     
-        logs << currentDateTime() << " " << msg << "\n\n";
+        logs << currentDateTime() << " " << logLevel(exc) << " " << message << "\n\n";
     }
     else
     {
@@ -49,13 +53,10 @@ void Logger::log(const std::string& msg, const int exc)
 
         logs.open("logs.txt", std::ios::app);
         
-        logs << currentDateTime() << " " << msg << "\n\n";
+        logs << currentDateTime() << " " << logLevel(exc) << " " << message << "\n\n";
     }
     
-    printLogLevel(level);
-	
-    std::cout << message << std::endl;
-    
+    std::cout << currentDateTime() << " " << logLevel(exc) << " " << message << "\n\n";
 }
 
 Logger::~Logger() {

@@ -3,7 +3,7 @@
 struct Logger
 {
    std::fstream logs;
-   void log(const std::string& msg, const int exc);
+   void log(const std::string& message, const int exc);
    ~Logger();
 };
 
