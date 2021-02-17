@@ -30,7 +30,7 @@ Windows
 > @rem Or if you have vcpkg in PATH
 >   vcpkg install jsoncpp
 > ```
-Linux, Unix and other OSs which are using bash
+Linux, Unix and other OSs which use bash
 > ```sh
 > # If you don't have vcpkg
 >   git clone https://github.com/microsoft/vcpkg.git
@@ -65,9 +65,8 @@ Linux, Unix and other OSs which are using bash
 #### apt-get
 > ```sh
 > sudo apt-get install qt5-default
-> ```sh
+> ```
 #### oficial site
 > [Qt](https://www.qt.io/download)
 ### Installation problems
-If you had any problems with installing dependencies, you would
-have tried updating your package manager and tried installing again.
+If you have any problems with installing dependencies, try updating your package manager and tried installing again.
