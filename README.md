@@ -69,4 +69,4 @@ sudo apt-get install qt5-default
 #### oficial site
 [Qt](https://www.qt.io/download)
 ### Installation problems
-If you have any problems with installing dependencies, try updating your package manager and tried installing again.
+If you have any problems with installing dependencies, try updating your package manager and install again.
