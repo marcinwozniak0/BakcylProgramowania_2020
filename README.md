@@ -5,17 +5,17 @@ You must install these dependencies on your own: sqlite3, jsoncpp, qt5
 
 ### All-in-one
 #### apt-get
-> ```sh
+> ```bash
 > sudo apt-get install libsqlite3-dev libjsoncpp-dev qt5-default
 > ```
 ### JsonCpp
 
 #### apt-get
-> ```sh
+> ```bash
 > sudo apt-get install libjsoncpp-dev
 > ```
 #### Meson
-> ```sh
+> ```bash
 > meson wrap install jsoncpp
 > ```
 
@@ -31,7 +31,7 @@ Windows
 >   vcpkg install jsoncpp
 > ```
 Linux, Unix and other OSs which use bash
-> ```sh
+> ```bash
 > # If you don't have vcpkg
 >   git clone https://github.com/microsoft/vcpkg.git
 >   ./vcpkg/bootstrap-vcpkg.sh
@@ -41,29 +41,29 @@ Linux, Unix and other OSs which use bash
 >   vcpkg install jsoncpp
 > ```
 #### conan
-> ```sh
+> ```bash
 > conan install jsoncpp
 > ```
 #### GitHub
 > [JsonCpp Releases | GitHub](https://github.com/open-source-parsers/jsoncpp/tags)
 #### Git
-> ```sh
+> ```bash
 > git clone https://github.com/open-souce-parsers/jsoncpp.git
 > ```
 ### SQLite
 #### conan
-> ```sh
+> ```bash
 > conan install sqlite3
 > ```
 #### apt-get
-> ```sh
+> ```bash
 > sudo apt-get install libsqlite3-dev
 > ```
 #### official site
 > [SQLite](https://www.sqlite.org)
 ### Qt5
 #### apt-get
-> ```sh
+> ```bash
 > sudo apt-get install qt5-default
 > ```
 #### oficial site
