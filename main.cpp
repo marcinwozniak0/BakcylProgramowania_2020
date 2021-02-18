@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+
 #include <QApplication>
 #include <sqlite3.h>
 #include <json/value.h>

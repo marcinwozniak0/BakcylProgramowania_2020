@@ -15,6 +15,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 
+find_package(QT NAMES Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+
+include(External_GTest.cmake)
+
+
 find_package(SQLite3 REQUIRED)
 find_package(JsonCpp REQUIRED)
 find_package(QT NAMES Qt5 COMPONENTS Widgets REQUIRED)
@@ -28,9 +34,11 @@ target_link_libraries(bakcyl_2020_ut ${GTEST_MAIN_LIBRARY}
                                      ${GMOCK_MAIN_LIBRARY}
                                      ${GMOCK_LIBRARY})
 
+
 #LOGIC
 include_directories(${PROJECT_SOURCE_DIR}/Logger)
 file(GLOB LOGGER_LIB ${PROJECT_SOURCE_DIR}/Logger/Logger.cpp)
+
 
 set(PROJECT_SOURCES
     main.cpp
