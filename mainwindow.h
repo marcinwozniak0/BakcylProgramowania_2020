@@ -5,6 +5,7 @@
 #include <QDesktopWidget>
 #include <memory>
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -19,5 +20,6 @@ public:
 
 private:
     std::unique_ptr<Ui::MainWindow> ui;
+
 };
 #endif // MAINWINDOW_H
