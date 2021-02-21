@@ -3,7 +3,7 @@ if [[ ! -f /usr/include/sqlite3.h ]]
 then
     sudo apt-get install libsqlite3-dev
 fi
-if [[ ! -f /usr/include/jsoncpp/json/json.h ]]
+if [[ ! -d /usr/include/jsoncpp/json ]]
 then
     sudo apt-get install libjsoncpp-dev
 fi
