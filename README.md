@@ -1,7 +1,7 @@
 # BakcylProgramowania_2020
 
 ## Dependencies
-Only requirement is that APT package manager has been installed already on your devie.
+The only requirement is that APT package manager has been installed already on your device.
 To install project dependencies you have to simply run the following command in the root of this repo:
 ```bash
 ./build.bash
