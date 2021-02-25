@@ -5,7 +5,6 @@ To install project dependencies you have to simply run the following command in 
 ```bash
 ./build.bash
 ```
-After running this script, find `/usr/include/sqlite.tar.gz` file and unpack it.
 ## Installation problems
 If you have any problems with installing dependencies, try updating your package manager and install again.
 
