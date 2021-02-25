@@ -2,6 +2,7 @@
 if [[ ! -f /usr/include/sqlite3.h ]]
 then
     curl https://sqlite.org/2021/sqlite-autoconf-3340100.tar.gz -o "/usr/include/sqlite.tar.gz"
+    tar -zxvf /usr/include/sqlite.tar.gz /usr/include/sqlite/
 fi
 if [[ ! -d /usr/include/jsoncpp/json ]]
 then
