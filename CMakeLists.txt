@@ -9,6 +9,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-g3 -pthread -fconcepts -Wall -pedantic")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
 
+include (ExternalProject)
+
 #Qt
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -16,15 +18,25 @@ set(CMAKE_AUTORCC ON)
 
 find_package(SQLite3)
 if (NOT SQLite3_FOUND)
-    message(SEND_ERROR "sqlite3 package not found, please install it")
+    ExternalProject_Add(
+        SQLite3
+        GIT_REPOSITORY https://github.com/azadkuh/sqlite-amalgamation.git
+        )
 endif()
 find_package(JsonCpp)
 if (NOT JsonCpp_FOUND)
-    message(SEND_ERROR "jsoncpp, or jsoncpp-dev package not found, please install it")
+    ExternalProject_Add(
+        JsonCpp
+        GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp.git
+        )
 endif()
 find_package(Qt5 COMPONENTS Widgets)
 if (NOT Qt5_FOUND)
-    message(SEND_ERROR "qt5 package not found, please install it")
+    ExternalProject_Add(
+        Qt5
+        GIT_REPOSITORY https://github.com/qt/qt5.git 
+        GIT_TAG origin/release/5.15.2
+        )
 endif()
 
 include(External_GTest.cmake)
