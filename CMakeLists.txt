@@ -43,18 +43,22 @@ add_executable(Deckbuilder ${PROJECT_SOURCES})
 #Search for dependencies
 find_package(SQLite3)
 if (NOT SQLite3_FOUND)
-    set (SQLITE3_ROOT, ${CMAKE_BINARY_DIR}/sqlite3)
+    set(SQLITE3_ROOT "${CMAKE_BINARY_DIR}/sqlite3")
     ExternalProject_Add(
         SQLite3
         GIT_REPOSITORY https://github.com/azadkuh/sqlite-amalgamation.git
         
         PREFIX ${SQLITE3_ROOT}
+        INSTALL_COMMAND make
         )
+    ExternalProject_Get_Property(SQLite3 binary_dir)
+    set(SQLITE3_LIBRARIES "${binary_dir}/libsqlite3.a")
+    add_dependencies(Deckbuilder SQLite3)
 endif()
 
 find_package(JsonCpp)
 if (NOT JsonCpp_FOUND)
-    set (JSONCPP_ROOT "${CMAKE_BINARY_DIR}/jsoncpp")
+    set(JSONCPP_ROOT "${CMAKE_BINARY_DIR}/jsoncpp")
     ExternalProject_Add(
         JsonCpp-git
         GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp.git
@@ -64,12 +68,12 @@ if (NOT JsonCpp_FOUND)
         INSTALL_COMMAND make
         )
     ExternalProject_Get_Property(JsonCpp-git binary_dir)
-    set (JSONCPP_LIBRARIES "${binary_dir}/lib/libjsoncpp.a")
+    set(JSONCPP_LIBRARIES "${binary_dir}/lib/libjsoncpp.a")
     #add_library(jsoncpp STATIC IMPORTED)
     #set_property(TARGET jsoncpp PROPERTY IMPORTED_LOCATION ${JSONCPP_LIBRARIES})
     add_dependencies(Deckbuilder JsonCpp-git)
 else()
-    set (JSONCPP_LIBRARIES "JsonCpp::JsonCpp")
+    set(JSONCPP_LIBRARIES "JsonCpp::JsonCpp")
 endif()
 
 find_package(Qt5 COMPONENTS Widgets)
