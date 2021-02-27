@@ -16,28 +16,6 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(SQLite3)
-if (NOT SQLite3_FOUND)
-    ExternalProject_Add(
-        SQLite3
-        GIT_REPOSITORY https://github.com/azadkuh/sqlite-amalgamation.git
-        )
-endif()
-find_package(JsonCpp)
-if (NOT JsonCpp_FOUND)
-    ExternalProject_Add(
-        JsonCpp
-        GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp.git
-        )
-endif()
-find_package(Qt5 COMPONENTS Widgets)
-if (NOT Qt5_FOUND)
-    ExternalProject_Add(
-        Qt5
-        GIT_REPOSITORY https://github.com/qt/qt5.git 
-        GIT_TAG origin/release/5.15.2
-        )
-endif()
 
 include(External_GTest.cmake)
 
@@ -62,7 +40,48 @@ set(PROJECT_SOURCES
 
 add_executable(Deckbuilder ${PROJECT_SOURCES})
     
-target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets ${SQLite3_LIBRARIES} JsonCpp::JsonCpp)
+#Search for dependencies
+find_package(SQLite3)
+if (NOT SQLite3_FOUND)
+    set (SQLITE3_ROOT, ${CMAKE_BINARY_DIR}/sqlite3)
+    ExternalProject_Add(
+        SQLite3
+        GIT_REPOSITORY https://github.com/azadkuh/sqlite-amalgamation.git
+        
+        PREFIX ${SQLITE3_ROOT}
+        )
+endif()
+
+find_package(NOT JsonCpp)
+if (JsonCpp_FOUND)
+    set (JSONCPP_ROOT "${CMAKE_BINARY_DIR}/jsoncpp")
+    ExternalProject_Add(
+        JsonCpp-git
+        GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp.git
+
+        PREFIX ${JSONCPP_ROOT}
+        CMAKE_ARGS -DBUILD_STATIC_LIBS=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=debug -DARCHIVE_INSTALL_DIR=. -G "Unix Makefiles" -DCMAKE_INSTALL_INCLUDEDIR=include/jsoncpp
+        INSTALL_COMMAND make
+        )
+    ExternalProject_Get_Property(JsonCpp-git binary_dir)
+    set (JSONCPP_LIBRARIES "${binary_dir}/lib/libjsoncpp.a")
+    #add_library(jsoncpp STATIC IMPORTED)
+    #set_property(TARGET jsoncpp PROPERTY IMPORTED_LOCATION ${JSONCPP_LIBRARIES})
+    add_dependencies(Deckbuilder JsonCpp-git)
+else()
+    set (JSONCPP_LIBRARIES "JsonCpp:JsonCpp")
+endif()
+
+find_package(Qt5 COMPONENTS Widgets)
+if (NOT Qt5_FOUND)
+    ExternalProject_Add(
+        Qt5
+        GIT_REPOSITORY https://github.com/qt/qt5.git 
+        GIT_TAG origin/release/5.15.2
+        )
+endif()
+
+target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets ${SQLite3_LIBRARIES} ${JSONCPP_LIBRARIES})
 
 
 # Valgrind
