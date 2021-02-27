@@ -1,5 +1,5 @@
 #!/bin/bash
-CURRENTDIR=pwd
+CURRENTDIR=$(pwd)
 if [[ ! -f /usr/include/sqlite3.h ]]
 then
     cd /usr/include
@@ -18,7 +18,15 @@ then
 fi
 if [[ ! -d /usr/lib/qt5/bin ]]
 then
-    sudo apt-get install qt5-default
+    cd /usr/lib
+    mkdir qt5
+    cd qt5
+    mkdir bin
+    cd bin
+    touch qt-opensource-linux-x64-5.12.4.run
+    curl https://download.qt.io/archive/qt/5.12/5.12.4/qt-opensource-linux-x64-5.12.4.run -o qt-opensource-linux-x64-5.12.4.run
+    chmod +x qt-opensource-linux-x64-5.12.4.run
+    ./qt-opensource-linux-x64-5.12.4.run
 fi
 
-cd CURRENTDIR
+cd $CURRENTDIR
