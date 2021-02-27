@@ -45,18 +45,23 @@ find_package(SQLite3)
 if (NOT SQLite3_FOUND)
     set(SQLITE3_ROOT "${CMAKE_BINARY_DIR}/sqlite3")
     ExternalProject_Add(
-        SQLite3
+        SQLite3-git
         GIT_REPOSITORY https://github.com/azadkuh/sqlite-amalgamation.git
         
         PREFIX ${SQLITE3_ROOT}
         INSTALL_COMMAND make
         )
-    ExternalProject_Get_Property(SQLite3 binary_dir)
-    ExternalProject_Get_Property(SQLite3 source_dir)
+    ExternalProject_Get_Property(SQLite3-git binary_dir)
+    ExternalProject_Get_Property(SQLite3-git source_dir)
     set(SQLITE3_LIBRARIES "${binary_dir}/libsqlite3.a")
     set(SQLITE3_INCLUDES ${source_dir})
     include_directories(${SQLITE3_INCLUDES})
-    add_dependencies(Deckbuilder SQLite3)
+    add_library(SQLite3 STATIC IMPORTED)
+    set_property(TARGET SQLite3 PROPERTY IMPORTED_LOCATION ${SQLite3_LIBRARIES})
+    add_dependencies(SQLite3 SQLite3-git)
+    target_link_libraries(Deckbuilder SQLite3 ${CMAKE_DL_LIBS})
+else()
+    target_link_libraries(Deckbuilder SQLite::SQLite3)
 endif()
 
 find_package(JsonCpp)
@@ -75,11 +80,12 @@ if (NOT JsonCpp_FOUND)
     set(JSONCPP_LIBRARIES "${binary_dir}/lib/libjsoncpp.a")
     set(JSONCPP_INCLUDES "${source_dir}/include")
     include_directories(${JSONCPP_INCLUDES})
-    #add_library(jsoncpp STATIC IMPORTED)
-    #set_property(TARGET jsoncpp PROPERTY IMPORTED_LOCATION ${JSONCPP_LIBRARIES})
-    add_dependencies(Deckbuilder JsonCpp-git)
+    add_library(jsoncpp STATIC IMPORTED)
+    set_property(TARGET jsoncpp PROPERTY IMPORTED_LOCATION ${JSONCPP_LIBRARIES})
+    add_dependencies(jsoncpp JsonCpp-git)
+    target_link_libraries(Deckbuilder jsoncpp)
 else()
-    set(JSONCPP_LIBRARIES "JsonCpp::JsonCpp")
+    target_link_libraries(Deckbuilder JsonCpp::JsonCpp)
 endif()
 
 find_package(Qt5 COMPONENTS Widgets)
@@ -91,7 +97,7 @@ if (NOT Qt5_FOUND)
         )
 endif()
 
-target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets ${SQLite3_LIBRARIES} ${JSONCPP_LIBRARIES})
+target_link_libraries(Deckbuilder Qt5::Widgets)
 
 
 # Valgrind
