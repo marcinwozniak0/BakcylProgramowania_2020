@@ -52,8 +52,8 @@ if (NOT SQLite3_FOUND)
         )
 endif()
 
-find_package(NOT JsonCpp)
-if (JsonCpp_FOUND)
+find_package(JsonCpp)
+if (NOT JsonCpp_FOUND)
     set (JSONCPP_ROOT "${CMAKE_BINARY_DIR}/jsoncpp")
     ExternalProject_Add(
         JsonCpp-git
@@ -69,7 +69,7 @@ if (JsonCpp_FOUND)
     #set_property(TARGET jsoncpp PROPERTY IMPORTED_LOCATION ${JSONCPP_LIBRARIES})
     add_dependencies(Deckbuilder JsonCpp-git)
 else()
-    set (JSONCPP_LIBRARIES "JsonCpp:JsonCpp")
+    set (JSONCPP_LIBRARIES "JsonCpp::JsonCpp")
 endif()
 
 find_package(Qt5 COMPONENTS Widgets)
