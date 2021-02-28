@@ -63,22 +63,30 @@ void createTables(sqlite3* db)
 
 
 
+std::string getJsonMemberNameWithoutNuls(Json::ValueIteratorBase it)
+{
+    // Jsoncpp tries to "be liberal in what it accepts" and allows for not-escaped embedded NUL characters in json string.
+    // This is not allowed in valid json, but could be useful for storing BLOBs.
+    // However sometimes you need just null-terminated string which of course is unable to embed NULs
+    // Jsoncpp has deprecated memberName() method, which returns CString and just quietly cuts part after first NUL
+    // Instead of using deprecated, kinda unsafe method, we fail fast at strings with embedded NULs
+    auto memberName = it.name();
+    if (memberName.size() != std::strlen(memberName.c_str()))
+    {
+        throw std::runtime_error("Json string must not have embedded NUL characters");
+    }
+    return memberName;
+}
+
 void fillDbWithRiotJson(sqlite3* db, Json::Value json)
 // TODO: it should add info about lang, to database
 {
     for (auto field = json.begin(); field != json.end(); ++field)
     {
-
-        // Yes. memberName() is deprecated, because it returns null-terminated string (which of course doesn't allow embedding NUL chars)
-        // But we need just C string and don't want embedded NULs - they are not legal in sqlite table name
-        // If I understand RFC correctly, they are also not allowed in valid json
-        // Besides I don't have slightest idea why would anyone use NUL in json except for storing BLOBs
-        // TODO: consider writing memberName() replacement which would fail fast at strings with embedded NULs
-        auto langAgnosticTable = field.memberName();
-        auto langDependentTableTmp = langAgnosticTable + std::string("Translations");
-        auto langDependentTable = langDependentTableTmp.c_str();
+        auto langAgnosticTable = getJsonMemberNameWithoutNuls(field);
+        auto langDependentTable = langAgnosticTable + "Translations";
         auto& value = *field;
-        fillTableWithArrOfDicts(db, langAgnosticTable, value); 
-        fillTableWithArrOfDicts(db, langDependentTable, value); 
+        fillTableWithArrOfDicts(db, langAgnosticTable.c_str(), value); 
+        fillTableWithArrOfDicts(db, langDependentTable.c_str(), value); 
     }
 }
