@@ -1,12 +1,32 @@
+#include "jsonInserter.hpp"
 #include "sqlite_helper.hpp"
+#include <fstream>
+#include <json/json.h>
 #include <sqlite3.h>
 
+void fillDbWithRiotJson(sqlite3* db, Json::Value json);
 void createTables(sqlite3* db);
+
+bool is_empty(std::ifstream& pFile)
+{
+    return pFile.peek() == std::ifstream::traits_type::eof();
+}
 
 int main()
 {
     sqlite3* db = open_db("database.sql");
     createTables(db);
+    std::ifstream input("globals-ru_ru.json");
+    if (is_empty(input))
+    {
+        sqlite3_close(db);
+        // ya ya. This sucks, but it is sufficient for this PoC
+        throw std::runtime_error("There are no json in globals-ru_ru.json. Download it from "
+              "https://dd.b.pvp.net/latest/core/ru_ru/data/globals-ru_ru.json");
+    }
+    Json::Value json;
+    input >> json;
+    fillDbWithRiotJson(db, json);
 }
 
 void createTables(sqlite3* db)
@@ -38,5 +58,27 @@ void createTables(sqlite3* db)
     if (result_code != SQLITE_OK)
     {
         throwSqliteException(db, "SQL Error: ", errMsg);
+    }
+}
+
+
+
+void fillDbWithRiotJson(sqlite3* db, Json::Value json)
+// TODO: it should add info about lang, to database
+{
+    for (auto field = json.begin(); field != json.end(); ++field)
+    {
+
+        // Yes. memberName() is deprecated, because it returns null-terminated string (which of course doesn't allow embedding NUL chars)
+        // But we need just C string and don't want embedded NULs - they are not legal in sqlite table name
+        // If I understand RFC correctly, they are also not allowed in valid json
+        // Besides I don't have slightest idea why would anyone use NUL in json except for storing BLOBs
+        // TODO: consider writing memberName() replacement which would fail fast at strings with embedded NULs
+        auto langAgnosticTable = field.memberName();
+        auto langDependentTableTmp = langAgnosticTable + std::string("Translations");
+        auto langDependentTable = langDependentTableTmp.c_str();
+        auto& value = *field;
+        fillTableWithArrOfDicts(db, langAgnosticTable, value); 
+        fillTableWithArrOfDicts(db, langDependentTable, value); 
     }
 }
