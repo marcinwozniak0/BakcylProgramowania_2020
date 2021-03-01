@@ -1,28 +1,28 @@
 #include "sqlite_helper.hpp"
 #include <stdexcept>
+#include <memory>
 
-sqlite3* open_db(const char db_name[])
+unique_sqlite3 open_db(const char db_name[])
 {
-    sqlite3* db; // Maybe I should wrap this into simple RAII handle or smart pointer?
-    int resultCode = sqlite3_open(db_name, &db);
+    sqlite3* tmp;
+    int resultCode = sqlite3_open(db_name, &tmp);
     if (resultCode != SQLITE_OK)
     {
-        throwSqliteException(db, "Can't open database: ");
+        std::string errMsg = std::string("Can't open database: ") + sqlite3_errmsg(tmp);
+        throw std::runtime_error(errMsg);
     }
-    return db;
+    return unique_sqlite3(tmp);
 }
 
-void throwSqliteException(sqlite3* db, const std::string& errMsgPrefix, char* errMsgSuffix)
+void throwSqliteException(unique_sqlite3& db, const std::string& errMsgPrefix, char* errMsgSuffix)
 {
     std::string errMsg = errMsgPrefix + errMsgSuffix;
     sqlite3_free(errMsgSuffix);
-    sqlite3_close(db); // I have doubts with this one. Mixing exceptions with hand memory managment is nightmare.
     throw std::runtime_error(errMsg);
 }
 
-void throwSqliteException(sqlite3* db, const std::string& errMsgPrefix)
+void throwSqliteException(unique_sqlite3& db, const std::string& errMsgPrefix)
 {
-    std::string errMsg = errMsgPrefix + sqlite3_errmsg(db);
-    sqlite3_close(db); // I have doubts with this one. Mixing exceptions with hand memory managment is nightmare.
+    std::string errMsg = errMsgPrefix + sqlite3_errmsg(db.get());
     throw std::runtime_error(errMsg);
 }

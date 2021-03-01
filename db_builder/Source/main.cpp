@@ -4,8 +4,8 @@
 #include <json/json.h>
 #include <sqlite3.h>
 
-void fillDbWithRiotJson(sqlite3* db, Json::Value json);
-void createTables(sqlite3* db);
+void fillDbWithRiotJson(unique_sqlite3& db, Json::Value json);
+void createTables(unique_sqlite3& db);
 
 bool is_empty(std::ifstream& pFile)
 {
@@ -14,12 +14,11 @@ bool is_empty(std::ifstream& pFile)
 
 int main()
 {
-    sqlite3* db = open_db("database.sql");
+    unique_sqlite3 db = open_db("database.sql");
     createTables(db);
     std::ifstream input("globals-ru_ru.json");
     if (is_empty(input))
     {
-        sqlite3_close(db);
         // ya ya. This sucks, but it is sufficient for this PoC
         throw std::runtime_error("There are no json in globals-ru_ru.json. Download it from "
               "https://dd.b.pvp.net/latest/core/ru_ru/data/globals-ru_ru.json");
@@ -29,7 +28,7 @@ int main()
     fillDbWithRiotJson(db, json);
 }
 
-void createTables(sqlite3* db)
+void createTables(unique_sqlite3& db)
 {
     // I have doubts about formating
     constexpr char query[] = R"""(
@@ -54,7 +53,7 @@ void createTables(sqlite3* db)
     CREATE TABLE IF NOT EXISTS "spellSpeedsTranslations" ("nameRef"	TEXT,"langCode"	TEXT,"name"	TEXT,FOREIGN KEY("langCode") REFERENCES "languages"("langCode"),PRIMARY KEY("nameRef","langCode"),FOREIGN KEY("nameRef") REFERENCES "spellSpeeds"("nameRef"));
     )""";
     char* errMsg = NULL;
-    int result_code = sqlite3_exec(db, query, NULL, NULL, &errMsg);
+    int result_code = sqlite3_exec(db.get(), query, NULL, NULL, &errMsg);
     if (result_code != SQLITE_OK)
     {
         throwSqliteException(db, "SQL Error: ", errMsg);
@@ -78,7 +77,7 @@ std::string getJsonMemberNameWithoutNuls(Json::ValueIteratorBase it)
     return memberName;
 }
 
-void fillDbWithRiotJson(sqlite3* db, Json::Value json)
+void fillDbWithRiotJson(unique_sqlite3& db, Json::Value json)
 // TODO: it should add info about lang, to database
 {
     for (auto field = json.begin(); field != json.end(); ++field)

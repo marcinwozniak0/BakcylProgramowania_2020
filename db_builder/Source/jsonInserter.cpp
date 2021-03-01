@@ -4,14 +4,14 @@
 
 namespace
 {
-const std::vector<std::string> getColumnNames(sqlite3* db, const char tableName[]);
-sqlite3_stmt* prepareInsertStatement(sqlite3* db, const char table_name[], int colCount); // SQLi-insecure itself.
+const std::vector<std::string> getColumnNames(unique_sqlite3& db, const char tableName[]);
+sqlite3_stmt* prepareInsertStatement(unique_sqlite3& db, const char table_name[], int colCount); // SQLi-insecure itself.
 // Caller should check if getColumnNames() (SQLi-safe method) returns any columns
 void bindJsonDictToInsertStatement(sqlite3_stmt* stmt, const std::vector<std::string>& colNames,
                                    const Json::Value& json);
 } // namespace
 
-void fillTableWithArrOfDicts(sqlite3* db, const char table_name[], Json::Value json)
+void fillTableWithArrOfDicts(unique_sqlite3& db, const char table_name[], Json::Value json)
 {
     const auto colNames = getColumnNames(db, table_name);
     sqlite3_stmt* stmt = prepareInsertStatement(db, table_name, colNames.size());
@@ -36,11 +36,11 @@ void fillTableWithArrOfDicts(sqlite3* db, const char table_name[], Json::Value j
 
 namespace
 {
-const std::vector<std::string> getColumnNames(sqlite3* db, const char tableName[])
+const std::vector<std::string> getColumnNames(unique_sqlite3& db, const char tableName[])
 {
     sqlite3_stmt* stmt;
     std::vector<std::string> output;
-    int rc = sqlite3_prepare_v2(db, "SELECT name FROM pragma_table_info(@table)", -1, &stmt, NULL);
+    int rc = sqlite3_prepare_v2(db.get(), "SELECT name FROM pragma_table_info(@table)", -1, &stmt, NULL);
     if (rc != SQLITE_OK)
     {
         sqlite3_finalize(stmt);
@@ -61,7 +61,7 @@ const std::vector<std::string> getColumnNames(sqlite3* db, const char tableName[
     return output;
 }
 
-sqlite3_stmt* prepareInsertStatement(sqlite3* db, const char table_name[], int colCount)
+sqlite3_stmt* prepareInsertStatement(unique_sqlite3& db, const char table_name[], int colCount)
 {
     // Unfortunately sqlite_bind_param() doesn't work for table identifiers.
     // We must resort to binding table_name using dumb string concat.
@@ -83,7 +83,7 @@ sqlite3_stmt* prepareInsertStatement(sqlite3* db, const char table_name[], int c
     query += ')';
 
     sqlite3_stmt* stmt;
-    int rc = sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, NULL);
+    int rc = sqlite3_prepare_v2(db.get(), query.c_str(), -1, &stmt, NULL);
     if (rc != SQLITE_OK)
     {
         sqlite3_finalize(stmt);
