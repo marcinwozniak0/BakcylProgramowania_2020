@@ -11,5 +11,3 @@ using unique_sqlite3  = std::unique_ptr<sqlite3,  sqlite_deleter>;
 /* using unique_sqlite3_stmt  = std::unique_ptr<sqlite3,  sqlite_deleter>; */ 
 
 unique_sqlite3 open_db(const char db_name[]);
-void throwSqliteException(unique_sqlite3& db, const std::string& errMsgPrefix, char* errMsgSuffix);
-void throwSqliteException(unique_sqlite3& db, const std::string& errMsgPrefix);

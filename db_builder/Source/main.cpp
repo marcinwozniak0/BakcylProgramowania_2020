@@ -52,15 +52,12 @@ void createTables(unique_sqlite3& db)
     CREATE TABLE IF NOT EXISTS "cardSubtypesTranslation" ("cardCode"	TEXT,"langCode"	TEXT,"subtype"	TEXT,FOREIGN KEY("cardCode") REFERENCES "cards"("cardCode"),FOREIGN KEY("langCode") REFERENCES "languages"("langCode"));
     CREATE TABLE IF NOT EXISTS "spellSpeedsTranslations" ("nameRef"	TEXT,"langCode"	TEXT,"name"	TEXT,FOREIGN KEY("langCode") REFERENCES "languages"("langCode"),PRIMARY KEY("nameRef","langCode"),FOREIGN KEY("nameRef") REFERENCES "spellSpeeds"("nameRef"));
     )""";
-    char* errMsg = NULL;
-    int result_code = sqlite3_exec(db.get(), query, NULL, NULL, &errMsg);
+    int result_code = sqlite3_exec(db.get(), query, NULL, NULL, NULL);
     if (result_code != SQLITE_OK)
     {
-        throwSqliteException(db, "SQL Error: ", errMsg);
+        throw std::runtime_error(std::string("SQL Error: ") + sqlite3_errmsg(db.get()));
     }
 }
-
-
 
 std::string getJsonMemberNameWithoutNuls(Json::ValueIteratorBase it)
 {

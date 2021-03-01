@@ -17,7 +17,7 @@ void fillTableWithArrOfDicts(unique_sqlite3& db, const char table_name[], Json::
     sqlite3_stmt* stmt = prepareInsertStatement(db, table_name, colNames.size());
     if(colNames.size() == 0)
     {
-        throwSqliteException(db, "Unable to fill not existing table");
+        throw std::runtime_error("Unable to fill not existing table");
     }
     for (auto dict = json.begin(); dict != json.end(); ++dict)
     {
@@ -26,7 +26,7 @@ void fillTableWithArrOfDicts(unique_sqlite3& db, const char table_name[], Json::
         if (rc != SQLITE_DONE)
         {
             sqlite3_finalize(stmt);
-            throwSqliteException(db, "SQL Error: ");
+            throw std::runtime_error(std::string("SQL Error: ") + sqlite3_errmsg(db.get()));
         }
         sqlite3_reset(stmt);
         sqlite3_clear_bindings(stmt);
@@ -44,7 +44,7 @@ const std::vector<std::string> getColumnNames(unique_sqlite3& db, const char tab
     if (rc != SQLITE_OK)
     {
         sqlite3_finalize(stmt);
-        throwSqliteException(db, "SQL Error: ");
+        throw std::runtime_error(std::string("SQL Error: ") + sqlite3_errmsg(db.get()));
     }
     sqlite3_bind_text(stmt, sqlite3_bind_parameter_index(stmt, "@table"), tableName, -1, NULL);
 
@@ -56,7 +56,7 @@ const std::vector<std::string> getColumnNames(unique_sqlite3& db, const char tab
     sqlite3_finalize(stmt);
     if (rc != SQLITE_DONE)
     {
-        throwSqliteException(db, "SQL Error: ");
+        throw std::runtime_error(std::string("SQL Error: ") + sqlite3_errmsg(db.get()));
     }
     return output;
 }
@@ -87,7 +87,7 @@ sqlite3_stmt* prepareInsertStatement(unique_sqlite3& db, const char table_name[]
     if (rc != SQLITE_OK)
     {
         sqlite3_finalize(stmt);
-        throwSqliteException(db, "SQL Error: ");
+        throw std::runtime_error(std::string("SQL Error: ") + sqlite3_errmsg(db.get()));
     }
     return stmt;
 }
@@ -118,8 +118,8 @@ void bindJsonDictToInsertStatement(sqlite3_stmt* stmt, const std::vector<std::st
         }
         else
         {
-            // fuck. Mixing exceptions with hand memory managment is nightmare.
-            // TODO: proper error handling here
+            sqlite3_finalize(stmt);
+            throw std::runtime_error("Unable to bind value to insert statement"); // poor msg. TODO: improve this
         }
     }
 }
