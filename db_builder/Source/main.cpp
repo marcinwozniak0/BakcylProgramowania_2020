@@ -3,6 +3,8 @@
 #include <fstream>
 #include <json/json.h>
 #include <sqlite3.h>
+#include <cstring>
+
 
 void fillDbWithRiotJson(unique_sqlite3& db, Json::Value json);
 void createTables(unique_sqlite3& db);
