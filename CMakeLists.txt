@@ -90,17 +90,7 @@ endif()
 
 find_package(Qt5 COMPONENTS Widgets)
 if (NOT Qt5_FOUND)
-    set(QT5_ROOT "${CMAKE_BINARY_DIR}/qt5}")
-    ExternalProject_Add(
-        Qt5-git
-        GIT_REPOSITORY https://github.com/qt/qt5.git 
-
-        PREFIX ${QT5_ROOT}
-
-        CONFIGURE_COMMAND ./configure -prefix ${QT5_PREFIX}/qtbase
-        INSTALL_COMMAND ""
-        )
-    add_dependencies(Deckbuilder Qt5-git)
+    message(SEND_ERROR "Qt5 package not found, please install it")
 endif()
 
 target_link_libraries(Deckbuilder Qt5::Widgets)
