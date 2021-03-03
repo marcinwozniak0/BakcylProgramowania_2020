@@ -6,7 +6,7 @@ set(LIBRARY_OUTPUT_PATH build/)
 set(BINARY_OUTPUT_PATH build/)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "-g3 -pthread -fconcepts -Wall -Wno-error -pedantic")
+set(CMAKE_CXX_FLAGS "-g3 -pthread -fconcepts -Wall -pedantic")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
 
 #Qt
