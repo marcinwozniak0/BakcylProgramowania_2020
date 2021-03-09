@@ -8,24 +8,15 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-g3 -pthread -fconcepts -Wall -pedantic")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
+option(DOWNLOAD_DEPENDENCIES "Download all dependencies except Qt5." OFF)
+
+include (ExternalProject)
 
 #Qt
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(SQLite3)
-if (NOT SQLite3_FOUND)
-    message(SEND_ERROR "sqlite3 package not found, please install it")
-endif()
-find_package(JsonCpp)
-if (NOT JsonCpp_FOUND)
-    message(SEND_ERROR "jsoncpp, or jsoncpp-dev package not found, please install it")
-endif()
-find_package(Qt5 COMPONENTS Widgets)
-if (NOT Qt5_FOUND)
-    message(SEND_ERROR "qt5 package not found, please install it")
-endif()
 
 include(External_GTest.cmake)
 
@@ -50,8 +41,68 @@ set(PROJECT_SOURCES
 
 add_executable(Deckbuilder ${PROJECT_SOURCES})
     
-target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets ${SQLite3_LIBRARIES} JsonCpp::JsonCpp)
+#Search for dependencies
+find_package(SQLite3)
+if (NOT SQLite3_FOUND)
+    if (DOWNLOAD_DEPENDENCIES)
+        set(SQLITE3_ROOT "${CMAKE_BINARY_DIR}/sqlite3")
+        ExternalProject_Add(
+            SQLite3-git
+            GIT_REPOSITORY https://github.com/azadkuh/sqlite-amalgamation.git
+            
+            PREFIX ${SQLITE3_ROOT}
+            INSTALL_COMMAND make
+            )
+        ExternalProject_Get_Property(SQLite3-git binary_dir)
+        ExternalProject_Get_Property(SQLite3-git source_dir)
+        set(SQLITE3_LIBRARIES "${binary_dir}/libsqlite3.a")
+        set(SQLITE3_INCLUDES ${source_dir})
+        include_directories(${SQLITE3_INCLUDES})
+        add_library(SQLite3 STATIC IMPORTED)
+        set_property(TARGET SQLite3 PROPERTY IMPORTED_LOCATION ${SQLITE3_LIBRARIES})
+        add_dependencies(SQLite3 SQLite3-git)
+        target_link_libraries(Deckbuilder SQLite3 ${CMAKE_DL_LIBS})
+    else()
+	message(SEND_ERROR "sqlite3 package not found, please install it or use cmake with -DDOWNLOAD_DEPENDENCIES=ON flag to auto download and build all dependencies except Qt5")
+    endif()
+else()
+    target_link_libraries(Deckbuilder SQLite::SQLite3)
+endif()
 
+find_package(JsonCpp)
+if (NOT JsonCpp_FOUND)
+    if (DOWNLOAD_DEPENDENCIES)
+        set(JSONCPP_ROOT "${CMAKE_BINARY_DIR}/jsoncpp")
+        ExternalProject_Add(
+            JsonCpp-git
+            GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp.git
+
+            PREFIX ${JSONCPP_ROOT}
+            CMAKE_ARGS -DBUILD_STATIC_LIBS=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=debug -DARCHIVE_INSTALL_DIR=. -G "Unix Makefiles" -DCMAKE_INSTALL_INCLUDEDIR=include/jsoncpp
+            INSTALL_COMMAND make
+            )
+        ExternalProject_Get_Property(JsonCpp-git binary_dir)
+        ExternalProject_Get_Property(JsonCpp-git source_dir)
+        set(JSONCPP_LIBRARIES "${binary_dir}/lib/libjsoncpp.a")
+        set(JSONCPP_INCLUDES "${source_dir}/include")
+        include_directories(${JSONCPP_INCLUDES})
+        add_library(jsoncpp STATIC IMPORTED)
+        set_property(TARGET jsoncpp PROPERTY IMPORTED_LOCATION ${JSONCPP_LIBRARIES})
+        add_dependencies(jsoncpp JsonCpp-git)
+        target_link_libraries(Deckbuilder jsoncpp)
+    else()
+	    message(SEND_ERROR "jsoncpp or jsoncpp-dev package not found, please install it or use cmake with -DDOWNLOAD_DEPENDENCIES=ON flag to auto download and build all dependencies except Qt6")
+    endif()
+else()
+    target_link_libraries(Deckbuilder JsonCpp::JsonCpp)
+endif()
+
+find_package(Qt5 COMPONENTS Widgets)
+if (NOT Qt5_FOUND)
+    message(SEND_ERROR "Qt5 package not found, please install it")
+else()
+    target_link_libraries(Deckbuilder Qt5::Widgets)
+endif()
 
 # Valgrind
 find_program(VALGRIND "valgrind")
