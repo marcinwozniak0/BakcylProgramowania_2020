@@ -7,6 +7,11 @@ then
     mkdir sqlite
     curl https://sqlite.org/2021/sqlite-autoconf-3340100.tar.gz -o sqlite.tar.gz
     tar -zxvf sqlite.tar.gz sqlite
+    cd sqlite
+    ./configure
+    make
+    ar -rcs sqlite3.a sqlite3-shell.o sqlite3.o sqlite3-sqlite3.o
+    make install
 fi
 if [[ ! -d /usr/include/jsoncpp/json ]]
 then
