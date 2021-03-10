@@ -6,28 +6,59 @@
 #include <cstring>
 
 
-void fillDbWithRiotJson(unique_sqlite3& db, Json::Value json);
+void fillGlobals(unique_sqlite3& db, Json::Value json);
+void fillCards(unique_sqlite3& db, Json::Value json);
 void createTables(unique_sqlite3& db);
+std::string getJsonMemberNameWithoutNuls(Json::ValueIteratorBase it);
 
 bool is_empty(std::ifstream& pFile)
 {
     return pFile.peek() == std::ifstream::traits_type::eof();
 }
 
+Json::Value getJsonFromFile(const char filename[], const char download_url[])
+{
+    Json::Value json;
+    std::ifstream file(filename);
+    if (is_empty(file))
+    {
+        // ya ya. This sucks, but it is sufficient for this PoC
+        throw std::runtime_error(std::string("There are no json in globals-ru_ru.json. Download it from " + std::string(download_url)));
+    }
+    file >> json;
+    return json;
+}
+
 int main()
 {
     unique_sqlite3 db = open_db("database.sql");
     createTables(db);
-    std::ifstream input("globals-ru_ru.json");
-    if (is_empty(input))
-    {
-        // ya ya. This sucks, but it is sufficient for this PoC
-        throw std::runtime_error("There are no json in globals-ru_ru.json. Download it from "
-              "https://dd.b.pvp.net/latest/core/ru_ru/data/globals-ru_ru.json");
-    }
     Json::Value json;
-    input >> json;
-    fillDbWithRiotJson(db, json);
+    json = getJsonFromFile("globals-ru_ru.json", "https://dd.b.pvp.net/latest/core/ru_ru/data/globals-ru_ru.json");
+    fillGlobals(db, json);
+    json = getJsonFromFile("set1-ru_ru.json", "https://dd.b.pvp.net/latest/core/ru_ru/data/globals-ru_ru.json");
+    fillCards(db, json);
+}
+
+void fillCards(unique_sqlite3& db, Json::Value json)
+{
+    constexpr auto langAgnosticTable = "cards";
+    constexpr auto langDependentTable = "cardsTranslations";
+    fillTableWithArrOfDicts(db, langAgnosticTable, json); 
+    fillTableWithArrOfDicts(db, langDependentTable, json); 
+}
+
+void fillGlobals(unique_sqlite3& db, Json::Value json)
+// TODO: it should add info about lang, to database
+{
+    for (auto field = json.begin(); field != json.end(); ++field)
+    {
+        auto langAgnosticTable = getJsonMemberNameWithoutNuls(field);
+        auto langDependentTable = langAgnosticTable + "Translations";
+        auto& value = *field;
+        fillTableWithArrOfDicts(db, langAgnosticTable.c_str(), value); 
+        fillTableWithArrOfDicts(db, langDependentTable.c_str(), value); 
+    }
 }
 
 void createTables(unique_sqlite3& db)
@@ -74,17 +105,4 @@ std::string getJsonMemberNameWithoutNuls(Json::ValueIteratorBase it)
         throw std::runtime_error("Json string must not have embedded NUL characters");
     }
     return memberName;
-}
-
-void fillDbWithRiotJson(unique_sqlite3& db, Json::Value json)
-// TODO: it should add info about lang, to database
-{
-    for (auto field = json.begin(); field != json.end(); ++field)
-    {
-        auto langAgnosticTable = getJsonMemberNameWithoutNuls(field);
-        auto langDependentTable = langAgnosticTable + "Translations";
-        auto& value = *field;
-        fillTableWithArrOfDicts(db, langAgnosticTable.c_str(), value); 
-        fillTableWithArrOfDicts(db, langDependentTable.c_str(), value); 
-    }
 }
