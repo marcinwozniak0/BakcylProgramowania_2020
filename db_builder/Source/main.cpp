@@ -32,12 +32,14 @@ Json::Value getJsonFromFile(const char filename[], const char download_url[])
 int main()
 {
     unique_sqlite3 db = open_db("database.sql");
+    sqlite3_exec(db.get(), "BEGIN TRANSACTION;", NULL, NULL, NULL);
     createTables(db);
     Json::Value json;
     json = getJsonFromFile("globals-ru_ru.json", "https://dd.b.pvp.net/latest/core/ru_ru/data/globals-ru_ru.json");
     fillGlobals(db, json);
     json = getJsonFromFile("set1-ru_ru.json", "https://dd.b.pvp.net/latest/core/ru_ru/data/globals-ru_ru.json");
     fillCards(db, json);
+    sqlite3_exec(db.get(), "END TRANSACTION;", NULL, NULL, NULL);
 }
 
 void fillCards(unique_sqlite3& db, Json::Value json)
