@@ -13,11 +13,10 @@ namespace fd
         FILE *fp;
         std::string links[10];
         std::string fileNames[10];
-        //folder name for downloaded files;
-        std::string folderPath;
+        std::string folderPath;  //folderPath is folder path plus folders name
         
         public:
-        FileDownloader(std::string folderPath_);
+        FileDownloader(std::string folderPath_); 
         void downloadFiles();
     };
 }

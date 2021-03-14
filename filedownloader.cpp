@@ -33,6 +33,7 @@ void FileDownloader::downloadFiles()
     
     res = curl_easy_perform(curl);
     
+    //checking if everything went well
     if(res == CURLE_OK)
     {
         printf("SUCCES! FILE DOWNLOADED \n");
@@ -42,6 +43,7 @@ void FileDownloader::downloadFiles()
         printf("ERROR IN DOWNLOADING : \n", curl_easy_strerror(res));
     }
     
+    //moving downloaded file to folder created with folderPath 
     std::string newPath = folderPath + "/" + fileNames[0];
     if(rename("set1-en_us.json", newPath.c_str()) < 0)
     {
@@ -53,6 +55,5 @@ void FileDownloader::downloadFiles()
     }
 
     fclose(fp);
-    
     curl_easy_cleanup(curl);
 }
