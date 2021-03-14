@@ -91,97 +91,97 @@ std::map<std::string, std::string> Card::getCardAssets()
     return cardAssets;
 }
 
-void Card::setCardCode(int cardCode)
+void Card::setCardCode(int cardCode1)
 {
-    this->cardCode = cardCode;
+    cardCode = cardCode1;
 }
 
-void Card::setRegionRef(std::string regionRef)
+void Card::setRegionRef(std::string regionRef1)
 {
-    this->regionRef = regionRef;
+    regionRef = regionRef1;
 }
 
-void Card::setAttack(int attack)
+void Card::setAttack(int attack1)
 {
-    this->attack = attack;
+    attack = attack1;
 }
 
-void Card::setCost(int cost)
+void Card::setCost(int cost1)
 {
-    this->cost = cost;
+    cost = cost1;
 }
 
-void Card::setHealth(int health)
+void Card::setHealth(int health1)
 {
-    this->health = health;
+    health = health1;
 }
 
-void Card::setSpellSpeedRef(int spellSpeedRef)
+void Card::setSpellSpeedRef(int spellSpeedRef1)
 {
-    this->spellSpeedRef = spellSpeedRef;
+    spellSpeedRef = spellSpeedRef1;
 }
 
-void Card::setRarityRef(int rarityRef)
+void Card::setRarityRef(int rarityRef1)
 {
-    this->rarityRef = rarityRef;
+    rarityRef = rarityRef1;
 }
 
-void Card::setCollectible(bool collectible)
+void Card::setCollectible(bool collectible1)
 {
-    this->collectible = collectible;
+    collectible = collectible1;
 }
 
-void Card::setSet(std::string set)
+void Card::setSet(std::string set1)
 {
-    this->set = set;
+    set = set1;
 }
 
-void Card::setDescriptionRaw(std::string descriptionRaw)
+void Card::setDescriptionRaw(std::string descriptionRaw1)
 {
-    this->descriptionRaw = descriptionRaw;
+    descriptionRaw = descriptionRaw1;
 }
 
-void Card::setLevelupDescriptionRaw(std::string levelupDescriptionRaw)
+void Card::setLevelupDescriptionRaw(std::string levelupDescriptionRaw1)
 {
-    this->levelupDescriptionRaw = levelupDescriptionRaw;
+    levelupDescriptionRaw = levelupDescriptionRaw1;
 }
 
-void Card::setFlavorText(std::string flavorText)
+void Card::setFlavorText(std::string flavorText1)
 {
-    this->flavorText = flavorText;
+    flavorText = flavorText1;
 }
 
-void Card::setName(std::string name)
+void Card::setName(std::string name1)
 {
-    this->name = name;
+    name = name1;
 }
 
-void Card::setSupertype(std::string supertype)
+void Card::setSupertype(std::string supertype1)
 {
-    this->supertype = supertype;
+    supertype = supertype1;
 }
 
-void Card::setType(int type)
+void Card::setType(int type1)
 {
-    this->type = type;
+    type = type1;
 }
 
-void Card::setAssociatedCards(std::vector<Card> associatedCards)
+void Card::setAssociatedCards(std::vector<Card> associatedCards1)
 {
-    this->associatedCards = associatedCards;
+    associatedCards = associatedCards1;
 }
 
-void Card::setCardKeywords(std::vector<std::string> cardKeywords)
+void Card::setCardKeywords(std::vector<std::string> cardKeywords1)
 {
-    this->cardKeywords = cardKeywords;
+    cardKeywords = cardKeywords1;
 }
 
-void Card::setCardSubtypes(std::vector<std::string> cardSubtypes)
+void Card::setCardSubtypes(std::vector<std::string> cardSubtypes1)
 {
-    this->cardSubtypes = cardSubtypes;
+    cardSubtypes = cardSubtypes1;
 }
 
-void Card::setCardAssets(std::map<std::string, std::string> cardAssets)
+void Card::setCardAssets(std::map<std::string, std::string> cardAssets1)
 {
-    this->cardAssets = cardAssets;
+    cardAssets = cardAssets1;
 }
