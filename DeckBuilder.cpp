@@ -2,17 +2,17 @@
 #include <vector>
 #include "DeckBuilder.hpp"
 
-void addCards(std::vector <std::string> &cardsToAdd)
+void addCards(std::vector <Card> &cardsToAdd)
 {
 
 }
 
-void removeCards(std::vector <std::string> &cardsToRemove)
+void removeCards(std::vector <Card> &cardsToRemove)
 {
 
 }
 
-void deckValidator(std::vector <std::string> &deck)
+void deckValidator(std::vector <Card> &deck)
 {
     
 }
