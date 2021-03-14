@@ -16,7 +16,8 @@ void fillTableWithArrOfDicts(unique_sqlite3& db, const char table_name[], Json::
     const auto colNames = getColumnNames(db, table_name);
     if(colNames.size() == 0)
     {
-        throw std::runtime_error("Unable to fill not existing table");
+        std::cout << "Ommiting not existing table \"" << table_name << "\"\n";
+        return;
     }
     sqlite3_stmt* stmt = prepareInsertStatement(db, table_name, colNames.size());
     for (auto dict = json.begin(); dict != json.end(); ++dict)
