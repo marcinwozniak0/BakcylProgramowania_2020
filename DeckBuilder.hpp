@@ -1,15 +1,18 @@
 #include <string>
 #include <vector>
+#include "Card.hpp"
 
 class DeckBuilder 
 {
+    private:
     int maxNumberOfCards;
     int maxNumberOfHeroes;
     int maxNumberOfEachCard;
     std::string firstRegion;
     std::string secondRegion;
-    
-    void addCards(std::vector <std::string> cardsToAdd); //or <int> if we use ID
-    void removeCards(std::vector <std::string> cardsToRemove); //or <int> if we use ID
-    void deckValidator(std::vector <std::string> deck); //or <int> if we use ID
+
+    public:
+    void addCards(std::vector <Card> &cardsToAdd); //or <int> if we use ID
+    void removeCards(std::vector <Card> &cardsToRemove); //or <int> if we use ID
+    void deckValidator(std::vector <Card> &deck); //or <int> if we use ID
 }; 
