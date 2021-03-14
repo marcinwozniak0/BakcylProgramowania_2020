@@ -10,10 +10,10 @@
 using namespace fd;
 namespace fs = std::filesystem;
 
-FileDownloader::FileDownloader()
+FileDownloader::FileDownloader(std::string folderPath_)
 { 
-    folderName = "downloaded_files";
-    fs::create_directory("../../" + folderName);
+    folderPath = folderPath_;
+    fs::create_directory(folderPath);
     
     links[0] = "https://dd.b.pvp.net/latest/set1/en_us/data/set1-en_us.json";
     fileNames[0] = "set1-en_us.json";
@@ -35,14 +35,15 @@ void FileDownloader::downloadFiles()
     
     if(res == CURLE_OK)
     {
-        printf("SUCCES! " + fileNames[0] + " DOWNLOADED");
+        printf("SUCCES! FILE DOWNLOADED \n");
     } 
     else 
     {
         printf("ERROR IN DOWNLOADING : \n", curl_easy_strerror(res));
     }
     
-    if(rename("set1-en_us.json", "../../downloaded_files/set1-en_us.json.json") < 0)
+    std::string newPath = folderPath + "/" + fileNames[0];
+    if(rename("set1-en_us.json", newPath.c_str()) < 0)
     {
         printf("ERROR! There's probly no folder 'downloaded_files'. \n");
     }

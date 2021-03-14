@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     sqlite3* _db;
     sqlite3_open(":memory:", &_db);
     Json::Value root;
-    fd::FileDownloader testRun;
+    fd::FileDownloader testRun("../../downloaded_files");
     testRun.downloadFiles();
     QApplication a(argc, argv);
     MainWindow w;
