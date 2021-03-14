@@ -3,92 +3,92 @@
 
 int Card::getCardCode()
 {
-    return this->cardCode;
+    return cardCode;
 }
 
 std::string Card::getRegionRef()
 {
-    return this->regionRef;
+    return regionRef;
 }
 
 int Card::getCost()
 {
-    return this->cost;
+    return cost;
 }
 
 int Card::getHealth()
 {
-    return this->health;
+    return health;
 }
 
 int Card::getSpellSpeedRef()
 {
-    return this->spellSpeedRef;
+    return spellSpeedRef;
 }
 
 int Card::getRarityRef()
 {
-    return this->rarityRef;
+    return rarityRef;
 }
 
 bool Card::isCollectible()
 {
-    return this->collectible;
+    return collectible;
 }
 
 std::string Card::getSet()
 {
-    return this->set;
+    return set;
 }
 
 std::string Card::getDescriptionRaw()
 {
-    return this->descriptionRaw;
+    return descriptionRaw;
 }
 
 std::string Card::getLevelupDescriptionRaw()
 {
-    return this->levelupDescriptionRaw;
+    return levelupDescriptionRaw;
 }
 
 std::string Card::getFlavorText()
 {
-    return this->flavorText;
+    return flavorText;
 }
 
 std::string Card::getName()
 {
-    return this->name;
+    return name;
 }
 
 std::string Card::getSupertype()
 {
-    return this->supertype;
+    return supertype;
 }
 
 int Card::getType()
 {
-    return this->type;
+    return type;
 }
 
 std::vector<Card> Card::getAssociatedCards()
 {
-    return this->associatedCards;
+    return associatedCards;
 }
 
 std::vector<std::string> Card::getCardKeywords()
 {
-    return this->cardKeywords;
+    return cardKeywords;
 }
 
 std::vector<std::string> Card::getCardSubtypes()
 {
-    return this->cardSubtypes;
+    return cardSubtypes;
 }
 
 std::map<std::string, std::string> Card::getCardAssets()
 {
-    return this->cardAssets;
+    return cardAssets;
 }
 
 void Card::setCardCode(int cardCode)
