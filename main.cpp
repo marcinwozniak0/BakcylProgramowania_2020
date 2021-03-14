@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "filedownloader.h"
 
 #include <QApplication>
 #include <sqlite3.h>
@@ -9,6 +10,8 @@ int main(int argc, char *argv[])
     sqlite3* _db;
     sqlite3_open(":memory:", &_db);
     Json::Value root;
+    fd::FileDownloader testRun;
+    testRun.downloadFiles();
     QApplication a(argc, argv);
     MainWindow w;
     w.show();

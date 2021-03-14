@@ -50,11 +50,13 @@ set(PROJECT_SOURCES
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    filedownloader.cpp
+    filedownloader.h
     ${LOGGER_LIB})
 
 add_executable(Deckbuilder ${PROJECT_SOURCES})
     
-target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets ${SQLite3_LIBRARIES} JsonCpp::JsonCpp)
+target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets ${SQLite3_LIBRARIES} JsonCpp::JsonCpp CURL::libcurl)
 
 # database builder
 include(${PROJECT_SOURCE_DIR}/db_builder/CMakeLists.txt)
