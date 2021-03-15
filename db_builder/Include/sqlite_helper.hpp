@@ -4,9 +4,13 @@
 #include <string>
 #include <vector>
 
-
-struct sqlite_deleter {
-  void operator()(sqlite3*  ptr) { if (ptr) sqlite3_close(ptr); }
+struct sqlite_deleter
+{
+    void operator()(sqlite3* ptr)
+    {
+        if (ptr)
+            sqlite3_close(ptr);
+    }
 };
 using unique_sqlite3 = std::unique_ptr<sqlite3, sqlite_deleter>;
 // TODO: Consider applying above hack, for sqlite_stmt

@@ -1,6 +1,6 @@
 #pragma once
-#include <json/json.h>
 #include "sqlite_helper.hpp"
+#include <json/json.h>
 #include <string>
 
 void fillTableWithArrOfDicts(unique_sqlite3& db, const char table_name[], const Json::Value& arrOfDicts);

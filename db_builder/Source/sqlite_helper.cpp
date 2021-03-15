@@ -1,6 +1,6 @@
 #include "sqlite_helper.hpp"
-#include <stdexcept>
 #include <memory>
+#include <stdexcept>
 
 unique_sqlite3 open_db(const char db_name[])
 {
@@ -60,11 +60,10 @@ sqlite3_stmt* prepareInsertStatement(unique_sqlite3& db, const char table_name[]
     // Unfortunately sqlite_bind_param() doesn't work for table identifiers.
     // We must resort to binding table_name using dumb string concat.
     // This is generaly bad idea mainly because of SQL injection vurnelibity.
-    // However caller could ensure safety by passing valid colCount (at example from getColumnNames().size(), which is SQLi-safe method
-    // colCount == 0 means that table doesn't exist so we don't inject it name
-    // AFAIK this should be sufficient countermeasure. Prove me wrong.
-    // Also. In case of this parser, SQL injection isn't that big deal
-    // We are storing data from only one entity. He doesn't need SQLi to read or malform it :P
+    // However caller could ensure safety by passing valid colCount (at example from getColumnNames().size(), which is
+    // SQLi-safe method colCount == 0 means that table doesn't exist so we don't inject it name AFAIK this should be
+    // sufficient countermeasure. Prove me wrong. Also. In case of this parser, SQL injection isn't that big deal We are
+    // storing data from only one entity. He doesn't need SQLi to read or malform it :P
     std::string query = std::string("INSERT INTO ") + table_name + " VALUES(";
     for (int i = 0; i < colCount; ++i)
     {
@@ -79,4 +78,3 @@ sqlite3_stmt* prepareInsertStatement(unique_sqlite3& db, const char table_name[]
     auto stmt = prepare_stmt(db, query.c_str());
     return stmt;
 }
-

@@ -11,13 +11,13 @@ void bindJsonDictToInsertStatement(sqlite3_stmt* stmt, const std::vector<std::st
 void fillTableWithArrOfDicts(unique_sqlite3& db, const char table_name[], const Json::Value& json)
 {
     const auto colNames = getColumnNames(db, table_name);
-    if(colNames.size() == 0)
+    if (colNames.size() == 0)
     {
         std::cout << "Ommiting not existing table \"" << table_name << "\"\n";
         return;
     }
     sqlite3_stmt* stmt = prepareInsertStatement(db, table_name, colNames.size());
-    for (const auto& dict: json)
+    for (const auto& dict : json)
     {
         bindJsonDictToInsertStatement(stmt, colNames, dict);
         execDumbStmt(db, stmt);
