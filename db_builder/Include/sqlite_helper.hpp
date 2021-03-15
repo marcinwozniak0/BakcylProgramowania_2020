@@ -11,3 +11,7 @@ using unique_sqlite3  = std::unique_ptr<sqlite3,  sqlite_deleter>;
 /* using unique_sqlite3_stmt  = std::unique_ptr<sqlite3,  sqlite_deleter>; */ 
 
 unique_sqlite3 open_db(const char db_name[]);
+sqlite3_stmt* prepare_stmt(unique_sqlite3& db, const char query[]);
+
+void execDumbStmt(unique_sqlite3& db, sqlite3_stmt* stmt);
+// This is for dumb, not returning statements (eg. insert)

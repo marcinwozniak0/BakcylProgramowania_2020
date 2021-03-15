@@ -20,17 +20,10 @@ void fillTableWithArrOfDicts(unique_sqlite3& db, const char table_name[], Json::
         return;
     }
     sqlite3_stmt* stmt = prepareInsertStatement(db, table_name, colNames.size());
-    for (auto dict = json.begin(); dict != json.end(); ++dict)
+    for (const auto& dict: json)
     {
-        bindJsonDictToInsertStatement(stmt, colNames, *dict);
-        int rc = sqlite3_step(stmt);
-        if (rc != SQLITE_DONE)
-        {
-            sqlite3_finalize(stmt);
-            throw std::runtime_error(std::string("SQL Error: ") + sqlite3_errmsg(db.get()));
-        }
-        sqlite3_reset(stmt);
-        sqlite3_clear_bindings(stmt);
+        bindJsonDictToInsertStatement(stmt, colNames, dict);
+        execDumbStmt(db, stmt);
     }
     sqlite3_finalize(stmt);
 }
@@ -39,16 +32,10 @@ namespace
 {
 const std::vector<std::string> getColumnNames(unique_sqlite3& db, const char tableName[])
 {
-    sqlite3_stmt* stmt;
-    std::vector<std::string> output;
-    int rc = sqlite3_prepare_v2(db.get(), "SELECT name FROM pragma_table_info(@table)", -1, &stmt, NULL);
-    if (rc != SQLITE_OK)
-    {
-        sqlite3_finalize(stmt);
-        throw std::runtime_error(std::string("SQL Error: ") + sqlite3_errmsg(db.get()));
-    }
+    auto stmt = prepare_stmt(db, "SELECT name FROM pragma_table_info(@table)");
     sqlite3_bind_text(stmt, sqlite3_bind_parameter_index(stmt, "@table"), tableName, -1, NULL);
-
+    std::vector<std::string> output;
+    int rc;
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
     {
         std::string colName = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
@@ -83,13 +70,7 @@ sqlite3_stmt* prepareInsertStatement(unique_sqlite3& db, const char table_name[]
     }
     query += ')';
 
-    sqlite3_stmt* stmt;
-    int rc = sqlite3_prepare_v2(db.get(), query.c_str(), -1, &stmt, NULL);
-    if (rc != SQLITE_OK)
-    {
-        sqlite3_finalize(stmt);
-        throw std::runtime_error(std::string("SQL Error: ") + sqlite3_errmsg(db.get()));
-    }
+    auto stmt = prepare_stmt(db, query.c_str());
     return stmt;
 }
 
