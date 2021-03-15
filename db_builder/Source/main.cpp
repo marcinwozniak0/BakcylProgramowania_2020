@@ -6,8 +6,8 @@
 #include <cstring>
 
 
-void fillGlobals(unique_sqlite3& db, Json::Value json);
-void fillCards(unique_sqlite3& db, Json::Value json);
+void fillGlobals(unique_sqlite3& db, const Json::Value& json);
+void fillCards(unique_sqlite3& db, const Json::Value& json);
 void createTables(unique_sqlite3& db);
 std::string getJsonMemberNameWithoutNuls(Json::ValueIteratorBase it);
 
@@ -44,7 +44,7 @@ int main()
     sqlite3_exec(db.get(), "END TRANSACTION;", NULL, NULL, NULL);
 }
 
-void fillGlobals(unique_sqlite3& db, Json::Value json)
+void fillGlobals(unique_sqlite3& db, const Json::Value& json)
 {
     for (auto field = json.begin(); field != json.end(); ++field)
     {
