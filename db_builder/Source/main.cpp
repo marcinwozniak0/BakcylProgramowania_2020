@@ -34,63 +34,23 @@ int main()
     unique_sqlite3 db = open_db("database.sql");
     sqlite3_exec(db.get(), "BEGIN TRANSACTION;", NULL, NULL, NULL);
     createTables(db);
+
     Json::Value json;
     json = getJsonFromFile("globals-ru_ru.json", "https://dd.b.pvp.net/latest/core/ru_ru/data/globals-ru_ru.json");
     fillGlobals(db, json);
     json = getJsonFromFile("set1-ru_ru.json", "https://dd.b.pvp.net/latest/core/ru_ru/data/globals-ru_ru.json");
-    fillCards(db, json);
+    fillTableWithArrOfDicts(db, "cards", json); 
+
     sqlite3_exec(db.get(), "END TRANSACTION;", NULL, NULL, NULL);
 }
 
-void fillCards(unique_sqlite3& db, Json::Value json)
-{
-    constexpr auto langAgnosticTable = "cards";
-    constexpr auto langDependentTable = "cardsTranslations";
-    fillTableWithArrOfDicts(db, langAgnosticTable, json); 
-    fillTableWithArrOfDicts(db, langDependentTable, json); 
-}
-
 void fillGlobals(unique_sqlite3& db, Json::Value json)
-// TODO: it should add info about lang, to database
 {
     for (auto field = json.begin(); field != json.end(); ++field)
     {
-        auto langAgnosticTable = getJsonMemberNameWithoutNuls(field);
-        auto langDependentTable = langAgnosticTable + "Translations";
+        auto tableName = getJsonMemberNameWithoutNuls(field);
         auto& value = *field;
-        fillTableWithArrOfDicts(db, langAgnosticTable.c_str(), value); 
-        fillTableWithArrOfDicts(db, langDependentTable.c_str(), value); 
-    }
-}
-
-void createTables(unique_sqlite3& db)
-{
-    // I have doubts about formating
-    constexpr char query[] = R"""(
-    CREATE TABLE IF NOT EXISTS "vocabTerms" ("nameRef"	TEXT,PRIMARY KEY("nameRef"));
-    CREATE TABLE IF NOT EXISTS "keywords" ("nameRef"	TEXT,PRIMARY KEY("nameRef"));
-    CREATE TABLE IF NOT EXISTS "spellSpeeds" ("nameRef"	TEXT,PRIMARY KEY("nameRef"));
-    CREATE TABLE IF NOT EXISTS "sets" ("nameRef"	TEXT,PRIMARY KEY("nameRef"));
-    CREATE TABLE IF NOT EXISTS "regions" ("nameRef"	TEXT,"abbreviation"	TEXT,PRIMARY KEY("nameRef"));
-    CREATE TABLE IF NOT EXISTS "rarities" ("nameRef"	TEXT,"value"	INTEGER,PRIMARY KEY("nameRef"));
-    CREATE TABLE IF NOT EXISTS "associatedCards" ("cardCode"	TEXT,"associatedCardCode"	TEXT,FOREIGN KEY("associatedCardCode") REFERENCES "cards"("cardCode"),FOREIGN KEY("cardCode") REFERENCES "cards"("cardCode"));
-    CREATE TABLE IF NOT EXISTS "languages" ("langCode"	TEXT,PRIMARY KEY("langCode"));
-    CREATE TABLE IF NOT EXISTS "keywordsTranslations" ("nameRef"	TEXT,"langCode"	TEXT,"description"	TEXT,"name"	TEXT,FOREIGN KEY("nameRef") REFERENCES "keywords"("nameRef"),PRIMARY KEY("nameRef","langCode"),FOREIGN KEY("langCode") REFERENCES "languages"("langCode"));
-    CREATE TABLE IF NOT EXISTS "vocabTermsTranslations" ("nameRef"	TEXT,"langCode"	TEXT,"name"	TEXT,"description"	TEXT,PRIMARY KEY("nameRef","langCode"),FOREIGN KEY("nameRef") REFERENCES "vocabTerms"("nameRef"),FOREIGN KEY("langCode") REFERENCES "languages"("langCode"));
-    CREATE TABLE IF NOT EXISTS "regionsTranslations" ("nameRef"	TEXT,"langCode"	TEXT,"iconAbsolutePath"	TEXT,"name"	TEXT,FOREIGN KEY("nameRef") REFERENCES "regions"("nameRef"),PRIMARY KEY("nameRef","langCode"));
-    CREATE TABLE IF NOT EXISTS "cards" ("cardCode"	TEXT UNIQUE,"regionRef"	TEXT,"attack"	INTEGER,"cost"	INTEGER,"health"	INTEGER,"artistName"	TEXT,"spellSpeedRef"	TEXT,"rarityRef"	TEXT,"collectible"	INTEGER,"set"	TEXT,FOREIGN KEY("set") REFERENCES "sets"("nameRef"),FOREIGN KEY("rarityRef") REFERENCES "rarities"("nameRef"),FOREIGN KEY("spellSpeedRef") REFERENCES "spellSpeeds"("nameRef"),PRIMARY KEY("cardCode"),FOREIGN KEY("regionRef") REFERENCES "regions"("nameRef"));
-    CREATE TABLE IF NOT EXISTS "cardKeywords" ("cardCode"	TEXT,"keywordRef"	INTEGER,FOREIGN KEY("keywordRef") REFERENCES "keywords"("nameRef"),FOREIGN KEY("cardCode") REFERENCES "cards"("cardCode"));
-    CREATE TABLE IF NOT EXISTS "cardAssetsTranslations" ("cardCode"	TEXT,"gameAbsolutePath"	TEXT,"fullAbsolutePath"	TEXT,FOREIGN KEY("cardCode") REFERENCES "cards"("cardCode"));
-    CREATE TABLE IF NOT EXISTS "setsTranslations" ("langCode"	TEXT,"nameRef"	TEXT,"iconAbsolutePath"	TEXT,"name"	TEXT,PRIMARY KEY("langCode","nameRef"),FOREIGN KEY("langCode") REFERENCES "languages"("langCode"),FOREIGN KEY("nameRef") REFERENCES "sets"("nameRef"));
-    CREATE TABLE IF NOT EXISTS "raritiesTranslations" ("langCode"	TEXT,"nameRef"	TEXT,"name"	TEXT,PRIMARY KEY("langCode","nameRef"),FOREIGN KEY("langCode") REFERENCES "languages"("langCode"),FOREIGN KEY("nameRef") REFERENCES "rarities"("nameRef"));
-    CREATE TABLE IF NOT EXISTS "cardsTranslations" ("cardCode"	TEXT,"langCode"	TEXT,"descriptionRaw"	TEXT,"levelupDescriptionRaw"	TEXT,"flavorText"	TEXT,"name"	TEXT,"supertype"	TEXT,"type"	TEXT,PRIMARY KEY("cardCode","langCode"),FOREIGN KEY("cardCode") REFERENCES "cards"("cardCode"),FOREIGN KEY("langCode") REFERENCES "languages"("langCode"));
-    CREATE TABLE IF NOT EXISTS "cardSubtypesTranslation" ("cardCode"	TEXT,"langCode"	TEXT,"subtype"	TEXT,FOREIGN KEY("cardCode") REFERENCES "cards"("cardCode"),FOREIGN KEY("langCode") REFERENCES "languages"("langCode"));
-    CREATE TABLE IF NOT EXISTS "spellSpeedsTranslations" ("nameRef"	TEXT,"langCode"	TEXT,"name"	TEXT,FOREIGN KEY("langCode") REFERENCES "languages"("langCode"),PRIMARY KEY("nameRef","langCode"),FOREIGN KEY("nameRef") REFERENCES "spellSpeeds"("nameRef"));
-    )""";
-    int result_code = sqlite3_exec(db.get(), query, NULL, NULL, NULL);
-    if (result_code != SQLITE_OK)
-    {
-        throw std::runtime_error(std::string("SQL Error: ") + sqlite3_errmsg(db.get()));
+        fillTableWithArrOfDicts(db, tableName.c_str(), value); 
     }
 }
 
@@ -107,4 +67,91 @@ std::string getJsonMemberNameWithoutNuls(Json::ValueIteratorBase it)
         throw std::runtime_error("Json string must not have embedded NUL characters");
     }
     return memberName;
+}
+
+void createTables(unique_sqlite3& db)
+{
+    // I have doubts about formating
+    constexpr char query[] = R"""(
+    CREATE TABLE IF NOT EXISTS "keywords"(
+      "nameRef"	TEXT,
+      "description"	TEXT, -- localized
+      "name"	TEXT, -- localized
+      PRIMARY KEY("nameRef")
+    );
+    CREATE TABLE IF NOT EXISTS "spellSpeeds"(
+      "nameRef"	TEXT,
+      "name"	TEXT, -- localized
+      PRIMARY KEY("nameRef")
+     );
+    CREATE TABLE IF NOT EXISTS "sets"(
+      "nameRef"	TEXT,
+      "iconAbsolutePath"	TEXT, -- localized
+      "name"	TEXT, -- localized
+      PRIMARY KEY("nameRef")
+     );
+    CREATE TABLE IF NOT EXISTS "regions"(
+      "nameRef"	TEXT,
+      "abbreviation"	TEXT, -- probably not localized
+      "iconAbsolutePath" TEXT, -- localized
+      "name"	TEXT, -- localized
+      PRIMARY KEY("nameRef")
+    );
+    CREATE TABLE IF NOT EXISTS "rarities"(
+      "nameRef"	TEXT,
+      "name" TEXT, -- localized
+      PRIMARY KEY("nameRef")
+     );
+    CREATE TABLE IF NOT EXISTS "associatedCards"(
+      "cardCode"	TEXT,
+      "associatedCardCode"	TEXT,
+      FOREIGN KEY("associatedCardCode") REFERENCES "cards"("cardCode"),
+      FOREIGN KEY("cardCode") REFERENCES "cards"("cardCode")
+    );
+    CREATE TABLE IF NOT EXISTS "cards"(
+      "cardCode"	TEXT UNIQUE,
+      "regionRef"	TEXT,
+      "attack"	INTEGER,
+      "cost"	INTEGER,
+      "health"	INTEGER,
+      "artistName"	TEXT,
+      "spellSpeedRef"	TEXT,
+      "rarityRef"	TEXT,
+      "collectible"	INTEGER,
+      "set"	TEXT,
+      "descriptionRaw"	TEXT, -- localized
+      "levelupDescriptionRaw"	TEXT, -- localized
+      "flavorText"	TEXT, -- localized
+      "name"	TEXT, -- localized
+      "supertype"	TEXT, -- localized
+      "type"	TEXT, -- localized
+      FOREIGN KEY("set") REFERENCES "sets"("nameRef"),
+      FOREIGN KEY("rarityRef") REFERENCES "rarities"("nameRef"),
+      FOREIGN KEY("spellSpeedRef") REFERENCES "spellSpeeds"("nameRef"),
+      PRIMARY KEY("cardCode"),
+      FOREIGN KEY("regionRef") REFERENCES "regions"("nameRef")
+    );
+    CREATE TABLE IF NOT EXISTS "cardKeywords"(
+      "cardCode"	TEXT,
+      "keywordRef"	INTEGER,
+      FOREIGN KEY("keywordRef") REFERENCES "keywords"("nameRef"),
+      FOREIGN KEY("cardCode") REFERENCES "cards"("cardCode")
+    );
+    CREATE TABLE IF NOT EXISTS "cardAssets"(
+      "cardCode"	TEXT,
+      "gameAbsolutePath"	TEXT, -- localization dependent
+      "fullAbsolutePath"	TEXT, -- localization dependent
+      FOREIGN KEY("cardCode") REFERENCES "cards"("cardCode")
+    );
+    CREATE TABLE IF NOT EXISTS "cardSubtypes"(
+      "cardCode"	TEXT,
+      "subtype"	TEXT, -- localization dependent
+      FOREIGN KEY("cardCode") REFERENCES "cards"("cardCode")
+    );
+    )""";
+    int result_code = sqlite3_exec(db.get(), query, NULL, NULL, NULL);
+    if (result_code != SQLITE_OK)
+    {
+        throw std::runtime_error(std::string("SQL Error: ") + sqlite3_errmsg(db.get()));
+    }
 }
