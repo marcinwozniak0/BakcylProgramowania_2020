@@ -1,5 +1,4 @@
 #include "Card.hpp"
-#include <string>
 
 int Card::getCardCode()
 {
