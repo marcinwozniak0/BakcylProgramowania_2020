@@ -30,6 +30,15 @@ FileDownloader::FileDownloader(std::string directoryPath_)
     links.push_back("https://dd.b.pvp.net/latest/set1/en_us/data/set1-en_us.json");
     fileNames.push_back("set1-en_us.json");
     
+    links.push_back("https://dd.b.pvp.net/latest/set2/en_us/data/set2-en_us.json");
+    fileNames.push_back("set2-en_us.json");
+    
+    links.push_back("https://dd.b.pvp.net/latest/set3/en_us/data/set3-en_us.json");
+    fileNames.push_back("set3-en_us.json");
+    
+    links.push_back("https://dd.b.pvp.net/latest/set4/en_us/data/set4-en_us.json");
+    fileNames.push_back("set4-en_us.json");
+    
     //initializing curl
     curl = curl_easy_init();
 }
@@ -40,7 +49,7 @@ void FileDownloader::downloadFiles()
     
     int i = 0;
     while(i < links.size())
-    {
+    {  
         //some curl setup
         fp = fopen(fileNames[i].c_str(), "wb");
     
@@ -53,12 +62,12 @@ void FileDownloader::downloadFiles()
         //checking if everything went well
         if(res == CURLE_OK)
         {
-            std::string text = "Succes! " + fileNames[i] + " downloaded \n";
-            printf(text.c_str());
+            std::string msg = "Succes! " + fileNames[i] + " downloaded";
+            std::cout<<msg<<std::endl;
         } 
         else 
         {
-            printf("ERROR IN DOWNLOADING : \n", curl_easy_strerror(res));
+            std::cout<<curl_easy_strerror(res)<<std::endl;
         }
     
         //moving downloaded file to folder created with folderPath 
