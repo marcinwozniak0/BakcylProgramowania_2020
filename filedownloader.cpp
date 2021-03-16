@@ -12,6 +12,7 @@ namespace fs = std::filesystem;
 
 FileDownloader::FileDownloader(std::string directoryPath_)
 { 
+    //creating directory if it doesn't already exists
     directoryPath = directoryPath_;
     if(fs::exists(directoryPath))
     {
@@ -22,7 +23,10 @@ FileDownloader::FileDownloader(std::string directoryPath_)
         fs::create_directory(directoryPath);
     }
     
-    //https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json
+    //adding URLs and names to vectors
+    links.push_back("https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json");
+    fileNames.push_back("globals-en_us.json");
+    
     links.push_back("https://dd.b.pvp.net/latest/set1/en_us/data/set1-en_us.json");
     fileNames.push_back("set1-en_us.json");
     
@@ -33,33 +37,38 @@ FileDownloader::FileDownloader(std::string directoryPath_)
 void FileDownloader::downloadFiles()
 {   
     CURLcode res;
-    fp = fopen(fileNames[0].c_str(), "wb");
     
-    curl_easy_setopt(curl, CURLOPT_URL, links[0].c_str());
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
-    curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1L);
+    int i = 0;
+    while(i < links.size())
+    {
+        //some curl setup
+        fp = fopen(fileNames[i].c_str(), "wb");
     
-    res = curl_easy_perform(curl);
+        curl_easy_setopt(curl, CURLOPT_URL, links[i].c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+        curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1L);
     
-    //checking if everything went well
-    if(res == CURLE_OK)
-    {
-        printf("SUCCES! FILE DOWNLOADED \n");
-    } 
-    else 
-    {
-        printf("ERROR IN DOWNLOADING : \n", curl_easy_strerror(res));
-    }
+        res = curl_easy_perform(curl);
     
-    //moving downloaded file to folder created with folderPath 
-    std::string newPath = directoryPath + "/" + fileNames[0];
-    if(rename("set1-en_us.json", newPath.c_str()) < 0)
-    {
-        printf("ERROR! There's probly no directory 'data'. \n");
-    }
-    else 
-    {
-        printf("SUCCES! \n");
+        //checking if everything went well
+        if(res == CURLE_OK)
+        {
+            std::string text = "Succes! " + fileNames[i] + " downloaded \n";
+            printf(text.c_str());
+        } 
+        else 
+        {
+            printf("ERROR IN DOWNLOADING : \n", curl_easy_strerror(res));
+        }
+    
+        //moving downloaded file to folder created with folderPath 
+        std::string newPath = directoryPath + "/" + fileNames[i];
+        if(rename(fileNames[i].c_str(), newPath.c_str()) < 0)
+        {
+            printf("ERROR! There's probly no directory 'data'. \n");
+        }
+        
+        i++;
     }
 
     fclose(fp);
