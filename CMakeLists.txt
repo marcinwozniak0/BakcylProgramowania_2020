@@ -53,7 +53,7 @@ add_executable(Deckbuilder ${PROJECT_SOURCES})
 target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets ${SQLite3_LIBRARIES} JsonCpp::JsonCpp)
 
 # database builder
-include(${PROJECT_SOURCE_DIR}/db_builder/CMakeLists.txt)
+add_subdirectory(${PROJECT_SOURCE_DIR}/db_builder)
 
 # Valgrind
 find_program(VALGRIND "valgrind")
