@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QPixmap>
+
 void CenterWindow(QWidget *widget);
 void showCard(QString path, QLabel *label);
 
@@ -12,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(std::make_unique<Ui::MainWindow>())
 {
     ui->setupUi(this);
+
     showCard("../../BakcylProgramowania_2020/source/pic.png",ui->label_pic0);
     setFixedSize(windowWight,windowHeight);
 
