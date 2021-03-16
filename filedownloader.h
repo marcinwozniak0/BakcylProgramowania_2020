@@ -4,6 +4,7 @@
 #include <curl/curl.h>
 #include <iostream>
 #include <string>
+#include <vector>
 
 namespace fd
 {
@@ -11,8 +12,8 @@ namespace fd
     {
         CURL *curl;
         FILE *fp;
-        std::string links[10];
-        std::string fileNames[10];
+        std::vector <std::string>links;
+        std::vector <std::string>fileNames;
         std::string folderPath;  //folderPath is folder path plus folders name
         
         public:

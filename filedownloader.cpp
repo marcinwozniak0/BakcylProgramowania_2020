@@ -15,8 +15,8 @@ FileDownloader::FileDownloader(std::string folderPath_)
     folderPath = folderPath_;
     fs::create_directory(folderPath);
     
-    links[0] = "https://dd.b.pvp.net/latest/set1/en_us/data/set1-en_us.json";
-    fileNames[0] = "set1-en_us.json";
+    links.push_back("https://dd.b.pvp.net/latest/set1/en_us/data/set1-en_us.json");
+    fileNames.push_back("set1-en_us.json");
     
     //initializing curl
     curl = curl_easy_init();
