@@ -14,10 +14,10 @@ namespace fd
         FILE *fp;
         std::vector <std::string>links;
         std::vector <std::string>fileNames;
-        std::string folderPath;  //folderPath is folder path plus folders name
+        std::string directoryPath;  //folderPath is folder path plus folders name
         
         public:
-        FileDownloader(std::string folderPath_); 
+        FileDownloader(std::string directoryPath_); 
         void downloadFiles();
     };
 }

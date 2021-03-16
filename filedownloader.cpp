@@ -10,11 +10,19 @@
 using namespace fd;
 namespace fs = std::filesystem;
 
-FileDownloader::FileDownloader(std::string folderPath_)
+FileDownloader::FileDownloader(std::string directoryPath_)
 { 
-    folderPath = folderPath_;
-    fs::create_directory(folderPath);
+    directoryPath = directoryPath_;
+    if(fs::exists(directoryPath))
+    {
+        printf("Directory already exists! \n");
+    }
+    else 
+    {
+        fs::create_directory(directoryPath);
+    }
     
+    //https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json
     links.push_back("https://dd.b.pvp.net/latest/set1/en_us/data/set1-en_us.json");
     fileNames.push_back("set1-en_us.json");
     
@@ -44,10 +52,10 @@ void FileDownloader::downloadFiles()
     }
     
     //moving downloaded file to folder created with folderPath 
-    std::string newPath = folderPath + "/" + fileNames[0];
+    std::string newPath = directoryPath + "/" + fileNames[0];
     if(rename("set1-en_us.json", newPath.c_str()) < 0)
     {
-        printf("ERROR! There's probly no folder 'downloaded_files'. \n");
+        printf("ERROR! There's probly no directory 'data'. \n");
     }
     else 
     {
