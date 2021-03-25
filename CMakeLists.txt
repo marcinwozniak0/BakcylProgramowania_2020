@@ -55,6 +55,10 @@ target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets ${SQLite3_LIBRARIES} Json
 # database builder
 add_subdirectory(${PROJECT_SOURCE_DIR}/db_builder)
 
+#search functions
+add_subdirectory(${PROJECT_SOURCE_DIR}/search_func)
+
+
 # Valgrind
 find_program(VALGRIND "valgrind")
 if(VALGRIND)
