@@ -1,10 +1,13 @@
+#pragma once
 #include <sqlite3.h>
-#include "Card.cpp"
+#include "Card.hpp"
 #include "SearchFlags.hpp"
 
 
 extern std::vector<Card> results;
 
-std::vector<Card> searchFor(SearchFlags sf);
-static int turnIntoCard(void* unused, int colCount, char** data, char** colNames);
-std::string prepareSQLQuery(SearchFlags sf);
+std::vector<Card> searchFor(SearchFlags);
+Card turnIntoCard(char**, std::vector<std::string>);
+static int fillResultArrayWCards(void*, int, char**, char**);
+std::string prepareSQLQuery(SearchFlags);
+std::string toString(std::size_t);

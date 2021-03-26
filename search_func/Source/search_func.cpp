@@ -1,4 +1,5 @@
 #include "search_func.hpp"
+#include "utils.hpp"
 #include <iostream>
 
 std::vector<Card> results = {};
@@ -8,9 +9,9 @@ std::vector<Card> searchFor(SearchFlags sf)
 	sqlite3* db;
 	sqlite3_open("database.sql", &db);
 	std::string mainQuery = prepareSQLQuery(sf);
-	std::string fullQuery = "SELECT * FROM cards WHERE cardCode IN ("
+	std::string fullQuery = "SELECT * FROM cards NATURAL JOIN ("
 		+ mainQuery + ");";
-	int exit = sqlite3_exec(db, fullQuery.c_str(), turnIntoCard, NULL, NULL);
+	int exit = sqlite3_exec(db, fullQuery.c_str(), fillResultArrayWCards, NULL, NULL);
 	if(exit != SQLITE_OK)
 	{
 		std::cout << "Sth's up w/ the db" << std::endl;
@@ -22,21 +23,18 @@ std::vector<Card> searchFor(SearchFlags sf)
 	return cards;
 }
 
-unsigned int find(std::vector<std::string> vector, std::string value)
+
+Card turnIntoCard(char** data, std::vector<std::string> colNames)
 {
-    int i;
-	for(i = 0; i < (int)vector.size(); ++i)
-	{
-		if(vector[i] == value)
-		{
-			break;
-		}
-	}
-	if(i > (int)vector.size()) return -1;
-	return i;
+    Card card;
+	card.setCardCode(data[find(colNames, "cardCode")]);
+	//set rest of card
+	
+	return card;
 }
 
-static int turnIntoCard(void* unused, int colCount, char** data, char** _colNames)
+
+static int fillResultArrayWCards(void* unused, int colCount, char** data, char** _colNames)
 {
 	std::vector<std::string> colNames(colCount);
 	for(int i = 0; i < colCount; ++i)
@@ -45,25 +43,13 @@ static int turnIntoCard(void* unused, int colCount, char** data, char** _colName
 		colNames[i] = str;
 	}
 
-	Card card;
-	card.setCardCode(data[find(colNames, "cardCode")]);
-	//set rest of card
+	Card card = turnIntoCard(data, colNames);
 	
 	results.push_back(card);
 	
 	return 0;
 }
 
-std::string toString(std::size_t x)
-{
-	std::string s = "";
-	while(x > 0)
-	{
-		s = (char)(x % 10 + '0') + s;
-		x /= 10;
-	}
-	return s;
-}
 
 std::string prepareSQLQuery(SearchFlags sf)
 {
