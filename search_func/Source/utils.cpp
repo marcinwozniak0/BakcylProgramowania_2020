@@ -1,7 +1,7 @@
 #include "utils.hpp"
 
 
-unsigned int find(std::vector<std::string> vector, std::string value)
+int find(std::vector<std::string> vector, std::string value)
 {
     int i;
 	for(i = 0; i < (int)vector.size(); ++i)
