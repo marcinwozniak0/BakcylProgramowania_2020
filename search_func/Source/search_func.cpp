@@ -40,7 +40,7 @@ int fillResultArrayWCards(void* unused, int colCount, char** data, char** _colNa
 	for(int i = 0; i < colCount; ++i)
 	{
 		std::string str(_colNames[i]);
-		colNames[i] = str;
+		colNames.at(i) = str;
 	}
 
 	Card card = turnIntoCard(data, colNames);

@@ -6,7 +6,7 @@ int find(std::vector<std::string> vector, std::string value)
     int i;
 	for(i = 0; i < (int)vector.size(); ++i)
 	{
-		if(vector[i] == value)
+		if(vector.at(i) == value)
 		{
 			break;
 		}
