@@ -8,6 +8,6 @@ extern std::vector<Card> results;
 
 std::vector<Card> searchFor(SearchFlags);
 Card turnIntoCard(char**, std::vector<std::string>);
-static int fillResultArrayWCards(void*, int, char**, char**);
+int fillResultArrayWCards(void*, int, char**, char**);
 std::string prepareSQLQuery(SearchFlags);
 std::string toString(std::size_t);

@@ -34,7 +34,7 @@ Card turnIntoCard(char** data, std::vector<std::string> colNames)
 }
 
 
-static int fillResultArrayWCards(void* unused, int colCount, char** data, char** _colNames)
+int fillResultArrayWCards(void* unused, int colCount, char** data, char** _colNames)
 {
 	std::vector<std::string> colNames(colCount);
 	for(int i = 0; i < colCount; ++i)
@@ -54,17 +54,17 @@ static int fillResultArrayWCards(void* unused, int colCount, char** data, char**
 std::string prepareSQLQuery(SearchFlags sf)
 {
 	std::string query = "SELECT cardCode FROM 'cards' WHERE ";
-	bool where_searches = 0;
+	bool where_searches = false;
 
 	if(sf.hp >= 0)
 	{
-		query += "health = 0 AND ";
+		query += "health = " + std::to_string(sf.hp) + " AND ";
 		where_searches = true;
 	}
 	else if(sf.hpMin >= 0 && sf.hpMax >= 0)
 	{
-		query += "health >= " + toString(sf.hpMin) +
-		       	" AND health <= " + toString(sf.hpMax) + " AND ";
+		query += "health >= " + std::to_string(sf.hpMin) +
+		       	" AND health <= " + std::to_string(sf.hpMax) + " AND ";
 		where_searches = true;
 	}
 
@@ -74,7 +74,10 @@ std::string prepareSQLQuery(SearchFlags sf)
 	{
 		query = query.substr(0, query.size() - 4);
 	}
-	else query = query.substr(0, query.size() - 6);
+	else 
+	{
+	    query = query.substr(0, query.size() - 6);
+	}
 
 	return query;
 }
