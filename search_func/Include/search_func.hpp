@@ -7,7 +7,7 @@
 extern std::vector<Card> results;
 
 std::vector<Card> searchFor(SearchFlags);
-Card turnIntoCard(std::string*);
+Card turnIntoCard(std::vector<std::string>);
 int fillResultArrayWCards(void*, int, char**, char**);
 std::string prepareSQLQuery(SearchFlags);
 std::string toString(std::size_t);

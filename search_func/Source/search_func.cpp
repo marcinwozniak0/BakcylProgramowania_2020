@@ -26,28 +26,29 @@ std::vector<Card> searchFor(SearchFlags sf)
 }
 
 
-Card turnIntoCard(std::string* data)
+Card turnIntoCard(std::vector<std::string> data)
 {
+    int i = 0;
     Card card;
-	card.setCardCode( *data++ );
+	card.setCardCode( data.at(i++) );
     //card.setRegionRef( *data++ );
-    card.setAttack( std::stoi(*data++) );
-    card.setCost( std::stoi(*data++) );
-    card.setHealth( std::stoi(*data++) );
+    card.setAttack( std::stoi(data.at(i++)) );
+    card.setCost( std::stoi(data.at(i++)) );
+    card.setHealth( std::stoi(data.at(i++)) );
     //card.setSpellSpeedRef( *data++ );
     //card.setRarityRef( *data++ );
-    card.setCollectible( std::stoi(*data++) );
-    card.setSet( *data++ );
-    card.setDescriptionRaw( *data++ );
-    card.setLevelupDescriptionRaw( *data++ );
-    card.setFlavorText( *data++ );
-    card.setName( *data++ );
-    card.setSupertype( *data++ );
+    card.setCollectible( std::stoi(data.at(i++)) );
+    card.setSet( data.at(i++) );
+    card.setDescriptionRaw( data.at(i++) );
+    card.setLevelupDescriptionRaw( data.at(i++) );
+    card.setFlavorText( data.at(i++) );
+    card.setName( data.at(i++) );
+    card.setSupertype( data.at(i++) );
     //card.setType( *data++ );
     
     std::map<std::string, std::string> assets;
-    assets["gameAbsolutePath"] = *data++;
-    assets["fullAbsolutePath"] = *data++;
+    assets["gameAbsolutePath"] = data.at(i++);
+    assets["fullAbsolutePath"] = data.at(i);
     card.setCardAssets( assets );
 	
 	return card;
@@ -56,7 +57,7 @@ Card turnIntoCard(std::string* data)
 
 int fillResultArrayWCards(void* unused, int colCount, char** _data, char** colNames)
 {
-    std::string* data = new std::string[colCount];
+    std::vector<std::string> data(colCount);
 	for(int i = 0; i < colCount; ++i)
 	{
 	    std::string str(_data[i]);
@@ -66,8 +67,6 @@ int fillResultArrayWCards(void* unused, int colCount, char** _data, char** colNa
 	Card card = turnIntoCard(data);
 	
 	results.push_back(card);
-	
-	delete (data - colCount);   //won't work until fields are commented
 	
 	return 0;
 }
