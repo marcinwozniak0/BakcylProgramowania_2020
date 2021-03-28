@@ -18,7 +18,7 @@ int nwzn()
 	std::cout << results[0].getCardCode() << std::endl;
 	std::cout << results[0].getName() << std::endl;
 	
-	sqlite3_close();
+	sqlite3_close(db);
 	return 0;
 }
 	
