@@ -12,6 +12,8 @@ void showCard(QString path, QLabel *label);
 constexpr size_t windowWight = 1200; //px
 constexpr size_t windowHeight = 700; //px
 
+void CenterWindow(QWidget *widget);
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(std::make_unique<Ui::MainWindow>())
@@ -21,7 +23,9 @@ MainWindow::MainWindow(QWidget *parent)
     showCard("../../BakcylProgramowania_2020/source/pic.png",ui->label_pic1);
     setFixedSize(windowWight,windowHeight);
 
+    setFixedSize(windowWight,windowHeight);
     CenterWindow(this);
+
 
 }
 MainWindow::~MainWindow()
@@ -47,10 +51,12 @@ void CenterWindow(QWidget *widget){
     screenWidth = desktop->width();
     screenHeight = desktop->height();
 
+
     x = (screenWidth - windowWight) / 2;
     y = (screenHeight - windowHeight) / 2;
 
     widget->setGeometry(x,y,windowWight,windowHeight);
+
 }
 
 void showCard(QString path, QLabel *label){

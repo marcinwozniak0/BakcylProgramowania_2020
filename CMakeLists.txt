@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.14)
 
 project(Bakcyl2020)
 
@@ -14,17 +14,18 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-
-find_package(QT NAMES Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
-
-include(External_GTest.cmake)
-
-
-find_package(SQLite3 REQUIRED)
-find_package(JsonCpp REQUIRED)
-find_package(QT NAMES Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package(SQLite3)
+if (NOT SQLite3_FOUND)
+    message(SEND_ERROR "sqlite3 package not found, please install it")
+endif()
+find_package(JsonCpp)
+if (NOT JsonCpp_FOUND)
+    message(SEND_ERROR "jsoncpp, or jsoncpp-dev package not found, please install it")
+endif()
+find_package(Qt5 COMPONENTS Widgets)
+if (NOT Qt5_FOUND)
+    message(SEND_ERROR "qt5 package not found, please install it")
+endif()
 
 include(External_GTest.cmake)
 
@@ -49,8 +50,10 @@ set(PROJECT_SOURCES
 
 add_executable(Deckbuilder ${PROJECT_SOURCES})
     
-target_link_libraries(Deckbuilder PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${SQLite3_LIBRARIES} JsonCpp::JsonCpp)
+target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets ${SQLite3_LIBRARIES} JsonCpp::JsonCpp)
 
+# database builder
+add_subdirectory(${PROJECT_SOURCE_DIR}/db_builder)
 
 # Valgrind
 find_program(VALGRIND "valgrind")
