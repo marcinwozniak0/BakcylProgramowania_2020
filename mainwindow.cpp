@@ -1,7 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QPixmap>
+#include <QtCore>
+#include <QtGui>
+#include <QMessageBox>
+#include <iostream>
 
 void CenterWindow(QWidget *widget);
+void showCard(QString path, QLabel *label);
 
 constexpr size_t windowWight = 1200; //px
 constexpr size_t windowHeight = 700; //px
@@ -12,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    showCard("../../BakcylProgramowania_2020/source/pic.png",ui->label_pic1);
     setFixedSize(windowWight,windowHeight);
 
     CenterWindow(this);
@@ -21,7 +28,16 @@ MainWindow::~MainWindow()
 {
 }
 
+void MainWindow::on_Atak_B_clicked(){
+    QMessageBox::information(this,"Title","Atack");
+    ui->Szukaj_B->setText("Hi");
+
+
+}
+
+
 void CenterWindow(QWidget *widget){
+
     int x, y;
     int screenWidth;
     int screenHeight;
@@ -35,4 +51,11 @@ void CenterWindow(QWidget *widget){
     y = (screenHeight - windowHeight) / 2;
 
     widget->setGeometry(x,y,windowWight,windowHeight);
+}
+
+void showCard(QString path, QLabel *label){
+    QPixmap picture(path);
+    int wp = label->width();
+    int hp = label->height();
+    label->setPixmap(picture.scaled(wp,hp,Qt::KeepAspectRatio));
 }

@@ -21,5 +21,8 @@ public:
 private:
     std::unique_ptr<Ui::MainWindow> ui;
 
+private slots:
+    void on_Atak_B_clicked();
+
 };
 #endif // MAINWINDOW_H
