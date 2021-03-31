@@ -21,7 +21,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1" rowspan="2">
+    <item row="1" column="1">
      <widget class="QGroupBox" name="groupBox_3">
       <property name="maximumSize">
        <size>
@@ -34,7 +34,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
+    <item row="0" column="0" colspan="2">
      <widget class="QGroupBox" name="groupBox">
       <property name="maximumSize">
        <size>
@@ -45,20 +45,153 @@
       <property name="title">
        <string>Wyszukiwarka</string>
       </property>
+      <widget class="QPushButton" name="Zdrowie_B">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>30</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Zdrowie</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Koszt_B">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>30</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Koszt</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Atak_B">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>30</y>
+         <width>141</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Atak</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Typ_B">
+       <property name="geometry">
+        <rect>
+         <x>470</x>
+         <y>30</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Typ</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="Nazwa_T">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>80</y>
+         <width>261</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="placeholderText">
+        <string>Nazwa</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Rzadkosc_B">
+       <property name="geometry">
+        <rect>
+         <x>45</x>
+         <y>77</y>
+         <width>121</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Rzadkość</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Region_B">
+       <property name="geometry">
+        <rect>
+         <x>480</x>
+         <y>80</y>
+         <width>121</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Region</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Szukaj_B">
+       <property name="geometry">
+        <rect>
+         <x>850</x>
+         <y>70</y>
+         <width>231</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Szukaj</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="Sortowanie_DB">
+       <property name="geometry">
+        <rect>
+         <x>848</x>
+         <y>30</y>
+         <width>231</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Alfabetycznie A-Z</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Alfabetycznie Z-A</string>
+        </property>
+       </item>
+      </widget>
      </widget>
     </item>
     <item row="1" column="0">
      <widget class="QGroupBox" name="groupBox_2">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>450</height>
+       </size>
+      </property>
       <property name="title">
        <string>Karty</string>
       </property>
-      <widget class="QLabel" name="label_pic0">
+      <widget class="QLabel" name="label_pic1">
        <property name="geometry">
         <rect>
          <x>60</x>
          <y>30</y>
-         <width>141</width>
-         <height>161</height>
+         <width>101</width>
+         <height>131</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -68,13 +201,13 @@
         <string/>
        </property>
       </widget>
-      <widget class="QLabel" name="label_pic0_2">
+      <widget class="QLabel" name="label_pic6">
        <property name="geometry">
         <rect>
          <x>60</x>
-         <y>200</y>
-         <width>141</width>
-         <height>161</height>
+         <y>170</y>
+         <width>101</width>
+         <height>131</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -84,13 +217,29 @@
         <string/>
        </property>
       </widget>
-      <widget class="QLabel" name="label_pic0_3">
+      <widget class="QLabel" name="label_pic11">
        <property name="geometry">
         <rect>
-         <x>210</x>
+         <x>60</x>
+         <y>310</y>
+         <width>101</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Box</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_pic2">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
          <y>30</y>
-         <width>141</width>
-         <height>161</height>
+         <width>101</width>
+         <height>131</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -100,29 +249,13 @@
         <string/>
        </property>
       </widget>
-      <widget class="QLabel" name="label_pic0_4">
+      <widget class="QLabel" name="label_pic3">
        <property name="geometry">
         <rect>
-         <x>210</x>
-         <y>200</y>
-         <width>141</width>
-         <height>161</height>
-        </rect>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::Box</enum>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_pic0_5">
-       <property name="geometry">
-        <rect>
-         <x>360</x>
+         <x>320</x>
          <y>30</y>
-         <width>141</width>
-         <height>161</height>
+         <width>101</width>
+         <height>131</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -132,29 +265,13 @@
         <string/>
        </property>
       </widget>
-      <widget class="QLabel" name="label_pic0_11">
+      <widget class="QLabel" name="label_pic4">
        <property name="geometry">
         <rect>
-         <x>360</x>
-         <y>200</y>
-         <width>141</width>
-         <height>161</height>
-        </rect>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::Box</enum>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_pic0_18">
-       <property name="geometry">
-        <rect>
-         <x>510</x>
+         <x>450</x>
          <y>30</y>
-         <width>141</width>
-         <height>161</height>
+         <width>101</width>
+         <height>131</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -164,29 +281,13 @@
         <string/>
        </property>
       </widget>
-      <widget class="QLabel" name="label_pic0_19">
+      <widget class="QLabel" name="label_pic5">
        <property name="geometry">
         <rect>
-         <x>510</x>
-         <y>200</y>
-         <width>141</width>
-         <height>161</height>
-        </rect>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::Box</enum>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_pic0_20">
-       <property name="geometry">
-        <rect>
-         <x>660</x>
+         <x>580</x>
          <y>30</y>
-         <width>141</width>
-         <height>161</height>
+         <width>101</width>
+         <height>131</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -196,13 +297,125 @@
         <string/>
        </property>
       </widget>
-      <widget class="QLabel" name="label_pic0_21">
+      <widget class="QLabel" name="label_pic7">
        <property name="geometry">
         <rect>
-         <x>660</x>
-         <y>200</y>
-         <width>141</width>
-         <height>161</height>
+         <x>190</x>
+         <y>170</y>
+         <width>101</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Box</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_pic8">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>170</y>
+         <width>101</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Box</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_pic9">
+       <property name="geometry">
+        <rect>
+         <x>450</x>
+         <y>170</y>
+         <width>101</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Box</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_pic10">
+       <property name="geometry">
+        <rect>
+         <x>580</x>
+         <y>170</y>
+         <width>101</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Box</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_pic12">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>310</y>
+         <width>101</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Box</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_pic13">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>310</y>
+         <width>101</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Box</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_pic14">
+       <property name="geometry">
+        <rect>
+         <x>450</x>
+         <y>310</y>
+         <width>101</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Box</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_pic15">
+       <property name="geometry">
+        <rect>
+         <x>580</x>
+         <y>310</y>
+         <width>101</width>
+         <height>131</height>
         </rect>
        </property>
        <property name="frameShape">

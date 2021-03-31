@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QPixmap>
+#include <QtCore>
+#include <QtGui>
 
 void CenterWindow(QWidget *widget);
 void showCard(QString path, QLabel *label);
@@ -23,6 +25,11 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
 }
+
+void MainWindow::on_Atack_B_clicked(){
+
+}
+
 
 void CenterWindow(QWidget *widget){
     int x, y;
