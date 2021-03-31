@@ -1,6 +1,7 @@
 #pragma once
-#include <vector>
-#include <string>
+#include <sqlite3.h>
+#include <iostream>
 
 
-int find(std::vector<std::string>, std::string);
+void errorHandler(int, sqlite3*);
+std::string toStr(const unsigned char*);

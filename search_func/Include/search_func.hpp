@@ -4,9 +4,7 @@
 #include "SearchFlags.hpp"
 
 
-extern std::vector<Card> results;
-
 std::vector<Card> searchFor(SearchFlags);
-Card turnIntoCard(std::vector<std::string>);
-int fillResultArrayWCards(void*, int, char**, char**);
+Card turnIntoCard(sqlite3_stmt*);
+std::vector<Card> getCards(std::string);
 std::string prepareSQLQuery(SearchFlags);

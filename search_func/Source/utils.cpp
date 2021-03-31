@@ -1,17 +1,17 @@
 #include "utils.hpp"
 
 
-int find(std::vector<std::string> vector, std::string value)
+void errorHandler(int exit, sqlite3* db)
 {
-    int i;
-	for(i = 0; i < (int)vector.size(); ++i)
-	{
-		if(vector.at(i) == value)
-		{
-			break;
-		}
-	}
-	if(i > (int)vector.size()) return -1;
-	return i;
+    if(exit != SQLITE_OK && exit != SQLITE_DONE)
+    {
+        std::cout << "error: " << sqlite3_errmsg(db) << std::endl;
+    }
 }
 
+
+std::string toStr(const unsigned char* chain)
+{
+    std::string str(reinterpret_cast<const char*> (chain));
+    return str;
+}
