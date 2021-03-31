@@ -32,156 +32,6 @@
       <property name="title">
        <string>Przyciski</string>
       </property>
-      <widget class="QCalendarWidget" name="calendarWidget">
-       <property name="geometry">
-        <rect>
-         <x>140</x>
-         <y>60</y>
-         <width>601</width>
-         <height>241</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
-    </item>
-    <item row="0" column="0" colspan="2">
-     <widget class="QGroupBox" name="groupBox">
-      <property name="maximumSize">
-       <size>
-        <width>250</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="title">
-       <string/>
-      </property>
-      <widget class="QPushButton" name="Zdrowie_B">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>30</y>
-         <width>131</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Zdrowie</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="Koszt_B">
-       <property name="geometry">
-        <rect>
-         <x>180</x>
-         <y>30</y>
-         <width>131</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Koszt</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="Atak_B">
-       <property name="geometry">
-        <rect>
-         <x>320</x>
-         <y>30</y>
-         <width>141</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Atak</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="Typ_B">
-       <property name="geometry">
-        <rect>
-         <x>470</x>
-         <y>30</y>
-         <width>131</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Typ</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="Nazwa_T">
-       <property name="geometry">
-        <rect>
-         <x>180</x>
-         <y>80</y>
-         <width>261</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="placeholderText">
-        <string>Nazwa</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="Rzadkosc_B">
-       <property name="geometry">
-        <rect>
-         <x>45</x>
-         <y>77</y>
-         <width>121</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Rzadkość</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="Region_B">
-       <property name="geometry">
-        <rect>
-         <x>480</x>
-         <y>80</y>
-         <width>121</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Region</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="Szukaj_B">
-       <property name="geometry">
-        <rect>
-         <x>850</x>
-         <y>70</y>
-         <width>231</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Szukaj</string>
-       </property>
-      </widget>
-      <widget class="QComboBox" name="Sortowanie_DB">
-       <property name="geometry">
-        <rect>
-         <x>848</x>
-         <y>30</y>
-         <width>231</width>
-         <height>28</height>
-        </rect>
-       </property>
-       <item>
-        <property name="text">
-         <string>Alfabetycznie A-Z</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Alfabetycznie Z-A</string>
-        </property>
-       </item>
-      </widget>
      </widget>
     </item>
     <item row="1" column="0">
@@ -437,6 +287,152 @@
       </widget>
      </widget>
     </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="minimumSize">
+       <size>
+        <width>1187</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>250</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QPushButton" name="Zdrowie_B">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>30</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Zdrowie</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Koszt_B">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>30</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Koszt</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Atak_B">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>30</y>
+         <width>141</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Atak</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Typ_B">
+       <property name="geometry">
+        <rect>
+         <x>470</x>
+         <y>30</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Typ</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="Nazwa_T">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>80</y>
+         <width>261</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="placeholderText">
+        <string>Nazwa</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Rzadkosc_B">
+       <property name="geometry">
+        <rect>
+         <x>45</x>
+         <y>77</y>
+         <width>121</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Rzadkość</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Region_B">
+       <property name="geometry">
+        <rect>
+         <x>480</x>
+         <y>80</y>
+         <width>121</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Region</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Szukaj_B">
+       <property name="geometry">
+        <rect>
+         <x>850</x>
+         <y>70</y>
+         <width>231</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Szukaj</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="Sortowanie_DB">
+       <property name="geometry">
+        <rect>
+         <x>848</x>
+         <y>30</y>
+         <width>231</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Alfabetycznie A-Z</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Alfabetycznie Z-A</string>
+        </property>
+       </item>
+      </widget>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -445,7 +441,7 @@
      <x>0</x>
      <y>0</y>
      <width>1144</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
