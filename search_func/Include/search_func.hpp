@@ -5,6 +5,7 @@
 
 
 std::vector<Card> searchFor(SearchFlags);
-Card turnIntoCard(sqlite3_stmt*);
 std::vector<Card> getCards(std::string);
+Card turnIntoCard(sqlite3_stmt*);
+void takePluralData(Card&, sqlite3*);
 std::string prepareSQLQuery(SearchFlags);

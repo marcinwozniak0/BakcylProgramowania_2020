@@ -7,7 +7,7 @@ std::vector<Card> searchFor(SearchFlags sf)
 {
 	std::string mainQuery = prepareSQLQuery(sf);
     std::vector<Card> cards = getCards(mainQuery);
-	
+
 	return cards;
 }
 
@@ -31,11 +31,16 @@ std::vector<Card> getCards(std::string mainQuery)
         cards.push_back(turnIntoCard(stmt));
     }
     errorHandler(exit, db);
-    
     sqlite3_finalize(stmt);
+    
+    for(size_t i = 0; i < cards.size(); ++i)
+    {
+        takePluralData(cards.at(i), db);
+    }
     
     return cards;
 }
+
 
 Card turnIntoCard(sqlite3_stmt* stmt)
 {
@@ -62,9 +67,44 @@ Card turnIntoCard(sqlite3_stmt* stmt)
     assets["fullAbsolutePath"] = toStr( sqlite3_column_text(stmt, i) );
     card.setCardAssets( assets );
     
-    //add keywords, subtypes and associated cards
-	
+    
 	return card;
+}
+
+
+void takePluralData(Card& card, sqlite3* db)
+{
+    sqlite3_stmt* stmt;
+    std::string cardCode = card.getCardCode();
+    
+    std::string queries[3] = {"SELECT name FROM cardKeywords JOIN keywords "
+        "ON keywordRef = nameRef WHERE cardCode = '" + cardCode + "';", 
+        
+        "SELECT subtype FROM cardSubtypes WHERE cardCode = '" + cardCode + "';", 
+        
+        "SELECT associatedCardCode FROM associatedCards WHERE cardCode = '" + cardCode + "';"};
+        
+    for(int i = 0; i < 3; ++i)
+    {
+        std::vector<std::string> data = {};
+        
+        int exit = sqlite3_prepare_v2(db, queries[i].c_str(), -1, &stmt, NULL);
+        errorHandler(exit, db);
+    
+        while((exit = sqlite3_step(stmt)) == SQLITE_ROW)
+        {
+            data.push_back( toStr( sqlite3_column_text(stmt, 0) ) );
+        }
+        errorHandler(exit, db);
+        sqlite3_finalize(stmt);
+        
+        switch(i)
+        {
+            case 0: card.setCardKeywords(data); break;
+            case 1: card.setCardSubtypes(data); break;
+            //case 2: card.setAssociatedCards(data);
+        }
+    }
 }
 
 
