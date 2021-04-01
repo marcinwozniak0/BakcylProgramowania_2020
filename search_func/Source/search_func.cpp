@@ -5,25 +5,22 @@
 
 std::vector<Card> searchFor(SearchFlags sf)
 {
-	std::string mainQuery = prepareSQLQuery(sf);
-    std::vector<Card> cards = getCards(mainQuery);
+	std::string sqlQuery = prepareSQLQuery(sf);
+    std::vector<Card> cards = getCards(sqlQuery);
 
 	return cards;
 }
 
 
-std::vector<Card> getCards(std::string mainQuery)
+std::vector<Card> getCards(std::string sqlQuery)
 {
     std::vector<Card> cards = {};
     
     sqlite3* db;
 	sqlite3_open("database.sql", &db);
     sqlite3_stmt* stmt;
-    std::string fullQuery = "SELECT cardID.cardCode AS cardCode,   attack, cost, health,   "
-	    "collectible, [set], descriptionRaw, levelupDescriptionRaw, flavorText, [name], supertype,   gameAbsolutePath, "
-	    "fullAbsolutePath FROM " + mainQuery + " AS cardID NATURAL JOIN cards NATURAL JOIN cardAssets;";
     
-    int exit = sqlite3_prepare_v2(db, fullQuery.c_str(), -1, &stmt, NULL);
+    int exit = sqlite3_prepare_v2(db, sqlQuery.c_str(), -1, &stmt, NULL);
     errorHandler(exit, db);
     
     while((exit = sqlite3_step(stmt)) == SQLITE_ROW)
@@ -33,10 +30,11 @@ std::vector<Card> getCards(std::string mainQuery)
     errorHandler(exit, db);
     sqlite3_finalize(stmt);
     
-    for(size_t i = 0; i < cards.size(); ++i)
+    for(Card& card : cards)
     {
-        takePluralData(cards.at(i), db);
+        takePluralData(card, db);
     }
+    sqlite3_close(db);
     
     return cards;
 }
@@ -66,7 +64,6 @@ Card turnIntoCard(sqlite3_stmt* stmt)
     assets["gameAbsolutePath"] = toStr( sqlite3_column_text(stmt, i++) );
     assets["fullAbsolutePath"] = toStr( sqlite3_column_text(stmt, i) );
     card.setCardAssets( assets );
-    
     
 	return card;
 }
@@ -110,7 +107,13 @@ void takePluralData(Card& card, sqlite3* db)
 
 std::string prepareSQLQuery(SearchFlags sf)
 {
-	std::string query = "(SELECT cardCode FROM cards LIMIT 40)";
+	std::string query = "SELECT cardCode, " /*regions.name, */  "attack, cost, health, " /*spellSpeeds.name, */
+	    /*rarities.name, */ "collectible, sets.name, descriptionRaw, levelupDescriptionRaw, flavorText, "
+	    "cards.name, supertype, " /*type, */ "gameAbsolutePath, fullAbsolutePath FROM cards NATURAL JOIN "
+	    "cardAssets LEFT JOIN regions ON regionRef = regions.nameRef LEFT JOIN spellSpeeds ON spellSpeedRef = "
+	    "spellSpeeds.nameRef LEFT JOIN rarities ON rarityRef = rarities.nameRef LEFT JOIN sets ON [set] = sets.nameRef "
+	    "ORDER BY cards.name LIMIT 40";
+	    
 	//make query according to the search flags
 
 	return query;
