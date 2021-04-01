@@ -17,7 +17,7 @@ void CenterWindow(QWidget *widget);
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(std::make_unique<Ui::MainWindow>())
+    , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     ui->ZKA_Opcje->hide();
@@ -46,7 +46,8 @@ void MainWindow::on_Typ_B_clicked(){
     ui->ZKA_Opcje->hide();
 }
 void MainWindow::on_Szukaj_B_clicked(){
-    SearchRequest request;
+    SearchRequest request(/*HP*/3,0,0,/*Atack*/0,0,0,/*Cost*/0,0,0,"Juzef",000,000,000'000'000'000'0);
+    request.ShowRequest();
 }
 void MainWindow::DisplayCards(){
         QRegularExpression label_regex("label_pic??");
@@ -81,3 +82,5 @@ void showCard(QString path, QLabel* label){
     int hp = label->height();
     label->setPixmap(picture.scaled(wp,hp,Qt::KeepAspectRatio));
 }
+
+

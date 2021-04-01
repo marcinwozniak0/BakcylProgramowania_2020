@@ -8,6 +8,21 @@ class SearchRequest
 {
 public:
     SearchRequest();
+    SearchRequest(size_t hpMin,
+                  size_t hpMax,
+                  size_t hp,
+                  size_t costMin,
+                  size_t costMax,
+                  size_t cost,
+                  size_t atackMin,
+                  size_t atackMax,
+                  size_t atack,
+                  std::string name,
+                  std::bitset<3> rarity,
+                  std::bitset<3> cardType,
+                  std::bitset<13> region);
+    //Devfunc
+    void ShowRequest();
 private:
     //HP
     size_t hpMin_ {};
@@ -22,14 +37,13 @@ private:
     size_t atackMax_ {};
     size_t atack_ {};
     //Name
-    std::string name {};
+    std::string name_ {};
     //Rarity
     std::bitset<3> rarity_ {};
     //Type
     std::bitset<3> cardType_ {};
     //Region
     std::bitset<13> region_ {};
-
 };
 
 #endif // SEARCHREQUEST_H
