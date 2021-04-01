@@ -1,9 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
 #include <QPixmap>
 #include <QRegularExpression>
 #include <QMessageBox>
-#include <iostream>
+
+#include "searchrequest.h"
 
 void CenterWindow(QWidget *widget);
 void showCard(QString path, QLabel* label);
@@ -21,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->ZKA_Opcje->hide();
     ui->Typ_Opcje->hide();
 
-    ui->groupBox_2->setStyleSheet("QFrame{border:0px solid black}");//Hide a card borders
+    //ui->groupBox_2->setStyleSheet("QFrame{border:0px solid black}");//Hide a card borders
 
     DisplayCards();
     setFixedSize(windowWight,windowHeight);
@@ -43,14 +45,15 @@ void MainWindow::on_Typ_B_clicked(){
     ui->Typ_Opcje->show();
     ui->ZKA_Opcje->hide();
 }
+void MainWindow::on_Szukaj_B_clicked(){
+    SearchRequest request;
+}
 void MainWindow::DisplayCards(){
         QRegularExpression label_regex("label_pic??");
         auto childrens = ui->groupBox_2->findChildren<QLabel*>(label_regex);
-        std::cerr<<childrens.length();
         for(auto& it : childrens){
-            showCard("../../BakcylProgramowania_2020/source/pic.png",it);
+            showCard("../../BakcylProgramowania_2020/source/pic.png",it); //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po label
         }
-
 }
 
 void CenterWindow(QWidget *widget){

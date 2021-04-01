@@ -46,6 +46,7 @@ set(PROJECT_SOURCES
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    searchrequest.cpp
     ${LOGGER_LIB})
 
 add_executable(Deckbuilder ${PROJECT_SOURCES})

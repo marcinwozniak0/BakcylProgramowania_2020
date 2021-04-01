@@ -25,6 +25,7 @@ private:
 private slots:
     void on_Atak_B_clicked();
     void on_Typ_B_clicked();
+    void on_Szukaj_B_clicked();
 
 };
 #endif // MAINWINDOW_H
