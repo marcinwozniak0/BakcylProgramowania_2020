@@ -20,6 +20,7 @@ public:
 
 private:
     std::unique_ptr<Ui::MainWindow> ui;
+    void DisplayCards();
 
 private slots:
     void on_Atak_B_clicked();
