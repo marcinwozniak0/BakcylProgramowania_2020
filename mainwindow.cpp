@@ -19,6 +19,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(std::make_unique<Ui::MainWindow>())
 {
     ui->setupUi(this);
+    ui->ZKA_Opcje->hide();
+    ui->Typ_Opcje->hide();
+
+    //ui->groupBox_2->setStyleSheet("QFrame{border:0px solid black}");//Hide a card borders
 
     showCard("../../BakcylProgramowania_2020/source/pic.png",ui->label_pic1);
     setFixedSize(windowWight,windowHeight);
@@ -33,12 +37,13 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::on_Atak_B_clicked(){
-    QMessageBox::information(this,"Title","Atack");
-    ui->Szukaj_B->setText("Hi");
-
-
+    ui->ZKA_Opcje->show();
+    ui->Typ_Opcje->hide();
 }
-
+void MainWindow::on_Typ_B_clicked(){
+    ui->Typ_Opcje->show();
+    ui->ZKA_Opcje->hide();
+}
 
 void CenterWindow(QWidget *widget){
 
