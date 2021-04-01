@@ -13,7 +13,7 @@ SearchRequest::SearchRequest(
                              size_t atack,
                              std::string name,
                              std::bitset<3> rarity,
-                             std::bitset<3> cardType,
+                             std::bitset<4> cardType,
                              std::bitset<13> region)
 {
     hpMin_=hpMin;
@@ -57,7 +57,7 @@ void SearchRequest::ShowRequest(){
     if(name_ != ""){
         std::cerr<<"Nazwa zawiera w sobie: "<<name_ <<'\n';
     }
-    if(rarity_ != 000){
+    if(rarity_ != 0000){
         std::cerr<<"Bitset rzadkości: " <<rarity_ << '\n';
     }
     if(cardType_ != 000){

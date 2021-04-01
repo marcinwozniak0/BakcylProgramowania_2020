@@ -38,7 +38,7 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::on_Szukaj_B_clicked(){
-    SearchRequest request(/*HP*/3,0,0,/*Atack*/0,0,0,/*Cost*/0,0,0,"Juzef",000,000,000'000'000'000'0);
+    SearchRequest request(/*HP*/3,0,0,/*Atack*/0,0,0,/*Cost*/0,0,0,"Juzef",000,0000,000'000'000'000'0);
     request.ShowRequest();
 }
 void MainWindow::DisplayCards(){

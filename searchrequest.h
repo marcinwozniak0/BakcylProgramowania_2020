@@ -19,7 +19,7 @@ public:
                   size_t atack,
                   std::string name,
                   std::bitset<3> rarity,
-                  std::bitset<3> cardType,
+                  std::bitset<4> cardType,
                   std::bitset<13> region);
     //Devfunc
     void ShowRequest();
@@ -41,7 +41,7 @@ private:
     //Rarity
     std::bitset<3> rarity_ {};
     //Type
-    std::bitset<3> cardType_ {};
+    std::bitset<4> cardType_ {};
     //Region
     std::bitset<13> region_ {};
 };
