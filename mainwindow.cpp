@@ -20,8 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->ZKA_Opcje->hide();
-    ui->Typ_Opcje->hide();
+
 
     //ui->groupBox_2->setStyleSheet("QFrame{border:0px solid black}");//Hide a card borders
 
@@ -37,14 +36,7 @@ MainWindow::~MainWindow()
 {
 }
 
-void MainWindow::on_Atak_B_clicked(){
-    ui->ZKA_Opcje->show();
-    ui->Typ_Opcje->hide();
-}
-void MainWindow::on_Typ_B_clicked(){
-    ui->Typ_Opcje->show();
-    ui->ZKA_Opcje->hide();
-}
+
 void MainWindow::on_Szukaj_B_clicked(){
     SearchRequest request(/*HP*/3,0,0,/*Atack*/0,0,0,/*Cost*/0,0,0,"Juzef",000,000,000'000'000'000'0);
     request.ShowRequest();
@@ -84,3 +76,33 @@ void showCard(QString path, QLabel* label){
 }
 
 
+
+void MainWindow::on_Zdrowie_B_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::on_Koszt_B_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(2);
+}
+
+void MainWindow::on_Atak_B_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(3);
+}
+
+void MainWindow::on_Typ_B_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(4);
+}
+
+void MainWindow::on_Rzadkosc_B_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(5);
+}
+
+void MainWindow::on_Region_B_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(6);
+}
