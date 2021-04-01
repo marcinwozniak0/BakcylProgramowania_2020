@@ -54,7 +54,8 @@ void MainWindow::on_Szukaj_B_clicked(){
                           koszt_od,koszt_do,koszt_value,
                           atak_od,atak_do,atak_value,
                           ui->Nazwa_T->text().toStdString(),
-                          000,/*typ*/ 0000,000'000'000'000'0);
+                          000,
+                          /*typ*/ 0000,000'000'000'000'0);
 //                          ui->Koszt_od->text().toInt(),
 //                          ui->Koszt_do->text().toInt(),
 //                          ui->Koszt_value->text().toInt(),
