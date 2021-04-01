@@ -1,3 +1,6 @@
+#ifndef CARD_HPP
+#define CARD_HPP
+
 #include <vector>
 #include <string>
 #include <map>
@@ -65,3 +68,5 @@ public:
     void setCardSubtypes(std::vector<std::string> cardSubtypes);
     void setCardAssets(std::map<std::string, std::string> cardAssets);
 };
+
+#endif
