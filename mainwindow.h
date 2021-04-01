@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QDesktopWidget>
-#include <memory>
 
 
 QT_BEGIN_NAMESPACE
@@ -19,7 +18,17 @@ public:
     ~MainWindow();
 
 private:
-    std::unique_ptr<Ui::MainWindow> ui;
+    Ui::MainWindow* ui;
+    void DisplayCards();
 
+private slots:
+
+    void on_Szukaj_B_clicked();
+    void on_Zdrowie_B_clicked();
+    void on_Koszt_B_clicked();
+    void on_Atak_B_clicked();
+    void on_Typ_B_clicked();
+    void on_Rzadkosc_B_clicked();
+    void on_Region_B_clicked();
 };
 #endif // MAINWINDOW_H
