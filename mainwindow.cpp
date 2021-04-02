@@ -3,7 +3,6 @@
 
 #include <QPixmap>
 #include <QRegularExpression>
-#include <QMessageBox>
 
 #include "searchrequest.h"
 
@@ -39,6 +38,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_Szukaj_B_clicked(){
 
+    QRegularExpression rarity_regex("Rarity_?");
+    auto rarity = ui->Rzadkosc->findChildren<QCheckBox*>(rarity_regex);
+    QRegularExpression type_regex("Typ_?");
+    auto type = ui->Typ->findChildren<QCheckBox*>(type_regex);
+    QRegularExpression region_regex("Region_??");
+    auto regions = ui->Region->findChildren<QCheckBox*>(region_regex);
+
     SearchRequest request(ui->Zdrowie_od->text().toInt(),
                           ui->Zdrowie_do->text().toInt(),
                           ui->Zdrowie_value->text().toInt(),
@@ -51,11 +57,12 @@ void MainWindow::on_Szukaj_B_clicked(){
                           ui->Atak_do->text().toInt(),
                           ui->Atak_value->text().toInt(),
                           ui->Nazwa_T->text().toStdString(),
-                          000,
-                          0000,
-                          000'000'000'000'0);
+                          rarity,
+                          type,
+                          regions);
 
     request.ShowRequest();
+    //TODO: Ustalić kolejność i znaczenie poszczególnych bitów w typie, rzadkości i regionach
 }
 void MainWindow::DisplayCards(){
         QRegularExpression label_regex("label_pic??");
@@ -64,6 +71,7 @@ void MainWindow::DisplayCards(){
             showCard("../../BakcylProgramowania_2020/source/pic.png",it); //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po label
         }
 }
+
 
 void CenterWindow(QWidget *widget){
 

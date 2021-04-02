@@ -12,9 +12,9 @@ SearchRequest::SearchRequest(
                              size_t atackMax,
                              size_t atack,
                              std::string name,
-                             std::bitset<3> rarity,
-                             std::bitset<4> cardType,
-                             std::bitset<13> region)
+                             QList<QCheckBox*>& rarity,
+                             QList<QCheckBox*>& cardType,
+                             QList<QCheckBox*>& region)
 {
     hpMin_=hpMin;
     hpMax_=hpMax;
@@ -26,9 +26,24 @@ SearchRequest::SearchRequest(
     atackMax_=atackMax;
     atack_=atack;
     name_=name;
-    rarity_=rarity;
-    cardType_=cardType;
-    region_=region;
+
+    for(int i = 0; i < 3; i++){
+        if(rarity[i]->isChecked()){
+            rarity_.set(i,true);
+        }
+    }
+
+    for(int i = 0; i < 4; i++){
+        if(cardType[i]->isChecked()){
+            cardType_.set(i,true);
+        }
+    }
+
+    for(int i = 0; i < 13; i++){
+        if(region[i]->isChecked()){
+            region_.set(i,true);
+        }
+    }
 }
 
 //Devfunc
@@ -58,9 +73,9 @@ void SearchRequest::ShowRequest(){
         std::cerr<<"Nazwa zawiera w sobie: "<<name_ <<'\n';
     }
 
-
+    if(rarity_ != 000){
         std::cerr<<"Bitset rzadkości: " <<rarity_ << '\n';
-
+    }
     if(cardType_ != 0000){
         std::cerr<<"Bitset typu kart:  " <<cardType_ << '\n';
     }

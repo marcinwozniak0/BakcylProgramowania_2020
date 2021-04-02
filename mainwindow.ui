@@ -206,7 +206,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>6</number>
        </property>
        <widget class="QWidget" name="page"/>
        <widget class="QWidget" name="zdrowie">
@@ -542,7 +542,7 @@
           <string>Rzadkosc</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="checkBox_5">
+        <widget class="QCheckBox" name="Rarity_1">
          <property name="geometry">
           <rect>
            <x>60</x>
@@ -555,7 +555,7 @@
           <string>Common</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="checkBox_6">
+        <widget class="QCheckBox" name="Rarity_2">
          <property name="geometry">
           <rect>
            <x>60</x>
@@ -568,7 +568,7 @@
           <string>Rate</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="checkBox_7">
+        <widget class="QCheckBox" name="Rarity_3">
          <property name="geometry">
           <rect>
            <x>60</x>
@@ -596,7 +596,7 @@
           <string>Region</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Bandle">
+        <widget class="QCheckBox" name="Region_1">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -609,7 +609,7 @@
           <string>BANDLE CITY</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Bilge">
+        <widget class="QCheckBox" name="Region_2">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -622,7 +622,7 @@
           <string>BILGEWATER</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Demacia">
+        <widget class="QCheckBox" name="Region_3">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -635,7 +635,7 @@
           <string>DEMACIA</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Frelj">
+        <widget class="QCheckBox" name="Region_4">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -648,7 +648,7 @@
           <string>FRELJORD</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Noxus">
+        <widget class="QCheckBox" name="Region_7">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -661,7 +661,7 @@
           <string>NOXUS</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Ixtal">
+        <widget class="QCheckBox" name="Region_5">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -674,7 +674,7 @@
           <string>IXTAL</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Shurim">
+        <widget class="QCheckBox" name="Region_11">
          <property name="geometry">
           <rect>
            <x>120</x>
@@ -687,7 +687,7 @@
           <string>SHURIMA</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Targp">
+        <widget class="QCheckBox" name="Region_12">
          <property name="geometry">
           <rect>
            <x>120</x>
@@ -700,7 +700,7 @@
           <string>TARGON</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Pilto">
+        <widget class="QCheckBox" name="Region_9">
          <property name="geometry">
           <rect>
            <x>120</x>
@@ -713,7 +713,7 @@
           <string>PILTOVER</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Pustak">
+        <widget class="QCheckBox" name="Region_10">
          <property name="geometry">
           <rect>
            <x>120</x>
@@ -726,7 +726,7 @@
           <string>PUSTKA</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Zaun">
+        <widget class="QCheckBox" name="Region_14">
          <property name="geometry">
           <rect>
            <x>120</x>
@@ -739,7 +739,7 @@
           <string>ZAUN</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Ionia">
+        <widget class="QCheckBox" name="Region_13">
          <property name="geometry">
           <rect>
            <x>120</x>
@@ -752,7 +752,7 @@
           <string>IONIA</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Wyspy">
+        <widget class="QCheckBox" name="Region_8">
          <property name="geometry">
           <rect>
            <x>0</x>
