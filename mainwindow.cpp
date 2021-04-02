@@ -38,31 +38,22 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::on_Szukaj_B_clicked(){
-    std::bitset<4> type;
-    type.set(1,true);
-      int zdrowie_od=ui->Zdrowie_od->text().toInt();
-      int zdrowie_do=ui->Zdrowie_do->text().toInt();
-      int zdrowie_value=ui->Zdrowie_value->text().toInt();
-      int koszt_od=ui->Koszt_od->text().toInt();
-      int koszt_do=ui->Koszt_do->text().toInt();
-      int koszt_value=ui->Koszt_value->text().toInt();
-      int atak_od=ui->Atak_od->text().toInt();
-      int atak_do=ui->Atak_do->text().toInt();
-      int atak_value=ui->Atak_value->text().toInt();
-//    (ui->Typ->findChildren<QCheckBox*>("Typ_1",Qt::FindChildrenRecursively));
-    SearchRequest request(zdrowie_od,zdrowie_do,zdrowie_value,
-                          koszt_od,koszt_do,koszt_value,
-                          atak_od,atak_do,atak_value,
+
+    SearchRequest request(ui->Zdrowie_od->text().toInt(),
+                          ui->Zdrowie_do->text().toInt(),
+                          ui->Zdrowie_value->text().toInt(),
+
+                          ui->Koszt_od->text().toInt(),
+                          ui->Koszt_do->text().toInt(),
+                          ui->Koszt_value->text().toInt(),
+
+                          ui->Atak_od->text().toInt(),
+                          ui->Atak_do->text().toInt(),
+                          ui->Atak_value->text().toInt(),
                           ui->Nazwa_T->text().toStdString(),
                           000,
-                          /*typ*/ 0000,000'000'000'000'0);
-//                          ui->Koszt_od->text().toInt(),
-//                          ui->Koszt_do->text().toInt(),
-//                          ui->Koszt_value->text().toInt(),
-
-
-
-
+                          0000,
+                          000'000'000'000'0);
 
     request.ShowRequest();
 }

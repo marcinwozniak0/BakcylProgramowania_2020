@@ -57,13 +57,14 @@ void SearchRequest::ShowRequest(){
     if(name_ != ""){
         std::cerr<<"Nazwa zawiera w sobie: "<<name_ <<'\n';
     }
-    if(rarity_ != 0000){
+
+
         std::cerr<<"Bitset rzadkości: " <<rarity_ << '\n';
-    }
-    if(cardType_ != 000){
-        std::cerr<<"Bitset typu kart:  " <<rarity_ << '\n';
+
+    if(cardType_ != 0000){
+        std::cerr<<"Bitset typu kart:  " <<cardType_ << '\n';
     }
     if(region_ != 000'000'000'000'0){
-        std::cerr<<"Bitset typu kart:  " <<rarity_ << '\n';
+        std::cerr<<"Bitset typu kart:  " <<region_ << '\n';
     }
 }
