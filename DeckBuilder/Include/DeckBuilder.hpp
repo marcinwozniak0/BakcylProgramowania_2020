@@ -3,8 +3,9 @@
 #include <map>
 #include "Card.hpp"
 #include "Deck.hpp"
-#include "../Logger/Logger.hpp"
-#include "../Logger/ExceptionLevels.cpp"
+#include "Logger.hpp"
+#include "ExceptionLevels.cpp"
+
 class DeckBuilder 
 {
     private:
