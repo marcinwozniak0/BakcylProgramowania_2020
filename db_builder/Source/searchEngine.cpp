@@ -2,35 +2,43 @@
 #include <optional>
 #include <sqlite_helper.hpp>
 
-std::pair<std::string, std::vector<std::string>> parseFilters(const Filters& filters)
+struct DynamicQuery
 {
-    std::string queryFilterPart = "WHERE 1=1";
+    std::string queryText;
     std::vector<std::string> paramQueue;
+    // Unfortunately we don't have nice heterogenous containers in cpp
+    // so we resort to storing params in queue as strings.
+    // If you want to queue integer you must convert it to string beforehand
+    // This sucks, but drawbacks seem to be nonsignificant in our usecase
+    void addFilters(const Filters& filters);
+};
+
+void DynamicQuery::addFilters(const Filters& filters)
+{
+    queryText += "WHERE 1=1";
     if (filters.cardName.size() > 0)
     {
         paramQueue.push_back(filters.cardName);
-        queryFilterPart += " AND cards.name LIKE '%'|| ? ||'%'";
+        queryText += " AND cards.name LIKE '%'|| ? ||'%'";
     }
     if (filters.regionNames.size() > 0)
     {
-        queryFilterPart += " AND regions.name IN " + buildPlaceholdersList(filters.regionNames.size());
         paramQueue.insert(paramQueue.end(), filters.regionNames.begin(), filters.regionNames.end());
+        queryText += " AND regions.name IN " + buildPlaceholdersList(filters.regionNames.size());
     }
-    if(filters.minAttack.has_value())
+    if (filters.minAttack.has_value())
     {
-        paramQueue.push_back(std::to_string(*filters.minAttack)); // agh
-        queryFilterPart += " AND attack >= ?";
+        paramQueue.push_back(std::to_string(*filters.minAttack));
+        queryText += " AND attack >= ?";
     }
-    if(filters.maxAttack.has_value())
+    if (filters.maxAttack.has_value())
     {
-        paramQueue.push_back(std::to_string(*filters.maxAttack)); // agh
-        queryFilterPart += " AND attack <= ?";
+        paramQueue.push_back(std::to_string(*filters.maxAttack));
+        queryText += " AND attack <= ?";
     }
-    return {queryFilterPart, paramQueue};
 }
 
 void bindParamQueue(sqlite3_stmt* stmt, const std::vector<std::string>& paramQueue)
-// This suck because and doesn't work for non-string params
 {
     for (size_t i = 0; i < paramQueue.size(); ++i)
     {
@@ -41,18 +49,17 @@ void bindParamQueue(sqlite3_stmt* stmt, const std::vector<std::string>& paramQue
 
 std::vector<Card> searchCards(unique_sqlite3& db, const Filters& filters)
 {
-    std::string query = "SELECT cardCode, cards.name, attack, cost, health, artistName, "
+    DynamicQuery dynQuery;
+    dynQuery.queryText = "SELECT cardCode, cards.name, attack, cost, health, artistName, "
                         "collectible, descriptionRaw, levelupDescriptionRaw, "
                         "flavorText, supertype, type FROM cards "
                         "LEFT JOIN regions ON cards.regionRef = regions.nameRef "
                         "LEFT JOIN sets ON cards.\"set\" = sets.nameRef "
                         "LEFT JOIN rarities ON cards.rarityRef = rarities.nameRef "
                         "LEFT JOIN spellSpeeds ON cards.spellSpeedRef = spellSpeeds.nameRef ";
-
-    auto [queryFilterPart, paramQueue] = parseFilters(filters);
-    query += queryFilterPart;
-    auto stmt = prepare_stmt(db, query.c_str());
-    bindParamQueue(stmt, paramQueue);
+    dynQuery.addFilters(filters);
+    auto stmt = prepare_stmt(db, dynQuery.queryText.c_str());
+    bindParamQueue(stmt, dynQuery.paramQueue);
 
     std::vector<Card> cards;
     int rc;
