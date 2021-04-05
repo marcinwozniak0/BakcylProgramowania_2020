@@ -1,4 +1,6 @@
+#include "iostream"
 #include "jsonInserter.hpp"
+#include "searchEngine.hpp"
 #include "sqlite_helper.hpp"
 #include <cstring>
 #include <fstream>
@@ -52,6 +54,17 @@ int main()
     }
 
     sqlite3_exec(db.get(), "END TRANSACTION;", NULL, NULL, NULL);
+
+    Filters filters;
+    filters.cardName = "yasUO";
+    filters.minAttack = 0;
+    filters.maxAttack = 0;
+    auto cards = searchCards(db, filters);
+    std::cout << cards.size() << "\n";
+    for (auto& card : cards)
+    {
+        std::cout << card.name << " : " << card.cardCode << "\n";
+    }
 }
 
 void fillGlobals(unique_sqlite3& db, const Json::Value& json)
