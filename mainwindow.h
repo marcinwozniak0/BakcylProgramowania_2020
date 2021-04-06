@@ -31,5 +31,6 @@ private slots:
     void on_Rzadkosc_B_clicked();
     void on_Region_B_clicked();
 
+    void on_button_pic1_clicked();
 };
 #endif // MAINWINDOW_H

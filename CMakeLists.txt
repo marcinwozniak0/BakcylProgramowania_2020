@@ -47,6 +47,7 @@ set(PROJECT_SOURCES
     mainwindow.h
     mainwindow.ui
     searchrequest.cpp
+    cardwindow.cpp
     ${LOGGER_LIB})
 
 add_executable(Deckbuilder ${PROJECT_SOURCES})

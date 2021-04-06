@@ -4,6 +4,7 @@
 #include <QPixmap>
 #include <QRegularExpression>
 
+#include "cardwindow.h"
 #include "searchrequest.h"
 
 void CenterWindow(QWidget *widget);
@@ -129,4 +130,12 @@ void MainWindow::on_Rzadkosc_B_clicked()
 void MainWindow::on_Region_B_clicked()
 {
      ui->stackedWidget->setCurrentIndex(6);
+}
+
+void MainWindow::on_button_pic1_clicked()
+{
+    Card card;
+    CardWindow cardw(card);
+    cardw.setModal(true);
+    cardw.exec();
 }
