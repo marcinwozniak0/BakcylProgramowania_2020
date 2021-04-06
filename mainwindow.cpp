@@ -6,7 +6,7 @@
 
 #include "cardwindow.h"
 #include "searchrequest.h"
-
+Card card;
 void CenterWindow(QWidget *widget);
 void showCard(QString path, QPushButton* button);
 
@@ -134,7 +134,7 @@ void MainWindow::on_Region_B_clicked()
 
 void MainWindow::on_button_pic1_clicked()
 {
-    Card card;
+
     CardWindow cardw(card);
     cardw.setModal(true);
     cardw.exec();

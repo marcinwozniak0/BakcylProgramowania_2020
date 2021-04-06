@@ -15,11 +15,12 @@ class CardWindow : public QDialog
 
 public:
     explicit CardWindow(QWidget *parent = nullptr);
-    explicit CardWindow(Card card, QWidget *parent = nullptr);
+     CardWindow(Card card, QWidget *parent = nullptr);
     ~CardWindow();
 
 private:
     Ui::CardWindow *ui;
+    Card card_;
 };
 
 #endif // CARDWINDOW_H
