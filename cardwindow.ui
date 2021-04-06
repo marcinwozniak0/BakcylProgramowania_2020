@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Zamknij</string>
+    <string>Close</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_2">
@@ -36,14 +36,14 @@
     </rect>
    </property>
    <property name="text">
-    <string>Dodaj</string>
+    <string>Add</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>40</y>
+     <x>120</x>
+     <y>30</y>
      <width>561</width>
      <height>781</height>
     </rect>
