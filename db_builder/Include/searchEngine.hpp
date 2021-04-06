@@ -64,4 +64,11 @@ struct Filters
     std::optional<int> maxHealth;
 };
 
-std::vector<Card> searchCards(unique_sqlite3& db, const Filters& filters);
+struct Pagination
+{
+    std::optional<int> limit;
+    std::optional<int> offset;
+    // offset is ignored if limit is empty
+};
+
+std::vector<Card> searchCards(unique_sqlite3& db, const Filters& filters, const Pagination& pagination);

@@ -11,6 +11,7 @@ struct DynamicQuery
     // If you want to queue integer you must convert it to string beforehand
     // This sucks, but drawbacks seem to be nonsignificant in our usecase
     void addFilters(const Filters& filters);
+    void addPagination(const Pagination& pagination);
 };
 
 void DynamicQuery::addFilters(const Filters& filters)
@@ -38,6 +39,20 @@ void DynamicQuery::addFilters(const Filters& filters)
     }
 }
 
+void DynamicQuery::addPagination(const Pagination& pagination)
+{
+    if(pagination.limit.has_value())
+    {
+        queryText += " LIMIT ?";
+        paramQueue.push_back(std::to_string(*pagination.limit));
+        if(pagination.offset.has_value())
+        {
+            queryText += " OFFSET ?";
+            paramQueue.push_back(std::to_string(*pagination.offset));
+        }
+    }
+}
+
 void bindParamQueue(sqlite3_stmt* stmt, const std::vector<std::string>& paramQueue)
 {
     for (size_t i = 0; i < paramQueue.size(); ++i)
@@ -47,7 +62,7 @@ void bindParamQueue(sqlite3_stmt* stmt, const std::vector<std::string>& paramQue
     }
 }
 
-std::vector<Card> searchCards(unique_sqlite3& db, const Filters& filters)
+std::vector<Card> searchCards(unique_sqlite3& db, const Filters& filters, const Pagination& pagination)
 {
     DynamicQuery dynQuery;
     dynQuery.queryText = "SELECT cardCode, cards.name, attack, cost, health, artistName, "
@@ -58,6 +73,7 @@ std::vector<Card> searchCards(unique_sqlite3& db, const Filters& filters)
                         "LEFT JOIN rarities ON cards.rarityRef = rarities.nameRef "
                         "LEFT JOIN spellSpeeds ON cards.spellSpeedRef = spellSpeeds.nameRef ";
     dynQuery.addFilters(filters);
+    dynQuery.addPagination(pagination);
     auto stmt = prepare_stmt(db, dynQuery.queryText.c_str());
     bindParamQueue(stmt, dynQuery.paramQueue);
 

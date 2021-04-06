@@ -55,11 +55,14 @@ int main()
 
     sqlite3_exec(db.get(), "END TRANSACTION;", NULL, NULL, NULL);
 
+    Pagination pagination;
+    pagination.limit = 3;
+    pagination.offset = 1;
     Filters filters;
-    filters.cardName = "yasUO";
-    filters.minAttack = 0;
-    filters.maxAttack = 0;
-    auto cards = searchCards(db, filters);
+    filters.cardName = "yA";
+    filters.minAttack = 2;
+    filters.maxAttack = 4;
+    auto cards = searchCards(db, filters, pagination);
     std::cout << cards.size() << "\n";
     for (auto& card : cards)
     {
