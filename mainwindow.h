@@ -23,12 +23,12 @@ private:
 
 private slots:
 
-    void on_Szukaj_B_clicked();
-    void on_Zdrowie_B_clicked();
-    void on_Koszt_B_clicked();
-    void on_Atak_B_clicked();
-    void on_Typ_B_clicked();
-    void on_Rzadkosc_B_clicked();
+    void on_Search_B_clicked();
+    void on_Health_B_clicked();
+    void on_Cost_B_clicked();
+    void on_Attack_B_clicked();
+    void on_Type_B_clicked();
+    void on_Rarity_B_clicked();
     void on_Region_B_clicked();
 
     void on_button_pic1_clicked();

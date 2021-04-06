@@ -38,7 +38,7 @@
       <property name="title">
        <string/>
       </property>
-      <widget class="QPushButton" name="Zdrowie_B">
+      <widget class="QPushButton" name="Health_B">
        <property name="enabled">
         <bool>true</bool>
        </property>
@@ -60,7 +60,7 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QPushButton" name="Koszt_B">
+      <widget class="QPushButton" name="Cost_B">
        <property name="geometry">
         <rect>
          <x>180</x>
@@ -82,7 +82,7 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QPushButton" name="Atak_B">
+      <widget class="QPushButton" name="Attack_B">
        <property name="geometry">
         <rect>
          <x>320</x>
@@ -95,7 +95,7 @@
         <string>Attack</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="Typ_B">
+      <widget class="QPushButton" name="Type_B">
        <property name="geometry">
         <rect>
          <x>470</x>
@@ -124,7 +124,7 @@
         <string>Nazwa</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="Rzadkosc_B">
+      <widget class="QPushButton" name="Rarity_B">
        <property name="geometry">
         <rect>
          <x>45</x>
@@ -150,7 +150,7 @@
         <string>Region</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="Szukaj_B">
+      <widget class="QPushButton" name="Search_B">
        <property name="geometry">
         <rect>
          <x>850</x>

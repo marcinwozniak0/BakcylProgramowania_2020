@@ -37,7 +37,7 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_Szukaj_B_clicked(){
+void MainWindow::on_Search_B_clicked(){
 
     QRegularExpression rarity_regex("Rarity_?");
     auto rarity = ui->Rarity->findChildren<QCheckBox*>(rarity_regex);
@@ -102,27 +102,27 @@ void showCard(QString path, QPushButton* button){
 
 
 
-void MainWindow::on_Zdrowie_B_clicked()
+void MainWindow::on_Health_B_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
 }
 
-void MainWindow::on_Koszt_B_clicked()
+void MainWindow::on_Cost_B_clicked()
 {
      ui->stackedWidget->setCurrentIndex(2);
 }
 
-void MainWindow::on_Atak_B_clicked()
+void MainWindow::on_Attack_B_clicked()
 {
      ui->stackedWidget->setCurrentIndex(3);
 }
 
-void MainWindow::on_Typ_B_clicked()
+void MainWindow::on_Type_B_clicked()
 {
      ui->stackedWidget->setCurrentIndex(4);
 }
 
-void MainWindow::on_Rzadkosc_B_clicked()
+void MainWindow::on_Rarity_B_clicked()
 {
      ui->stackedWidget->setCurrentIndex(5);
 }
