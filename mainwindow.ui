@@ -206,7 +206,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>6</number>
        </property>
        <widget class="QWidget" name="page"/>
        <widget class="QWidget" name="Health">
@@ -226,20 +226,20 @@
         <widget class="QLabel" name="label_7">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>2</x>
            <y>60</y>
-           <width>31</width>
+           <width>41</width>
            <height>21</height>
           </rect>
          </property>
          <property name="text">
-          <string>od</string>
+          <string>from</string>
          </property>
         </widget>
         <widget class="QLineEdit" name="Health_from">
          <property name="geometry">
           <rect>
-           <x>40</x>
+           <x>50</x>
            <y>60</y>
            <width>51</width>
            <height>21</height>
@@ -259,14 +259,14 @@
         <widget class="QLabel" name="label_8">
          <property name="geometry">
           <rect>
-           <x>100</x>
+           <x>110</x>
            <y>60</y>
            <width>21</width>
            <height>21</height>
           </rect>
          </property>
          <property name="text">
-          <string>do</string>
+          <string>to</string>
          </property>
         </widget>
         <widget class="QLabel" name="label_9">
@@ -279,7 +279,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>wartość</string>
+          <string>value</string>
          </property>
         </widget>
         <widget class="QLineEdit" name="Health_value">
@@ -317,7 +317,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>wartość</string>
+          <string>value</string>
          </property>
         </widget>
         <widget class="QLineEdit" name="Cost_value">
@@ -333,14 +333,14 @@
         <widget class="QLabel" name="label_11">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>0</x>
            <y>60</y>
-           <width>31</width>
+           <width>41</width>
            <height>21</height>
           </rect>
          </property>
          <property name="text">
-          <string>od</string>
+          <string>from</string>
          </property>
         </widget>
         <widget class="QLabel" name="label_12">
@@ -353,7 +353,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>do</string>
+          <string>to</string>
          </property>
         </widget>
         <widget class="QLineEdit" name="Cost_to">
@@ -401,7 +401,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>wartość</string>
+          <string>Value</string>
          </property>
         </widget>
         <widget class="QLineEdit" name="Attack_value">
@@ -417,14 +417,14 @@
         <widget class="QLabel" name="label_14">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>0</x>
            <y>60</y>
-           <width>31</width>
+           <width>41</width>
            <height>21</height>
           </rect>
          </property>
          <property name="text">
-          <string>od</string>
+          <string>from</string>
          </property>
         </widget>
         <widget class="QLabel" name="label_15">
@@ -437,7 +437,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>do</string>
+          <string>to</string>
          </property>
         </widget>
         <widget class="QLineEdit" name="Attack_to">
