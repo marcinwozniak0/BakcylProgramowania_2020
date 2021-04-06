@@ -108,7 +108,7 @@
         <string>Typ</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="Nazwa_T">
+      <widget class="QLineEdit" name="Name_T">
        <property name="geometry">
         <rect>
          <x>180</x>
@@ -209,7 +209,7 @@
         <number>6</number>
        </property>
        <widget class="QWidget" name="page"/>
-       <widget class="QWidget" name="zdrowie">
+       <widget class="QWidget" name="Health">
         <widget class="QLabel" name="label">
          <property name="geometry">
           <rect>
@@ -220,7 +220,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>Zdrowie</string>
+          <string>Health</string>
          </property>
         </widget>
         <widget class="QLabel" name="label_7">
@@ -236,7 +236,7 @@
           <string>od</string>
          </property>
         </widget>
-        <widget class="QLineEdit" name="Zdrowie_od">
+        <widget class="QLineEdit" name="Health_from">
          <property name="geometry">
           <rect>
            <x>40</x>
@@ -246,7 +246,7 @@
           </rect>
          </property>
         </widget>
-        <widget class="QLineEdit" name="Zdrowie_do">
+        <widget class="QLineEdit" name="Health_to">
          <property name="geometry">
           <rect>
            <x>130</x>
@@ -282,7 +282,7 @@
           <string>wartość</string>
          </property>
         </widget>
-        <widget class="QLineEdit" name="Zdrowie_value">
+        <widget class="QLineEdit" name="Health_value">
          <property name="geometry">
           <rect>
            <x>70</x>
@@ -293,7 +293,7 @@
          </property>
         </widget>
        </widget>
-       <widget class="QWidget" name="Koszt">
+       <widget class="QWidget" name="Cost">
         <widget class="QLabel" name="label_6">
          <property name="geometry">
           <rect>
@@ -304,7 +304,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>Koszt</string>
+          <string>Cost</string>
          </property>
         </widget>
         <widget class="QLabel" name="label_10">
@@ -320,7 +320,7 @@
           <string>wartość</string>
          </property>
         </widget>
-        <widget class="QLineEdit" name="Koszt_value">
+        <widget class="QLineEdit" name="Cost_value">
          <property name="geometry">
           <rect>
            <x>70</x>
@@ -356,7 +356,7 @@
           <string>do</string>
          </property>
         </widget>
-        <widget class="QLineEdit" name="Koszt_do">
+        <widget class="QLineEdit" name="Cost_to">
          <property name="geometry">
           <rect>
            <x>130</x>
@@ -366,7 +366,7 @@
           </rect>
          </property>
         </widget>
-        <widget class="QLineEdit" name="Koszt_od">
+        <widget class="QLineEdit" name="Cost_from">
          <property name="geometry">
           <rect>
            <x>40</x>
@@ -377,7 +377,7 @@
          </property>
         </widget>
        </widget>
-       <widget class="QWidget" name="Atak">
+       <widget class="QWidget" name="Attack">
         <widget class="QLabel" name="label_2">
          <property name="geometry">
           <rect>
@@ -388,7 +388,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>Atak</string>
+          <string>Attack</string>
          </property>
         </widget>
         <widget class="QLabel" name="label_13">
@@ -404,7 +404,7 @@
           <string>wartość</string>
          </property>
         </widget>
-        <widget class="QLineEdit" name="Atak_value">
+        <widget class="QLineEdit" name="Attack_value">
          <property name="geometry">
           <rect>
            <x>70</x>
@@ -440,7 +440,7 @@
           <string>do</string>
          </property>
         </widget>
-        <widget class="QLineEdit" name="Atak_do">
+        <widget class="QLineEdit" name="Attack_to">
          <property name="geometry">
           <rect>
            <x>130</x>
@@ -450,7 +450,7 @@
           </rect>
          </property>
         </widget>
-        <widget class="QLineEdit" name="Atak_od">
+        <widget class="QLineEdit" name="Attack_from">
          <property name="geometry">
           <rect>
            <x>40</x>
@@ -461,7 +461,7 @@
          </property>
         </widget>
        </widget>
-       <widget class="QWidget" name="Typ">
+       <widget class="QWidget" name="Type">
         <widget class="QLabel" name="label_3">
          <property name="geometry">
           <rect>
@@ -472,10 +472,10 @@
           </rect>
          </property>
          <property name="text">
-          <string>Typ</string>
+          <string>Type</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Typ_1">
+        <widget class="QCheckBox" name="Type_1">
          <property name="geometry">
           <rect>
            <x>60</x>
@@ -488,7 +488,7 @@
           <string>Champion</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Typ_2">
+        <widget class="QCheckBox" name="Type_2">
          <property name="geometry">
           <rect>
            <x>60</x>
@@ -501,7 +501,7 @@
           <string>Follower</string>
          </property>
         </widget>
-        <widget class="QCheckBox" name="Typ_3">
+        <widget class="QCheckBox" name="Type_3">
          <property name="geometry">
           <rect>
            <x>60</x>
@@ -528,7 +528,7 @@
          </property>
         </widget>
        </widget>
-       <widget class="QWidget" name="Rzadkosc">
+       <widget class="QWidget" name="Rarity">
         <widget class="QLabel" name="label_4">
          <property name="geometry">
           <rect>
@@ -539,7 +539,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>Rzadkosc</string>
+          <string>Rarity</string>
          </property>
         </widget>
         <widget class="QCheckBox" name="Rarity_1">

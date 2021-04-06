@@ -39,24 +39,24 @@ MainWindow::~MainWindow()
 void MainWindow::on_Szukaj_B_clicked(){
 
     QRegularExpression rarity_regex("Rarity_?");
-    auto rarity = ui->Rzadkosc->findChildren<QCheckBox*>(rarity_regex);
+    auto rarity = ui->Rarity->findChildren<QCheckBox*>(rarity_regex);
     QRegularExpression type_regex("Typ_?");
-    auto type = ui->Typ->findChildren<QCheckBox*>(type_regex);
+    auto type = ui->Type->findChildren<QCheckBox*>(type_regex);
     QRegularExpression region_regex("Region_??");
     auto regions = ui->Region->findChildren<QCheckBox*>(region_regex);
 
-    SearchRequest request(ui->Zdrowie_od->text().toInt(),
-                          ui->Zdrowie_do->text().toInt(),
-                          ui->Zdrowie_value->text().toInt(),
+    SearchRequest request(ui->Health_from->text().toInt(),
+                          ui->Health_to->text().toInt(),
+                          ui->Health_value->text().toInt(),
 
-                          ui->Koszt_od->text().toInt(),
-                          ui->Koszt_do->text().toInt(),
-                          ui->Koszt_value->text().toInt(),
+                          ui->Cost_from->text().toInt(),
+                          ui->Cost_to->text().toInt(),
+                          ui->Cost_value->text().toInt(),
 
-                          ui->Atak_od->text().toInt(),
-                          ui->Atak_do->text().toInt(),
-                          ui->Atak_value->text().toInt(),
-                          ui->Nazwa_T->text().toStdString(),
+                          ui->Attack_from->text().toInt(),
+                          ui->Attack_to->text().toInt(),
+                          ui->Attack_value->text().toInt(),
+                          ui->Name_T->text().toStdString(),
                           rarity,
                           type,
                           regions);
