@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <vector>
 #include <map>
@@ -12,8 +13,13 @@ class DeckBuilder
     int maxNumberOfCards;
     int maxNumberOfHeroes;
     int maxNumberOfEachCard;
+    int heroDef;
+    std::string firstRegion;
+    std::string secondRegion;
     std::map<Card,int> cardCount;
     Deck deck;
+    int checkNumberOfCard(Card card);
+
     public:
     DeckBuilder();
     ~DeckBuilder();

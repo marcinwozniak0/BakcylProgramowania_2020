@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <vector>
 #include "Card.hpp"
@@ -14,6 +15,8 @@ class Deck
     public:
     Deck();
     ~Deck();
-    friend void addCard(Card &cardToAdd);
-    friend void removeCard(Card &cardToRemove);
+    void addCard(Card &cardToAdd);
+    void removeCard(Card &cardToRemove);
+    int length();
+    std::vector <Card> getCardsAsVector();
 };

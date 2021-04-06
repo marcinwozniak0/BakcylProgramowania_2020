@@ -9,4 +9,20 @@ Deck::Deck()
     std::vector <Card> deck;
 }
 
+void Deck::addCard(Card &cardToAdd) {
+    deck.push_back(cardToAdd);
+}
+
+void Deck::removeCard(Card &cardToremove) {
+    
+}
+
+int Deck::length() {
+    return deck.size();
+}
+
+std::vector <Card> Deck::getCardsAsVector() {
+    return deck;
+}
+
 Deck::~Deck() {}
