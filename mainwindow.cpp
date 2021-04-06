@@ -7,7 +7,7 @@
 #include "searchrequest.h"
 
 void CenterWindow(QWidget *widget);
-void showCard(QString path, QLabel* label);
+void showCard(QString path, QPushButton* button);
 
 constexpr size_t windowWight = 1200; //px
 constexpr size_t windowHeight = 800; //px
@@ -21,8 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 
-    //ui->groupBox_2->setStyleSheet("QFrame{border:0px solid black}");//Hide a card borders
 
+    ui->stackedWidget->setCurrentIndex(0);
     DisplayCards();
     setFixedSize(windowWight,windowHeight);
 
@@ -65,9 +65,9 @@ void MainWindow::on_Szukaj_B_clicked(){
     //TODO: Ustalić kolejność i znaczenie poszczególnych bitów w typie, rzadkości i regionach
 }
 void MainWindow::DisplayCards(){
-        QRegularExpression label_regex("label_pic??");
-        auto childrens = ui->groupBox_2->findChildren<QLabel*>(label_regex);
-        for(auto& it : childrens){
+        QRegularExpression pic_regex("button_pic??");
+        auto childrensPic = ui->groupBox_2->findChildren<QPushButton*>(pic_regex);
+        for(auto& it : childrensPic){
             showCard("../../BakcylProgramowania_2020/source/pic.png",it); //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po label
         }
 }
@@ -92,11 +92,11 @@ void CenterWindow(QWidget *widget){
 
 }
 
-void showCard(QString path, QLabel* label){
+void showCard(QString path, QPushButton* button){
     QPixmap picture(path);
-    int wp = label->width();
-    int hp = label->height();
-    label->setPixmap(picture.scaled(wp,hp,Qt::KeepAspectRatio));
+    QIcon buttonIcon(picture);
+    button->setIcon(buttonIcon);
+    button->setIconSize(button->rect().size());
 }
 
 
