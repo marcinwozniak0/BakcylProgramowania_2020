@@ -17,6 +17,8 @@ CardWindow::CardWindow(Card card, QWidget *parent) :
     int wp = ui->label->width();
     int hp = ui->label->height();
     ui->label->setPixmap(picture.scaled(wp,hp,Qt::KeepAspectRatio));
+    this->setWindowTitle("Card");
+
 
 }
 CardWindow::~CardWindow()
