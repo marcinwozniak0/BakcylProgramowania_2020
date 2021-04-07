@@ -21,6 +21,9 @@ public:
 private:
     Ui::CardWindow *ui;
     Card card_;
+
+private slots:
+    void on_close_w_clicked();
 };
 
 #endif // CARDWINDOW_H

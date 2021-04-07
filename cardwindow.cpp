@@ -23,3 +23,8 @@ CardWindow::~CardWindow()
 {
     delete ui;
 }
+
+void CardWindow::on_close_w_clicked()
+{
+    close();
+}
