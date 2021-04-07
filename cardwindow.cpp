@@ -28,3 +28,5 @@ void CardWindow::on_close_w_clicked()
 {
     close();
 }
+
+//TO-DO:: BUTTON ADD
