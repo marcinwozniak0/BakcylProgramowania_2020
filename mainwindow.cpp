@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     setFixedSize(windowWight,windowHeight);
     CenterWindow(this);
-
+    this->setWindowTitle("Deckbuilder");
 
 }
 MainWindow::~MainWindow()
