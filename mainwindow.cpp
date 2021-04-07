@@ -3,12 +3,12 @@
 
 #include <QPixmap>
 #include <QRegularExpression>
-#include <QMessageBox>
 
+#include "cardwindow.h"
 #include "searchrequest.h"
-
+Card card;
 void CenterWindow(QWidget *widget);
-void showCard(QString path, QLabel* label);
+void showCard(QString path, QPushButton* button);
 
 constexpr size_t windowWight = 1200; //px
 constexpr size_t windowHeight = 800; //px
@@ -22,14 +22,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 
-    //ui->groupBox_2->setStyleSheet("QFrame{border:0px solid black}");//Hide a card borders
 
+    ui->stackedWidget->setCurrentIndex(0);
     DisplayCards();
     setFixedSize(windowWight,windowHeight);
 
     setFixedSize(windowWight,windowHeight);
     CenterWindow(this);
-
+    this->setWindowTitle("Deckbuilder");
 
 }
 MainWindow::~MainWindow()
@@ -37,42 +37,42 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_Szukaj_B_clicked(){
-    std::bitset<4> type;
-    type.set(1,true);
-      int zdrowie_od=ui->Zdrowie_od->text().toInt();
-      int zdrowie_do=ui->Zdrowie_do->text().toInt();
-      int zdrowie_value=ui->Zdrowie_value->text().toInt();
-      int koszt_od=ui->Koszt_od->text().toInt();
-      int koszt_do=ui->Koszt_do->text().toInt();
-      int koszt_value=ui->Koszt_value->text().toInt();
-      int atak_od=ui->Atak_od->text().toInt();
-      int atak_do=ui->Atak_do->text().toInt();
-      int atak_value=ui->Atak_value->text().toInt();
-//    (ui->Typ->findChildren<QCheckBox*>("Typ_1",Qt::FindChildrenRecursively));
-    SearchRequest request(zdrowie_od,zdrowie_do,zdrowie_value,
-                          koszt_od,koszt_do,koszt_value,
-                          atak_od,atak_do,atak_value,
-                          ui->Nazwa_T->text().toStdString(),
-                          000,
-                          /*typ*/ 0000,000'000'000'000'0);
-//                          ui->Koszt_od->text().toInt(),
-//                          ui->Koszt_do->text().toInt(),
-//                          ui->Koszt_value->text().toInt(),
+void MainWindow::on_Search_B_clicked(){
 
+    QRegularExpression rarity_regex("Rarity_?");
+    auto rarity = ui->Rarity->findChildren<QCheckBox*>(rarity_regex);
+    QRegularExpression type_regex("Typ_?");
+    auto type = ui->Type->findChildren<QCheckBox*>(type_regex);
+    QRegularExpression region_regex("Region_??");
+    auto regions = ui->Region->findChildren<QCheckBox*>(region_regex);
 
+    SearchRequest request(ui->Health_from->text().toInt(),
+                          ui->Health_to->text().toInt(),
+                          ui->Health_value->text().toInt(),
 
+                          ui->Cost_from->text().toInt(),
+                          ui->Cost_to->text().toInt(),
+                          ui->Cost_value->text().toInt(),
 
+                          ui->Attack_from->text().toInt(),
+                          ui->Attack_to->text().toInt(),
+                          ui->Attack_value->text().toInt(),
+                          ui->Name_T->text().toStdString(),
+                          rarity,
+                          type,
+                          regions);
 
     request.ShowRequest();
+    //TODO: Ustalić kolejność i znaczenie poszczególnych bitów w typie, rzadkości i regionach
 }
 void MainWindow::DisplayCards(){
-        QRegularExpression label_regex("label_pic??");
-        auto childrens = ui->groupBox_2->findChildren<QLabel*>(label_regex);
-        for(auto& it : childrens){
+        QRegularExpression pic_regex("button_pic??");
+        auto childrensPic = ui->groupBox_2->findChildren<QPushButton*>(pic_regex);
+        for(auto& it : childrensPic){
             showCard("../../BakcylProgramowania_2020/source/pic.png",it); //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po label
         }
 }
+
 
 void CenterWindow(QWidget *widget){
 
@@ -93,36 +93,36 @@ void CenterWindow(QWidget *widget){
 
 }
 
-void showCard(QString path, QLabel* label){
+void showCard(QString path, QPushButton* button){
     QPixmap picture(path);
-    int wp = label->width();
-    int hp = label->height();
-    label->setPixmap(picture.scaled(wp,hp,Qt::KeepAspectRatio));
+    QIcon buttonIcon(picture);
+    button->setIcon(buttonIcon);
+    button->setIconSize(button->rect().size());
 }
 
 
 
-void MainWindow::on_Zdrowie_B_clicked()
+void MainWindow::on_Health_B_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
 }
 
-void MainWindow::on_Koszt_B_clicked()
+void MainWindow::on_Cost_B_clicked()
 {
      ui->stackedWidget->setCurrentIndex(2);
 }
 
-void MainWindow::on_Atak_B_clicked()
+void MainWindow::on_Attack_B_clicked()
 {
      ui->stackedWidget->setCurrentIndex(3);
 }
 
-void MainWindow::on_Typ_B_clicked()
+void MainWindow::on_Type_B_clicked()
 {
      ui->stackedWidget->setCurrentIndex(4);
 }
 
-void MainWindow::on_Rzadkosc_B_clicked()
+void MainWindow::on_Rarity_B_clicked()
 {
      ui->stackedWidget->setCurrentIndex(5);
 }
@@ -130,4 +130,12 @@ void MainWindow::on_Rzadkosc_B_clicked()
 void MainWindow::on_Region_B_clicked()
 {
      ui->stackedWidget->setCurrentIndex(6);
+}
+
+void MainWindow::on_button_pic1_clicked()
+{
+
+    CardWindow cardw(card);
+    cardw.setModal(true);
+    cardw.exec();
 }

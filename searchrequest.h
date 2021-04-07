@@ -3,6 +3,8 @@
 
 #include <cstddef>
 #include <bitset>
+#include <QList>
+#include <QCheckBox>
 
 class SearchRequest
 {
@@ -18,9 +20,9 @@ public:
                   size_t atackMax,
                   size_t atack,
                   std::string name,
-                  std::bitset<3> rarity,
-                  std::bitset<4> cardType,
-                  std::bitset<13> region);
+                  QList<QCheckBox*>& rarity,
+                  QList<QCheckBox*>& cardType,
+                  QList<QCheckBox*>& region);
     //Devfunc
     void ShowRequest();
 private:
