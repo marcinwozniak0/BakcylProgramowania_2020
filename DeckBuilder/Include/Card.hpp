@@ -1,3 +1,6 @@
+#ifndef CARD_HPP
+#define CARD_HPP
+
 #include <vector>
 #include <string>
 #include <map>
@@ -5,7 +8,7 @@
 class Card
 {
 private:
-    std::string cardCode;
+    int cardCode;
     std::string regionRef;
     int attack;
     int cost;
@@ -26,7 +29,7 @@ private:
     std::map<std::string, std::string> cardAssets;
 
 public:
-    std::string getCardCode();
+    int getCardCode();
     std::string getRegionRef();
     int getAttack();
     int getCost();
@@ -45,7 +48,7 @@ public:
     std::vector<std::string> getCardKeywords();
     std::vector<std::string> getCardSubtypes();
     std::map<std::string, std::string> getCardAssets();
-    void setCardCode(std::string cardCode);
+    void setCardCode(int cardCode);
     void setRegionRef(std::string regionRef);
     void setAttack(int attack);
     void setCost(int cost);
@@ -65,3 +68,5 @@ public:
     void setCardSubtypes(std::vector<std::string> cardSubtypes);
     void setCardAssets(std::map<std::string, std::string> cardAssets);
 };
+
+#endif
