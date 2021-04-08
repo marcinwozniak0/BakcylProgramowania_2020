@@ -6,8 +6,8 @@
 	
 int main()
 {
-    SearchFlags sf;
-    std::vector<Card> cards = searchFor(sf);
+    SearchRequest sr;
+    std::vector<Card> cards = searchFor(sr);
     std::cout << cards.size()<< std::endl;
     while(true)
     {

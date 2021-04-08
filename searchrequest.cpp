@@ -1,6 +1,7 @@
 #include "searchrequest.h"
 #include<iostream>
 
+SearchRequest::SearchRequest(){}
 SearchRequest::SearchRequest(
                              size_t hpMin,
                              size_t hpMax,

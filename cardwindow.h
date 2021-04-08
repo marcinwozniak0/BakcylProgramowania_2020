@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "DeckBuilder/Card.hpp"
+#include "DeckBuilder/Include/Card.hpp"
 
 namespace Ui {
 class CardWindow;

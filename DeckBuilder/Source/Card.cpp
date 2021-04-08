@@ -1,6 +1,6 @@
 #include "Card.hpp"
 
-int Card::getCardCode()
+std::string Card::getCardCode()
 {
     return cardCode;
 }
@@ -90,7 +90,7 @@ std::map<std::string, std::string> Card::getCardAssets()
     return cardAssets;
 }
 
-void Card::setCardCode(int cardCode1)
+void Card::setCardCode(std::string cardCode1)
 {
     cardCode = cardCode1;
 }

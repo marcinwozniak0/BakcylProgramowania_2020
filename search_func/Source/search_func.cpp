@@ -3,9 +3,9 @@
 #include <iostream>
 
 
-std::vector<Card> searchFor(SearchFlags sf)
+std::vector<Card> searchFor(SearchRequest sr)
 {
-	std::string sqlQuery = prepareSQLQuery(sf);
+	std::string sqlQuery = prepareSQLQuery(sr);
     std::vector<Card> cards = getCards(sqlQuery);
 
 	return cards;
@@ -105,7 +105,7 @@ void takePluralData(Card& card, sqlite3* db)
 }
 
 
-std::string prepareSQLQuery(SearchFlags sf)
+std::string prepareSQLQuery(SearchRequest sr)
 {
 	std::string query = "SELECT cardCode, " /*regions.name, */  "attack, cost, health, " /*spellSpeeds.name, */
 	    /*rarities.name, */ "collectible, sets.name, descriptionRaw, levelupDescriptionRaw, flavorText, "
@@ -114,7 +114,7 @@ std::string prepareSQLQuery(SearchFlags sf)
 	    "spellSpeeds.nameRef LEFT JOIN rarities ON rarityRef = rarities.nameRef LEFT JOIN sets ON [set] = sets.nameRef "
 	    "ORDER BY cards.name LIMIT 40";
 	    
-	//make query according to the search flags
+	//make query according to the search request
 
 	return query;
 }

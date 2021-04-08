@@ -8,7 +8,7 @@
 class Card
 {
 private:
-    int cardCode;
+    std::string cardCode;
     std::string regionRef;
     int attack;
     int cost;
@@ -29,7 +29,7 @@ private:
     std::map<std::string, std::string> cardAssets;
 
 public:
-    int getCardCode();
+    std::string getCardCode();
     std::string getRegionRef();
     int getAttack();
     int getCost();
@@ -48,7 +48,7 @@ public:
     std::vector<std::string> getCardKeywords();
     std::vector<std::string> getCardSubtypes();
     std::map<std::string, std::string> getCardAssets();
-    void setCardCode(int cardCode);
+    void setCardCode(std::string cardCode);
     void setRegionRef(std::string regionRef);
     void setAttack(int attack);
     void setCost(int cost);
