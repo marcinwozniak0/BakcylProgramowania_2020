@@ -16,9 +16,9 @@ namespace fd
         std::vector <std::string>fileNames;
         std::string directoryPath;  //folderPath is folder path plus folders name
         
-        public:
+        public:  
         FileDownloader(std::string directoryPath_); 
-        void downloadFiles();
+        void downloadFiles();     
     };
 }
 

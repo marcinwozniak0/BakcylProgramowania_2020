@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <fstream>
 #include <stdio.h>
 #include <string>
 #include <filesystem>
@@ -47,39 +48,56 @@ void FileDownloader::downloadFiles()
 {   
     CURLcode res;
     
-    int i = 0;
+    long unsigned int i = 0;
     while(i < links.size())
     {  
-        //some curl setup
-        fp = fopen(fileNames[i].c_str(), "wb");
-    
-        curl_easy_setopt(curl, CURLOPT_URL, links[i].c_str());
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
-        curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1L);
-    
-        res = curl_easy_perform(curl);
-    
-        //checking if everything went well
-        if(res == CURLE_OK)
+        //checking if file already exists    
+        std::string fileDirectory = directoryPath + "/" + fileNames[i];
+        
+        FILE *fileToTest = fopen(fileDirectory.c_str(), "r"); 
+        
+        if(fileToTest)
         {
-            std::string msg = "Succes! " + fileNames[i] + " downloaded";
+            std::string msg = fileNames[i] + " already exists!";
             std::cout<<msg<<std::endl;
-        } 
-        else 
-        {
-            std::cout<<curl_easy_strerror(res)<<std::endl;
+            
+            fclose(fileToTest);
+            i++;
+            continue;            
         }
-    
-        //moving downloaded file to folder created with folderPath 
-        std::string newPath = directoryPath + "/" + fileNames[i];
-        if(rename(fileNames[i].c_str(), newPath.c_str()) < 0)
+        //if it already exists
         {
-            printf("ERROR! There's probly no directory 'data'. \n");
+            //some curl setup     
+            fp = fopen(fileNames[i].c_str(), "wb");
+    
+            curl_easy_setopt(curl, CURLOPT_URL, links[i].c_str());
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+            curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1L);
+    
+            res = curl_easy_perform(curl);
+    
+            //checking if everything went well
+            if(res == CURLE_OK)
+            {
+                std::string msg = "Succes! " + fileNames[i] + " downloaded";
+                std::cout<<msg<<std::endl;
+            }   
+            else 
+            {
+                std::cout<<curl_easy_strerror(res)<<std::endl;
+            }
+    
+            //moving downloaded file to folder created with folderPath 
+            std::string newPath = directoryPath + "/" + fileNames[i];
+            if(rename(fileNames[i].c_str(), newPath.c_str()) < 0)
+            {
+                printf("ERROR! There's probly no directory 'data'. \n");
+            } 
         }
         
+        fclose(fp);
         i++;
     }
-
-    fclose(fp);
+    
     curl_easy_cleanup(curl);
 }
