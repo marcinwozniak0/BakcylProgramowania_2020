@@ -1,7 +1,30 @@
 #include "search_func.hpp"
 #include "utils.hpp"
 #include <iostream>
+#include <memory>
 
+
+std::string mainQuery = "SELECT cardCode, " /*regions.name, */  "attack, cost, health, " /*spellSpeeds.name, */
+	    /*rarities.name, */ "collectible, sets.name, descriptionRaw, levelupDescriptionRaw, flavorText, "
+	    "cards.name, supertype, " /*type, */ "gameAbsolutePath, fullAbsolutePath FROM cards NATURAL JOIN "
+	    "cardAssets LEFT JOIN regions ON regionRef = regions.nameRef LEFT JOIN spellSpeeds ON spellSpeedRef = "
+	    "spellSpeeds.nameRef LEFT JOIN rarities ON rarityRef = rarities.nameRef LEFT JOIN sets ON [set] = sets.nameRef ";
+	    
+	    
+Card getCard(std::string cardCode)
+{
+    std::string sqlQuery = mainQuery + "WHERE cardCode = '" + cardCode + "';";
+    std::vector<Card> cards = getCards(sqlQuery);
+    
+    if(cards.size() == 0)
+    {
+        Card card;
+        return card;
+    }
+    
+    return cards.at(0);
+}
+    
 
 std::vector<Card> searchFor(SearchRequest sr)
 {
@@ -107,14 +130,53 @@ void takePluralData(Card& card, sqlite3* db)
 
 std::string prepareSQLQuery(SearchRequest sr)
 {
-	std::string query = "SELECT cardCode, " /*regions.name, */  "attack, cost, health, " /*spellSpeeds.name, */
-	    /*rarities.name, */ "collectible, sets.name, descriptionRaw, levelupDescriptionRaw, flavorText, "
-	    "cards.name, supertype, " /*type, */ "gameAbsolutePath, fullAbsolutePath FROM cards NATURAL JOIN "
-	    "cardAssets LEFT JOIN regions ON regionRef = regions.nameRef LEFT JOIN spellSpeeds ON spellSpeedRef = "
-	    "spellSpeeds.nameRef LEFT JOIN rarities ON rarityRef = rarities.nameRef LEFT JOIN sets ON [set] = sets.nameRef "
-	    "ORDER BY cards.name LIMIT 40";
-	    
-	//make query according to the search request
+	std::string query = mainQuery + "WHERE ";
+	
+	/********* untested *************
+	if(sr.name != "")
+	{
+	    query += "cards.name = '" + sr.name_ + "';";
+	    return query;
+	}
+	
+	
+	std::map<std::string, std::vector<int> > iAttr;                 //int attributes
+	std::vector<std::string> names = {"health", "cost", "attack"};  //attributes' names
+	
+	iAttr[names.at(0)] = {sr.hp_, sr.hpMin_, sr.hpMax_};
+	iAttr[names.at(1)] = {sr.cost_, sr.costMin_, sr.costMax_};
+	iAttr[names.at(2)] = {sr.atack_, sr.atackMin_, sr.atackMax_};
+	
+	for(int i = 0; i < 3; ++i)
+	{
+	    if(iAttr[names.at(i)].at(0) != 0)
+	    {
+	        query += names.at(i) + " = " + iAttr[names.at(i)].at(0) + " AND ";
+	    }
+	    else
+	    {
+	        if(sr.hpMin_ != 0)
+	        {
+	            query += names.at(i) + " >= " + iAttr[names.at(i)].at(1) + " AND ";
+	        }
+	        if(sr.hpMax_ != 0)
+	        {
+	            query += names.at(i) + " <= " + iAttr[names.at(i)].at(2) + " AND ";
+	        }
+	    }
+	} ***********************************/
+	
+	//finish query according to SearchRequest
+	
+	if(query[query.size() - 2] == 'E')
+	{
+	    query = query.substr(0, query.size() - 6);
+	}
+	else
+	{
+	    query = query.substr(0, query.size() - 4);
+	}
+	query += "ORDER BY cards.name LIMIT 40;";
 
 	return query;
 }
