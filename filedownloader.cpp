@@ -65,35 +65,33 @@ void FileDownloader::downloadFiles()
             i++;
             continue;            
         }
-        //if it already exists
+        
+        //some curl setup     
+        fp = fopen(fileNames[i].c_str(), "wb");
+    
+        curl_easy_setopt(curl, CURLOPT_URL, links[i].c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+        curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1L);
+    
+        res = curl_easy_perform(curl);
+    
+        //checking if everything went well
+        if(res == CURLE_OK)
         {
-            //some curl setup     
-            fp = fopen(fileNames[i].c_str(), "wb");
-    
-            curl_easy_setopt(curl, CURLOPT_URL, links[i].c_str());
-            curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
-            curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1L);
-    
-            res = curl_easy_perform(curl);
-    
-            //checking if everything went well
-            if(res == CURLE_OK)
-            {
-                std::string msg = "Succes! " + fileNames[i] + " downloaded";
-                std::cout<<msg<<std::endl;
-            }   
-            else 
-            {
-                std::cout<<curl_easy_strerror(res)<<std::endl;
-            }
-    
-            //moving downloaded file to folder created with folderPath 
-            std::string newPath = directoryPath + "/" + fileNames[i];
-            if(rename(fileNames[i].c_str(), newPath.c_str()) < 0)
-            {
-                printf("ERROR! There's probly no directory 'data'. \n");
-            } 
+            std::string msg = "Succes! " + fileNames[i] + " downloaded";
+            std::cout<<msg<<std::endl;
+        }   
+        else 
+        {
+            std::cout<<curl_easy_strerror(res)<<std::endl;
         }
+    
+        //moving downloaded file to folder created with folderPath 
+        std::string newPath = directoryPath + "/" + fileNames[i];
+        if(rename(fileNames[i].c_str(), newPath.c_str()) < 0)
+        {
+            printf("ERROR! There's probly no directory 'data'. \n");
+        } 
         
         fclose(fp);
         i++;
