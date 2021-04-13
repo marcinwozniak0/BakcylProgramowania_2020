@@ -64,6 +64,7 @@ void DeckBuilder::removeCard(Card &cardToRemove)
                     counter++;
                 }
             }
+            dl = deck.length();
             if (counter == dl){
                 if (firstRegion.compare(regioncd) == 0){
                     firstRegion = "";
