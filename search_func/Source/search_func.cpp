@@ -133,50 +133,65 @@ std::string prepareSQLQuery(SearchRequest sr)
 	std::string query = mainQuery + "WHERE ";
 	
 	/********* untested *************
-	if(sr.name != "")
+	query += "(cards.name LIKE '%" + sr.name_ + "%' OR "
+	        "regions.name LIKE '%" + sr.name_ + "%') AND ";
+	
+	
+	std::map<std::string, std::vector<int> > iAttr;         //int attributes
+	std::string names[3] = {"health", "cost", "attack"};    //attributes' names
+	
+	iAttr["health"] = {sr.hp_, sr.hpMin_, sr.hpMax_};
+	iAttr["cost"] = {sr.cost_, sr.costMin_, sr.costMax_};
+	iAttr["attack"] = {sr.atack_, sr.atackMin_, sr.atackMax_};
+	
+	for(std::string name : names)
 	{
-	    query += "cards.name = '" + sr.name_ + "';";
-	    return query;
-	}
-	
-	
-	std::map<std::string, std::vector<int> > iAttr;                 //int attributes
-	std::vector<std::string> names = {"health", "cost", "attack"};  //attributes' names
-	
-	iAttr[names.at(0)] = {sr.hp_, sr.hpMin_, sr.hpMax_};
-	iAttr[names.at(1)] = {sr.cost_, sr.costMin_, sr.costMax_};
-	iAttr[names.at(2)] = {sr.atack_, sr.atackMin_, sr.atackMax_};
-	
-	for(int i = 0; i < 3; ++i)
-	{
-	    if(iAttr[names.at(i)].at(0) != 0)
+	    if(iAttr[name].at(0) != 0)
 	    {
-	        query += names.at(i) + " = " + iAttr[names.at(i)].at(0) + " AND ";
+	        query += name + " = " + iAttr[name].at(0) + " AND ";
 	    }
 	    else
 	    {
-	        if(sr.hpMin_ != 0)
+	        if(iAttr[name].at(1) != 0)
 	        {
-	            query += names.at(i) + " >= " + iAttr[names.at(i)].at(1) + " AND ";
+	            query += name + " >= " + iAttr[name].at(1) + " AND ";
 	        }
-	        if(sr.hpMax_ != 0)
+	        if(iAttr[name].at(2) != 0)
 	        {
-	            query += names.at(i) + " <= " + iAttr[names.at(i)].at(2) + " AND ";
+	            query += name + " <= " + iAttr[name].at(2) + " AND ";
 	        }
 	    }
-	} ***********************************/
+	} 
+	
+	
+	std::map<std::string, std::vector<std::string> > sAttr; //string attributes
+	names = {"rarities.name", "type", "regions.name"};
+	
+	sAttr["rarities.name"] = bitsetToVec(sr.rarity_, "rarities.name");
+	sAttr["type"] = bitsetToVec(sr.cardType_, "type");
+	sAttr["regions.name"] = bitsetToVec(sr.region_, "regions.name");
+	
+	for(std::string name : names)
+	{
+	    if(sAttr[name].empty() == false)
+	    {
+	        query += "("
+	        for(std::string attribute : sAttr[name])
+	        {
+	            query += name + " = '" + attribute.first + "' OR ";
+	        }
+	        query = query.substr(0, query.size() - 4) + ") ";
+	    }
+	}
+	
+	
+	query = query + "ORDER BY '" + jakisOrder + "' LIMIT (" + strona + " * 15) 15;"
+	
+	***********************************/
 	
 	//finish query according to SearchRequest
 	
-	if(query[query.size() - 2] == 'E')
-	{
-	    query = query.substr(0, query.size() - 6);
-	}
-	else
-	{
-	    query = query.substr(0, query.size() - 4);
-	}
-	query += "ORDER BY cards.name LIMIT 40;";
+	query += "sets.name LIKE '_ou%' ORDER BY cards.name LIMIT 15;";
 
 	return query;
 }
