@@ -2,6 +2,9 @@
 #include <optional>
 #include <sqlite_helper.hpp>
 
+// Convinience wrapper for building dynamic search queries.
+// Probably SQLi-safe. We use sqlite placeholders and paramQueue
+// to bind filters, pagination and sorting to sqlite_stmt later.
 struct DynamicQuery
 {
     std::string queryText;
@@ -16,6 +19,10 @@ struct DynamicQuery
     // addFilters() and addPagination() add possibly reduntant spaces around appended query
     // We are dealing one-two bytes for simplicity, and bug-proofness. Seems fine
 };
+// For sure recreating query for each change in searched name
+// is not the most effective way, but the most reasonable one.
+// If we were premature optimization fetishists, we would insert
+// overcomplicated caching here
 
 void DynamicQuery::addFilters(const Filters& filters)
 {

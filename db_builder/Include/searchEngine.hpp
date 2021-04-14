@@ -9,6 +9,11 @@
 /*     std::string iconURL; */
 /* }; */
 
+// ##############
+// example interface for populating UI
+/* std::vector<Set> getSets() */ 
+// #############
+
 /* struct Region */
 /* { */
 /*     std::string name; */
@@ -40,8 +45,6 @@ struct Card
     std::string flavorText;
     std::string supertype;
     std::string type;
-    // It might be good idea to prefetch sets, regions, rarities and spellSpeeds
-    // and store just references here. They are repeating a lot across cards
     /* Set set; */
     /* Region region; */
     /* Rarity rarity; */
@@ -52,6 +55,7 @@ struct Filters
 {
     // empty filter means no filter
     std::string cardName; // currently matches "*name*". ASCII characters are case insensitive
+    // regions, sets, rarities and spellspeeds are matched exact, you provide whitelist of names
     std::vector<std::string> regionNames;
     std::vector<std::string> setNames;
     std::vector<std::string> rarityNames;

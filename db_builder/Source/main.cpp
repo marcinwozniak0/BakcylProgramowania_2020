@@ -123,8 +123,8 @@ std::string getJsonMemberNameWithoutNuls(Json::ValueIteratorBase it)
 {
     // Jsoncpp tries to "be liberal in what it accepts" and allows for not-escaped embedded NUL characters in json
     // string. This is not allowed in valid json, but could be useful for storing BLOBs. However sometimes you need just
-    // null-terminated string which of course is unable to embed NULs Jsoncpp has deprecated memberName() method, which
-    // returns CString and just quietly cuts part after first NUL Instead of using deprecated, kinda unsafe method, we
+    // null-terminated string which of course is unable to embed NULs. Jsoncpp has deprecated memberName() method, which
+    // returns CString and just quietly cuts part after first NUL. Instead of using deprecated, kinda unsafe method, we
     // fail fast at strings with embedded NULs
     auto memberName = it.name();
     if (memberName.size() != std::strlen(memberName.c_str()))
