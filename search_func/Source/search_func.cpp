@@ -16,13 +16,13 @@ Card getCard(std::string cardCode)
     std::string sqlQuery = mainQuery + "WHERE cardCode = '" + cardCode + "';";
     std::vector<Card> cards = getCards(sqlQuery);
     
-    if(cards.size() == 0)
+    if(cards.empty())
     {
         Card card;
         return card;
     }
     
-    return cards.at(0);
+    return cards.front();
 }
     
 
