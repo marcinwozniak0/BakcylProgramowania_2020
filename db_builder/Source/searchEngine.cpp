@@ -12,11 +12,14 @@ struct DynamicQuery
     // This sucks, but drawbacks seem to be nonsignificant in our usecase
     void addFilters(const Filters& filters);
     void addPagination(const Pagination& pagination);
+    // Reduntant spaces are better than lacking spaces
+    // addFilters() and addPagination() add possibly reduntant spaces around appended query
+    // We are dealing one-two bytes for simplicity, and bug-proofness. Seems fine
 };
 
 void DynamicQuery::addFilters(const Filters& filters)
 {
-    queryText += "WHERE 1=1";
+    queryText += " WHERE 1=1";
     if (filters.cardName.size() > 0)
     {
         paramQueue.push_back(filters.cardName);
@@ -37,6 +40,7 @@ void DynamicQuery::addFilters(const Filters& filters)
         paramQueue.push_back(std::to_string(*filters.maxAttack));
         queryText += " AND attack <= ?";
     }
+    queryText += " ";
 }
 
 void DynamicQuery::addPagination(const Pagination& pagination)
@@ -51,6 +55,7 @@ void DynamicQuery::addPagination(const Pagination& pagination)
             paramQueue.push_back(std::to_string(*pagination.offset));
         }
     }
+    queryText += " ";
 }
 
 void bindParamQueue(sqlite3_stmt* stmt, const std::vector<std::string>& paramQueue)
