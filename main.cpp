@@ -13,5 +13,7 @@ int main(int argc, char *argv[])
     a.setWindowIcon(QIcon("../../BakcylProgramowania_2020/source/icon.png"));
     MainWindow w;
     w.show();
+
+    sqlite3_close(_db);
     return a.exec();
 }

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QDesktopWidget>
+#include <QPushButton>
 
 
 QT_BEGIN_NAMESPACE
@@ -19,7 +20,10 @@ public:
 
 private:
     Ui::MainWindow* ui;
-    void DisplayCards();
+    std::vector<QPushButton*> cards;
+
+    void createCards();
+    void displayCards();
 
 private slots:
 
@@ -31,6 +35,6 @@ private slots:
     void on_Rarity_B_clicked();
     void on_Region_B_clicked();
 
-    void on_button_pic1_clicked();
+
 };
 #endif // MAINWINDOW_H

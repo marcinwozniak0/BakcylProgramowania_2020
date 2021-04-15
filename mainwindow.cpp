@@ -6,14 +6,14 @@
 
 #include "cardwindow.h"
 #include "searchrequest.h"
-Card card;
+
 void CenterWindow(QWidget *widget);
 void showCard(QString path, QPushButton* button);
 
 constexpr size_t windowWight = 1200; //px
 constexpr size_t windowHeight = 800; //px
 
-void CenterWindow(QWidget *widget);
+void centerWindow(QWidget *widget);
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -21,19 +21,20 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
-
     ui->stackedWidget->setCurrentIndex(0);
-    DisplayCards();
     setFixedSize(windowWight,windowHeight);
-
     setFixedSize(windowWight,windowHeight);
-    CenterWindow(this);
+    centerWindow(this);
     this->setWindowTitle("Deckbuilder");
-
+    createCards();
+    displayCards();
 }
 MainWindow::~MainWindow()
 {
+    delete ui;
+    for(auto& it : cards){
+        delete it;
+    }
 }
 
 
@@ -65,16 +66,40 @@ void MainWindow::on_Search_B_clicked(){
     request.ShowRequest();
     //TODO: Ustalić kolejność i znaczenie poszczególnych bitów w typie, rzadkości i regionach
 }
-void MainWindow::DisplayCards(){
-        QRegularExpression pic_regex("button_pic??");
-        auto childrensPic = ui->groupBox_2->findChildren<QPushButton*>(pic_regex);
-        for(auto& it : childrensPic){
-            showCard("../../BakcylProgramowania_2020/source/pic.png",it); //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po label
+void MainWindow::displayCards(){
+        for(auto& it : cards){
+            showCard("../../BakcylProgramowania_2020/source/pic.png",it); //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po buttonach
         }
 }
 
+void MainWindow::createCards(){
+    int posX = 90;
+    int posY = 30;
 
-void CenterWindow(QWidget *widget){
+    const size_t cardHeight = 160;
+    const size_t cardWight = 120;
+
+    const size_t maxCardsDisplay = 15;
+
+    for(size_t i = 0; i < maxCardsDisplay; i++){
+
+        cards.push_back(new QPushButton(ui->groupBox_2));
+        cards[i]->move(posX,posY);
+        cards[i]->setMinimumSize(cardWight,cardHeight);
+        cards[i]->setFlat(true);
+
+        if((i+1)% 5 == 0){
+            posY += cardHeight + 5;
+            posX -= (cardWight + 30) * 4;
+        }else{
+            posX += cardWight + 30;
+        }
+
+    }
+}
+
+
+void centerWindow(QWidget *widget){
 
     int x, y;
     int screenWidth;
@@ -132,10 +157,3 @@ void MainWindow::on_Region_B_clicked()
      ui->stackedWidget->setCurrentIndex(6);
 }
 
-void MainWindow::on_button_pic1_clicked()
-{
-
-    CardWindow cardw(card);
-    cardw.setModal(true);
-    cardw.exec();
-}
