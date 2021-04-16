@@ -18,7 +18,8 @@ namespace fd
         
         public:  
         FileDownloader(std::string directoryPath_); 
-        void downloadFiles();     
+        void download();     
+        void addLinks(std::string test){};
     };
 }
 

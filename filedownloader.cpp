@@ -44,7 +44,7 @@ FileDownloader::FileDownloader(std::string directoryPath_)
     curl = curl_easy_init();
 }
 
-void FileDownloader::downloadFiles()
+void FileDownloader::download()
 {   
     CURLcode res;
     
