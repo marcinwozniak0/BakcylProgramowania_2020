@@ -25,7 +25,7 @@ FileDownloader::FileDownloader(std::string directoryPath_)
     }
     
     //adding URLs and names to vectors
-    links.push_back("https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json");
+    /*links.push_back("https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json");
     fileNames.push_back("globals-en_us.json");
     
     links.push_back("https://dd.b.pvp.net/latest/set1/en_us/data/set1-en_us.json");
@@ -38,10 +38,24 @@ FileDownloader::FileDownloader(std::string directoryPath_)
     fileNames.push_back("set3-en_us.json");
     
     links.push_back("https://dd.b.pvp.net/latest/set4/en_us/data/set4-en_us.json");
-    fileNames.push_back("set4-en_us.json");
+    fileNames.push_back("set4-en_us.json");*/
     
     //initializing curl
     curl = curl_easy_init();
+}
+
+void FileDownloader::addLinks(std::string links_[], std::string fileNames_[], int numberOfLinks)
+{
+    
+    
+    for(int i = 0; i < numberOfLinks; i++)
+    {
+        std::string l = links_[i];
+        links.push_back(l);
+        
+        std::string n = fileNames_[i];
+        fileNames.push_back(n);
+    }
 }
 
 void FileDownloader::download()
