@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QGridLayout>
+#include <QPushButton>
+
 
 class CardsContainer : public QWidget
 {
@@ -12,6 +14,12 @@ public:
 
 private:
     void createLayout();
+    void displayCards();
+
+    void showCard(QString path, QPushButton* button);
+
+    std::vector<QPushButton*> cards_;
+
 
 };
 

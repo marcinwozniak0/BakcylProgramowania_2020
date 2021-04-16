@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QDesktopWidget>
-#include <QPushButton>
 
 
 QT_BEGIN_NAMESPACE
@@ -20,7 +19,6 @@ public:
 
 private:
     Ui::MainWindow* ui;
-    std::vector<QPushButton*> cards;
 
     void createCards();
     void displayCards();
