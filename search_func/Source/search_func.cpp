@@ -26,9 +26,9 @@ Card getCard(std::string cardCode)
 }
     
 
-std::vector<Card> searchFor(SearchRequest sr)
+std::vector<Card> searchFor(searchFlags sf)
 {
-    std::string sqlQuery = prepareSQLQuery(sr);
+    std::string sqlQuery = prepareSQLQuery(sf);
     std::vector<Card> cards = getCards(sqlQuery);
 
 	return cards;
@@ -128,70 +128,85 @@ void takePluralData(Card& card, sqlite3* db)
 }
 
 
-std::string prepareSQLQuery(SearchRequest sr)
+std::string prepareSQLQuery(searchFlags sf)
 {
 	std::string query = mainQuery + "WHERE ";
 	
-	/********* untested *************
-	query += "(cards.name LIKE '%" + sr.name_ + "%' OR "
-	        "regions.name LIKE '%" + sr.name_ + "%') AND ";
+	//********* untested *************
 	
-	
-	std::map<std::string, std::vector<int> > iAttr;         //int attributes
-	std::string names[3] = {"health", "cost", "attack"};    //attributes' names
-	
-	iAttr["health"] = {sr.hp_, sr.hpMin_, sr.hpMax_};
-	iAttr["cost"] = {sr.cost_, sr.costMin_, sr.costMax_};
-	iAttr["attack"] = {sr.atack_, sr.atackMin_, sr.atackMax_};
-	
-	for(std::string name : names)
+	if(sf.name != "")   //i'm thinking about automating this later
 	{
-	    if(iAttr[name].at(0) != 0)
+	    query += "(cards.name LIKE '%" + sf.name + "%' OR "
+	            "regions.name LIKE '%" + sf.name + "%') AND ";
+	}
+	
+	
+	std::map<std::string, searchFlags::intmember> iMemb;  //int members
+	//std::string names[3] = {"health", "cost", "attack"};    //attributes' names
+	
+	iMemb["health"] = sf.hp;
+	iMemb["cost"] = sf.cost;
+	iMemb["attack"] = sf.attack;
+	
+	for(auto [name, member] : iMemb)
+	{
+	    if(member.value != std::nullopt)
 	    {
-	        query += name + " = " + iAttr[name].at(0) + " AND ";
+	        query += name + " = " + (char)('0' + member.value.value()) + " AND ";   //conversions only temporary
 	    }
 	    else
 	    {
-	        if(iAttr[name].at(1) != 0)
+	        if(member.min != std::nullopt)
 	        {
-	            query += name + " >= " + iAttr[name].at(1) + " AND ";
+	            query += name + " >= " + (char)('0' + member.min.value()) + " AND ";
 	        }
-	        if(iAttr[name].at(2) != 0)
+	        if(member.max != std::nullopt)
 	        {
-	            query += name + " <= " + iAttr[name].at(2) + " AND ";
+	            query += name + " <= " + (char)('0' + member.max.value()) + " AND ";
 	        }
 	    }
 	} 
 	
 	
-	std::map<std::string, std::vector<std::string> > sAttr; //string attributes
-	names = {"rarities.name", "type", "regions.name"};
+	std::map<std::string, std::vector<std::string> > sMemb; //string members
+	//names = {"rarities.name", "type", "regions.name"};
 	
-	sAttr["rarities.name"] = bitsetToVec(sr.rarity_, "rarities.name");
-	sAttr["type"] = bitsetToVec(sr.cardType_, "type");
-	sAttr["regions.name"] = bitsetToVec(sr.region_, "regions.name");
+	sMemb["rarities.name"] = sf.rarities;
+	sMemb["type"] = sf.types;
+	sMemb["regions.name"] = sf.regions;
 	
-	for(std::string name : names)
+	for(auto [name, member] : sMemb)
 	{
-	    if(sAttr[name].empty() == false)
+	    if(member.empty() == false)
 	    {
-	        query += "("
-	        for(std::string attribute : sAttr[name])
+	        query += "(";
+	        for(std::string value : member)
 	        {
-	            query += name + " = '" + attribute.first + "' OR ";
+	            query += name + " = '" + value + "' OR ";
 	        }
-	        query = query.substr(0, query.size() - 4) + ") ";
+	        query = query.substr(0, query.size() - 4) + ") AND ";
 	    }
 	}
 	
+	if(query[query.size() - 2] == 'D')  //i'll also try to go around this later
+	{
+	    query = query.substr(0, query.size() - 4);
+	}
+	else
+	{
+	    query = query.substr(0, query.size() - 6);
+	}
+	query = query + "ORDER BY cards.name LIMIT (" + (char)(sf.pageNr - 1 + '0') + " * 15), 15;";
+	                                         //i'll probably use bind on that later, it'll be more safe
+	                                         //and we'll be able to have two digit pageNr
+	                                         //also maybe we could multi-bind it and get other pages faster
+	                                         //without having to go through this whole function again
 	
-	query = query + "ORDER BY '" + jakisOrder + "' LIMIT (" + strona + " * 15) 15;"
-	
-	***********************************/
+	//***********************************/
 	
 	//finish query according to SearchRequest
 	
-	query += "sets.name LIKE '_ou%' ORDER BY cards.name LIMIT 15;";
-
+	//query += "sets.name LIKE '_ou%' ORDER BY cards.name LIMIT 15;";
+    std::cout << query << std::endl;
 	return query;
 }
