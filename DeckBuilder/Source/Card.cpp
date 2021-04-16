@@ -5,9 +5,9 @@ std::string Card::getCardCode()
     return cardCode;
 }
 
-std::string Card::getRegionRef()
+std::string Card::getRegion()
 {
-    return regionRef;
+    return region;
 }
 
 int Card::getCost()
@@ -20,14 +20,14 @@ int Card::getHealth()
     return health;
 }
 
-int Card::getSpellSpeedRef()
+std::string Card::getSpellSpeed()
 {
-    return spellSpeedRef;
+    return spellSpeed;
 }
 
-int Card::getRarityRef()
+std::string Card::getRarity()
 {
-    return rarityRef;
+    return rarity;
 }
 
 bool Card::isCollectible()
@@ -65,12 +65,12 @@ std::string Card::getSupertype()
     return supertype;
 }
 
-int Card::getType()
+std::string Card::getType()
 {
     return type;
 }
 
-std::vector<Card> Card::getAssociatedCards()
+std::vector<std::string> Card::getAssociatedCards()
 {
     return associatedCards;
 }
@@ -95,9 +95,9 @@ void Card::setCardCode(std::string cardCode1)
     cardCode = cardCode1;
 }
 
-void Card::setRegionRef(std::string regionRef1)
+void Card::setRegion(std::string region1)
 {
-    regionRef = regionRef1;
+    region = region1;
 }
 
 void Card::setAttack(int attack1)
@@ -115,14 +115,14 @@ void Card::setHealth(int health1)
     health = health1;
 }
 
-void Card::setSpellSpeedRef(int spellSpeedRef1)
+void Card::setSpellSpeed(std::string spellSpeed1)
 {
-    spellSpeedRef = spellSpeedRef1;
+    spellSpeed = spellSpeed1;
 }
 
-void Card::setRarityRef(int rarityRef1)
+void Card::setRarity(std::string rarity1)
 {
-    rarityRef = rarityRef1;
+    rarity = rarity1;
 }
 
 void Card::setCollectible(bool collectible1)
@@ -160,12 +160,12 @@ void Card::setSupertype(std::string supertype1)
     supertype = supertype1;
 }
 
-void Card::setType(int type1)
+void Card::setType(std::string type1)
 {
     type = type1;
 }
 
-void Card::setAssociatedCards(std::vector<Card> associatedCards1)
+void Card::setAssociatedCards(std::vector<std::string> associatedCards1)
 {
     associatedCards = associatedCards1;
 }
@@ -183,4 +183,9 @@ void Card::setCardSubtypes(std::vector<std::string> cardSubtypes1)
 void Card::setCardAssets(std::map<std::string, std::string> cardAssets1)
 {
     cardAssets = cardAssets1;
+}
+
+bool Card::operator==(const Card& other) const
+{
+    return (cardCode == other.cardCode);
 }

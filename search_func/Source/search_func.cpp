@@ -4,9 +4,9 @@
 #include <memory>
 
 
-std::string mainQuery = "SELECT cardCode, " /*regions.name, */  "attack, cost, health, " /*spellSpeeds.name, */
-	    /*rarities.name, */ "collectible, sets.name, descriptionRaw, levelupDescriptionRaw, flavorText, "
-	    "cards.name, supertype, " /*type, */ "gameAbsolutePath, fullAbsolutePath FROM cards NATURAL JOIN "
+std::string mainQuery = "SELECT cardCode, regions.name, attack, cost, health, spellSpeeds.name, "
+	    "rarities.name, collectible, sets.name, descriptionRaw, levelupDescriptionRaw, flavorText, "
+	    "cards.name, supertype, type, gameAbsolutePath, fullAbsolutePath FROM cards NATURAL JOIN "
 	    "cardAssets LEFT JOIN regions ON regionRef = regions.nameRef LEFT JOIN spellSpeeds ON spellSpeedRef = "
 	    "spellSpeeds.nameRef LEFT JOIN rarities ON rarityRef = rarities.nameRef LEFT JOIN sets ON [set] = sets.nameRef ";
 	    
@@ -28,7 +28,7 @@ Card getCard(std::string cardCode)
 
 std::vector<Card> searchFor(SearchRequest sr)
 {
-	std::string sqlQuery = prepareSQLQuery(sr);
+    std::string sqlQuery = prepareSQLQuery(sr);
     std::vector<Card> cards = getCards(sqlQuery);
 
 	return cards;
@@ -68,12 +68,12 @@ Card turnIntoCard(sqlite3_stmt* stmt)
     int i = 0;
     Card card;
 	card.setCardCode( toStr( sqlite3_column_text(stmt, i++) ) );
-    //card.setRegionRef( toStr( sqlite3_column_text(stmt, i++) ) );
+    card.setRegion( toStr( sqlite3_column_text(stmt, i++) ) );
     card.setAttack( sqlite3_column_int(stmt, i++) );
     card.setCost( sqlite3_column_int(stmt, i++) );
     card.setHealth( sqlite3_column_int(stmt, i++) );
-    //card.setSpellSpeedRef( toStr( sqlite3_column_text(stmt, i++) ) );
-    //card.setRarityRef( toStr( sqlite3_column_text(stmt, i++) ) );
+    card.setSpellSpeed( toStr( sqlite3_column_text(stmt, i++) ) );
+    card.setRarity( toStr( sqlite3_column_text(stmt, i++) ) );
     card.setCollectible( sqlite3_column_int(stmt, i++) );
     card.setSet( toStr( sqlite3_column_text(stmt, i++) ) );
     card.setDescriptionRaw( toStr( sqlite3_column_text(stmt, i++) ) );
@@ -81,7 +81,7 @@ Card turnIntoCard(sqlite3_stmt* stmt)
     card.setFlavorText( toStr( sqlite3_column_text(stmt, i++) ) );
     card.setName( toStr( sqlite3_column_text(stmt, i++) ) );
     card.setSupertype( toStr( sqlite3_column_text(stmt, i++) ) );
-    //card.setType( toStr( sqlite3_column_text(stmt, i++) ) );
+    card.setType( toStr( sqlite3_column_text(stmt, i++) ) );
     
     std::map<std::string, std::string> assets;
     assets["gameAbsolutePath"] = toStr( sqlite3_column_text(stmt, i++) );
@@ -122,7 +122,7 @@ void takePluralData(Card& card, sqlite3* db)
         {
             case 0: card.setCardKeywords(data); break;
             case 1: card.setCardSubtypes(data); break;
-            //case 2: card.setAssociatedCards(data);
+            case 2: card.setAssociatedCards(data);
         }
     }
 }

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CARD_HPP
 #define CARD_HPP
 
@@ -9,12 +10,12 @@ class Card
 {
 private:
     std::string cardCode;
-    std::string regionRef;
+    std::string region;
     int attack;
     int cost;
     int health;
-    int spellSpeedRef;
-    int rarityRef;
+    std::string spellSpeed;
+    std::string rarity;
     bool collectible;
     std::string set;
     std::string descriptionRaw;
@@ -22,20 +23,20 @@ private:
     std::string flavorText;
     std::string name;
     std::string supertype;
-    int type;
-    std::vector<Card> associatedCards;
+    std::string type;
+    std::vector<std::string> associatedCards;
     std::vector<std::string> cardKeywords;
     std::vector<std::string> cardSubtypes;
     std::map<std::string, std::string> cardAssets;
 
 public:
     std::string getCardCode();
-    std::string getRegionRef();
+    std::string getRegion();
     int getAttack();
     int getCost();
     int getHealth();
-    int getSpellSpeedRef();
-    int getRarityRef();
+    std::string getSpellSpeed();
+    std::string getRarity();
     bool isCollectible();
     std::string getSet();
     std::string getDescriptionRaw();
@@ -43,18 +44,18 @@ public:
     std::string getFlavorText();
     std::string getName();
     std::string getSupertype();
-    int getType();
-    std::vector<Card> getAssociatedCards();
+    std::string getType();
+    std::vector<std::string> getAssociatedCards();
     std::vector<std::string> getCardKeywords();
     std::vector<std::string> getCardSubtypes();
     std::map<std::string, std::string> getCardAssets();
     void setCardCode(std::string cardCode);
-    void setRegionRef(std::string regionRef);
+    void setRegion(std::string region);
     void setAttack(int attack);
     void setCost(int cost);
     void setHealth(int health);
-    void setSpellSpeedRef(int spellSpeedRef);
-    void setRarityRef(int rarityRef);
+    void setSpellSpeed(std::string spellSpeed);
+    void setRarity(std::string rarity);
     void setCollectible(bool collectible);
     void setSet(std::string set);
     void setDescriptionRaw(std::string descriptionRaw);
@@ -62,11 +63,12 @@ public:
     void setFlavorText(std::string flavorText);
     void setName(std::string name);
     void setSupertype(std::string supertype);
-    void setType(int type);
-    void setAssociatedCards(std::vector<Card> associatedCards);
+    void setType(std::string type);
+    void setAssociatedCards(std::vector<std::string> associatedCards);
     void setCardKeywords(std::vector<std::string> cardKeywords);
     void setCardSubtypes(std::vector<std::string> cardSubtypes);
     void setCardAssets(std::map<std::string, std::string> cardAssets);
+    bool operator==(const Card& other) const;
 };
 
 #endif
