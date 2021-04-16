@@ -11,7 +11,10 @@ int main(int argc, char *argv[])
     sqlite3_open(":memory:", &_db);
     Json::Value root;
     
-    fd::FileDownloader testRun("data");
+    // REMEMBER each link should also have a name 
+    fd::FileDownloader downloader;                                                              
+    downloader.createDirectory("data");
+    
     std::string links_[] = {"https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json", 
                             "https://dd.b.pvp.net/latest/set1/en_us/data/set1-en_us.json", 
                             "https://dd.b.pvp.net/latest/set2/en_us/data/set2-en_us.json", 
@@ -22,8 +25,8 @@ int main(int argc, char *argv[])
                                 "set2-en_us.json", 
                                 "set3-en_us.json", 
                                 "set4-en_us.json"};
-    testRun.addLinks(links_, fileNames_, (sizeof(links_)/sizeof(links_[0])));
-    testRun.download();
+    downloader.addLinks(links_, fileNames_, (sizeof(links_)/sizeof(links_[0])));
+    downloader.download();
     
     QApplication a(argc, argv);
     MainWindow w;

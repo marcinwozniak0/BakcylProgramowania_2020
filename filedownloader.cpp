@@ -11,10 +11,15 @@
 using namespace fd;
 namespace fs = std::filesystem;
 
-FileDownloader::FileDownloader(std::string directoryPath_)
+FileDownloader::FileDownloader()
 { 
-    //creating directory if it doesn't already exists
+    curl = curl_easy_init();
+}
+
+void FileDownloader::createDirectory(std::string directoryPath_)
+{
     directoryPath = directoryPath_;
+    
     if(fs::exists(directoryPath))
     {
         printf("Directory already exists! \n");
@@ -23,31 +28,10 @@ FileDownloader::FileDownloader(std::string directoryPath_)
     {
         fs::create_directory(directoryPath);
     }
-    
-    //adding URLs and names to vectors
-    /*links.push_back("https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json");
-    fileNames.push_back("globals-en_us.json");
-    
-    links.push_back("https://dd.b.pvp.net/latest/set1/en_us/data/set1-en_us.json");
-    fileNames.push_back("set1-en_us.json");
-    
-    links.push_back("https://dd.b.pvp.net/latest/set2/en_us/data/set2-en_us.json");
-    fileNames.push_back("set2-en_us.json");
-    
-    links.push_back("https://dd.b.pvp.net/latest/set3/en_us/data/set3-en_us.json");
-    fileNames.push_back("set3-en_us.json");
-    
-    links.push_back("https://dd.b.pvp.net/latest/set4/en_us/data/set4-en_us.json");
-    fileNames.push_back("set4-en_us.json");*/
-    
-    //initializing curl
-    curl = curl_easy_init();
 }
 
 void FileDownloader::addLinks(std::string links_[], std::string fileNames_[], int numberOfLinks)
 {
-    
-    
     for(int i = 0; i < numberOfLinks; i++)
     {
         std::string l = links_[i];
