@@ -16,7 +16,7 @@ class DeckBuilder
     int heroDef;
     std::string firstRegion;
     std::string secondRegion;
-    std::map <Card,int> cardCount;
+    std::map <Card, int> cardCount;
     Deck deck;
     int checkNumberOfCard(Card card);
 
