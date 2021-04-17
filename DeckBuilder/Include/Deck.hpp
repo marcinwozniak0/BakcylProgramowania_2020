@@ -6,7 +6,6 @@
 class Deck
 {
     private:
-    int numberOfCards;
     int numberOfHeroes;
     std::string firstRegion;
     std::string secondRegion;
@@ -16,7 +15,10 @@ class Deck
     Deck();
     ~Deck();
     void addCard(Card &cardToAdd);
-    void removeCard(Card &cardToRemove);
+    void removeCard(int i);
     int length();
     std::vector <Card> getCardsAsVector();
+    int getNumberOfHeroes();
+    void increaseNumberOfHeroes();
+    void decreaseNumberOfHeroes();
 };
