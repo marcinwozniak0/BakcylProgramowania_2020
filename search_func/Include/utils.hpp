@@ -8,6 +8,3 @@
 
 void errorHandler(int, sqlite3*);
 std::string toStr(const unsigned char*);
-
-template<int size>
-std::vector<std::string> bitsetToVec(std::bitset<size>, std::string);

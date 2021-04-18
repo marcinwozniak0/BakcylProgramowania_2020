@@ -6,6 +6,9 @@
 int main()
 {
     searchFlags sf;
+    sf.hp.min = 4;
+    sf.regions = {"Ionia", "Noxus", "Bilgewater"};
+    sf.name = "a";
     std::vector<Card> cards = searchFor(sf);
     std::cout << cards.size() << std::endl;
     while(true)

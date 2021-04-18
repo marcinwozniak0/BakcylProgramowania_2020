@@ -7,14 +7,13 @@
 struct searchFlags
 {
     struct intmember    //notice: unset member means no filter
-    {                   //but member = 0 will give no results
+    {
         std::optional<int> value;
         std::optional<int> min;
         std::optional<int> max;
         
         intmember();
         intmember(int, int, int);
-        //intmember operator=(intmember);
     };
     
     intmember hp;

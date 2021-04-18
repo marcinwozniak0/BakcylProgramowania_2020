@@ -10,7 +10,14 @@ extern std::string mainQuery;
 Card getCard(std::string);
 std::vector<Card> searchFor(searchFlags);
 
-std::vector<Card> getCards(std::string);
+struct Query
+{
+    std::string text;
+    std::vector<int> bindings;
+    //int pageNr;
+};
+
+std::vector<Card> getCards(Query);
 Card turnIntoCard(sqlite3_stmt*);
 void takePluralData(Card&, sqlite3*);
-std::string prepareSQLQuery(searchFlags);
+Query prepareSQLQuery(searchFlags);

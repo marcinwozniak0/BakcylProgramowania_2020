@@ -13,7 +13,8 @@ std::string mainQuery = "SELECT cardCode, regions.name, attack, cost, health, sp
 	    
 Card getCard(std::string cardCode)
 {
-    std::string sqlQuery = mainQuery + "WHERE cardCode = '" + cardCode + "';";
+    Query sqlQuery;
+    sqlQuery.text = (mainQuery + "WHERE cardCode = '" + cardCode + "';").c_str();
     std::vector<Card> cards = getCards(sqlQuery);
     
     if(cards.empty())
@@ -28,14 +29,14 @@ Card getCard(std::string cardCode)
 
 std::vector<Card> searchFor(searchFlags sf)
 {
-    std::string sqlQuery = prepareSQLQuery(sf);
+    Query sqlQuery = prepareSQLQuery(sf);
     std::vector<Card> cards = getCards(sqlQuery);
 
 	return cards;
 }
 
 
-std::vector<Card> getCards(std::string sqlQuery)
+std::vector<Card> getCards(Query sqlQuery)
 {
     std::vector<Card> cards = {};
     
@@ -43,8 +44,14 @@ std::vector<Card> getCards(std::string sqlQuery)
 	sqlite3_open("database.sql", &db);
     sqlite3_stmt* stmt;
     
-    int exit = sqlite3_prepare_v2(db, sqlQuery.c_str(), -1, &stmt, NULL);
+    int exit = sqlite3_prepare_v2(db, sqlQuery.text.c_str(), -1, &stmt, NULL);
     errorHandler(exit, db);
+    
+    for(unsigned int i = 0; i < sqlQuery.bindings.size(); ++i)
+    {
+        exit = sqlite3_bind_int(stmt, i + 1, sqlQuery.bindings.at(i));
+        errorHandler(exit, db);
+    }
     
     while((exit = sqlite3_step(stmt)) == SQLITE_ROW)
     {
@@ -128,21 +135,15 @@ void takePluralData(Card& card, sqlite3* db)
 }
 
 
-std::string prepareSQLQuery(searchFlags sf)
+Query prepareSQLQuery(searchFlags sf)
 {
-	std::string query = mainQuery + "WHERE ";
-	
-	//********* untested *************
-	
-	if(sf.name != "")   //i'm thinking about automating this later
-	{
-	    query += "(cards.name LIKE '%" + sf.name + "%' OR "
-	            "regions.name LIKE '%" + sf.name + "%') AND ";
-	}
+    Query sqlQuery;
+
+	std::string query = mainQuery + "WHERE "
+	    "cards.name LIKE '%" + sf.name + "%' AND ";
 	
 	
 	std::map<std::string, searchFlags::intmember> iMemb;  //int members
-	//std::string names[3] = {"health", "cost", "attack"};    //attributes' names
 	
 	iMemb["health"] = sf.hp;
 	iMemb["cost"] = sf.cost;
@@ -152,24 +153,26 @@ std::string prepareSQLQuery(searchFlags sf)
 	{
 	    if(member.value != std::nullopt)
 	    {
-	        query += name + " = " + (char)('0' + member.value.value()) + " AND ";   //conversions only temporary
+	        query += name + " = ? AND ";
+	        sqlQuery.bindings.push_back(member.value.value());
 	    }
 	    else
 	    {
 	        if(member.min != std::nullopt)
 	        {
-	            query += name + " >= " + (char)('0' + member.min.value()) + " AND ";
+	            query += name + " >= ? AND ";
+	            sqlQuery.bindings.push_back(member.min.value());
 	        }
 	        if(member.max != std::nullopt)
 	        {
-	            query += name + " <= " + (char)('0' + member.max.value()) + " AND ";
+	            query += name + " <= ? AND ";
+	            sqlQuery.bindings.push_back(member.max.value());
 	        }
 	    }
 	} 
 	
 	
 	std::map<std::string, std::vector<std::string> > sMemb; //string members
-	//names = {"rarities.name", "type", "regions.name"};
 	
 	sMemb["rarities.name"] = sf.rarities;
 	sMemb["type"] = sf.types;
@@ -179,34 +182,23 @@ std::string prepareSQLQuery(searchFlags sf)
 	{
 	    if(member.empty() == false)
 	    {
-	        query += "(";
+	        query += name + " IN (";
 	        for(std::string value : member)
 	        {
-	            query += name + " = '" + value + "' OR ";
+	            query += "'" + value + "', ";
 	        }
-	        query = query.substr(0, query.size() - 4) + ") AND ";
+	        query = query.substr(0, query.size() - 2) + ") AND ";
 	    }
 	}
 	
-	if(query[query.size() - 2] == 'D')  //i'll also try to go around this later
-	{
-	    query = query.substr(0, query.size() - 4);
-	}
-	else
-	{
-	    query = query.substr(0, query.size() - 6);
-	}
-	query = query + "ORDER BY cards.name LIMIT (" + (char)(sf.pageNr - 1 + '0') + " * 15), 15;";
-	                                         //i'll probably use bind on that later, it'll be more safe
-	                                         //and we'll be able to have two digit pageNr
-	                                         //also maybe we could multi-bind it and get other pages faster
-	                                         //without having to go through this whole function again
 	
-	//***********************************/
+	query = query.substr(0, query.size() - 4) + 
+	    "ORDER BY cards.name LIMIT (? * 15), 15;";
+	sqlQuery.bindings.push_back(sf.pageNr - 1);
+	//also maybe we could multi-bind it and get other pages faster
+	//without having to go through this whole function again
 	
-	//finish query according to SearchRequest
 	
-	//query += "sets.name LIKE '_ou%' ORDER BY cards.name LIMIT 15;";
-    std::cout << query << std::endl;
-	return query;
+    sqlQuery.text = query;
+	return sqlQuery;
 }
