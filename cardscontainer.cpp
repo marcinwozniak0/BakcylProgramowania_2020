@@ -1,15 +1,30 @@
 #include "cardscontainer.h"
 
-CardsContainer::CardsContainer(QWidget* parent) : QWidget(parent)
+#include <QVariant>
+#include <iostream>
+
+CardsContainer::CardsContainer(QWidget* parent) :
+    QWidget(parent),
+    parent_(parent)
 {
 
-//    for(auto& it : cardButton)
-//    {
-//        it = new cardButton(id, this);
-//        connect(it, SIGNAL(clicked(int)), this, SIGNAL(digitClicked(int)));
+    createLayout(parent_);
 
-//    }
-//    createLayout();
+    displayCards();
+}
+
+void CardsContainer::displayCards(){
+
+        int i = 0;
+        for(auto& it : cards_){
+            showCard("../../BakcylProgramowania_2020/source/pic.png",it); //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po buttonach
+            it->setProperty("Id", i);                                     //TODO: ID powinno być id karty
+            i++;
+        }
+}
+
+void CardsContainer::createLayout(QWidget* parent)
+{
 
     int posX = 90;
     int posY = 30;
@@ -27,27 +42,14 @@ CardsContainer::CardsContainer(QWidget* parent) : QWidget(parent)
         cards_[i]->setFlat(true);
 
         if((i+1)% 5 == 0){
-            posY += cardHeight + 5;
+            posY += cardHeight + 5; //margin top/bottom
             posX -= (cardWight + 30) * 4;
         }else{
-            posX += cardWight + 30;
+            posX += cardWight + 30; //margin right/left
         }
 
-    }
 
-    displayCards();
-}
-
-void CardsContainer::displayCards(){
-        for(auto& it : cards_){
-            showCard("../../BakcylProgramowania_2020/source/pic.png",it); //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po buttonach
-        }
-}
-
-void CardsContainer::createLayout()
-{
-    QGridLayout* layout = new QGridLayout(this);
-
+   }
 
 }
 

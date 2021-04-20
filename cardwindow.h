@@ -15,12 +15,12 @@ class CardWindow : public QDialog
 
 public:
     explicit CardWindow(QWidget *parent = nullptr);
-     CardWindow(Card card, QWidget *parent = nullptr);
+     CardWindow(unsigned int cardId, QWidget *parent = nullptr);
     ~CardWindow();
 
 private:
     Ui::CardWindow *ui;
-    Card card_;
+    unsigned int cardId_;
 
 private slots:
     void on_close_w_clicked();
