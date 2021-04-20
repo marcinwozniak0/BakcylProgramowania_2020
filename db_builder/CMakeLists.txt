@@ -6,4 +6,4 @@ endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Include)
 add_executable(db_builder ${SOURCE_FILES})
-target_link_libraries(db_builder JsonCpp::JsonCpp ${SQLite3_LIBRARIES})
+target_link_libraries(db_builder JsonCpp::JsonCpp ${SQLite3_LIBRARIES} CURL::libcurl)

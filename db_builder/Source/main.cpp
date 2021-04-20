@@ -1,5 +1,6 @@
 #include "jsonInserter.hpp"
 #include "sqlite_helper.hpp"
+#include "filedownloader.h"
 #include <cstring>
 #include <fstream>
 #include <json/json.h>
@@ -24,9 +25,23 @@ Json::Value getJsonFromFile(const std::string& filename, const std::string& down
     std::ifstream file(filename);
     if (is_empty(file))
     {
+        file.close();
+        
+    
+        fd::FileDownloader downloader;                                                              
+        downloader.createDirectory("./");
+    
+        std::string links_[] = {download_url};
+        std::string fileNames_[] = {filename};
+        downloader.addLinks(links_, fileNames_, (sizeof(links_)/sizeof(links_[0])));
+        downloader.download();
+        
+        file.open(filename);
+        
+    
         // ya ya. This sucks, but it is sufficient for this PoC
-        throw std::runtime_error(
-            std::string("There are no json in " + filename + " Download it from " + std::string(download_url)));
+        //throw std::runtime_error(
+        //    std::string("There are no json in " + filename + " Download it from " + std::string(download_url)));
     }
     file >> json;
     return json;
@@ -40,13 +55,13 @@ int main()
 
     // temporary ugly shit. We are going to abadon it for sake of auto downloading
     Json::Value globalsJson =
-        getJsonFromFile("globals-ru_ru.json", "https://dd.b.pvp.net/latest/core/ru_ru/data/globals-ru_ru.json");
+        getJsonFromFile("globals-en_us.json", "https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json");
     fillGlobals(db, globalsJson);
     for (char i = '1'; i < '5'; ++i)
     {
         const auto setName = std::string("set") + i;
-        const auto fileName = setName + "-ru_ru.json";
-        auto url = "https://dd.b.pvp.net/latest/" + setName + "/ru_ru/data/" + fileName;
+        const auto fileName = setName + "-en_us.json";
+        auto url = "https://dd.b.pvp.net/latest/" + setName + "/en_us/data/" + fileName;
         Json::Value setJson = getJsonFromFile(fileName, url);
         fillSet(db, setJson);
     }
