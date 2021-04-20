@@ -3,12 +3,10 @@
 
 #include <QPixmap>
 #include <QRegularExpression>
+#include <iostream>
 
 #include "cardscontainer.h"
-#include "cardwindow.h"
 #include "searchrequest.h"
-
-void CenterWindow(QWidget *widget);
 
 constexpr size_t windowWight = 1200; //px
 constexpr size_t windowHeight = 800; //px
@@ -28,6 +26,9 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle("Deckbuilder");
 
     CardsContainer cardContainer(ui->groupBox_2);
+    for(auto& it : cardContainer.getCards()){
+        connect(it, &QPushButton::clicked, this, &MainWindow::cardClicked);
+    }
 
 }
 MainWindow::~MainWindow()
@@ -63,6 +64,17 @@ void MainWindow::on_Search_B_clicked(){
 
     request.ShowRequest();
     //TODO: Ustalić kolejność i znaczenie poszczególnych bitów w typie, rzadkości i regionach
+}
+void MainWindow::cardClicked(){
+    QPushButton *button = (QPushButton *)sender();
+    emit displayCardWindow(button->property("Id").toUInt(), this);
+
+}
+void MainWindow::displayCardWindow(unsigned int id, QWidget* parent){ //TODO: Ustalić czy okno ma przyjmować kartę czy wystarczy samo jej id ustalone podczas ustawiania pix mapy.
+    std::cerr<< id << " ";                                          //      Przesyłanie całej karty wymagało by stworzenia podklasy QPushButton z odpowiednim polem
+    CardWindow cardW(id, parent);
+    cardW.setModal(true);
+    cardW.exec();
 }
 
 void centerWindow(QWidget *widget){
