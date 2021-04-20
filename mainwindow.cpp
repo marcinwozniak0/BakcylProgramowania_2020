@@ -48,15 +48,14 @@ void MainWindow::on_Search_B_clicked(){
 
     SearchRequest request(ui->Health_from->text().toInt(),
                           ui->Health_to->text().toInt(),
-                          ui->Health_value->text().toInt(),
 
                           ui->Cost_from->text().toInt(),
                           ui->Cost_to->text().toInt(),
-                          ui->Cost_value->text().toInt(),
+
 
                           ui->Attack_from->text().toInt(),
                           ui->Attack_to->text().toInt(),
-                          ui->Attack_value->text().toInt(),
+
                           ui->Name_T->text().toStdString(),
                           rarity,
                           type,

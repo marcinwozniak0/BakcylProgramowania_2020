@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1205</width>
-    <height>800</height>
+    <width>1223</width>
+    <height>827</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -42,7 +42,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>6</number>
+        <number>5</number>
        </property>
        <widget class="QWidget" name="page"/>
        <widget class="QWidget" name="Health">
@@ -105,29 +105,6 @@
           <string>to</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_9">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>90</y>
-           <width>71</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>value</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="Health_value">
-         <property name="geometry">
-          <rect>
-           <x>70</x>
-           <y>90</y>
-           <width>91</width>
-           <height>21</height>
-          </rect>
-         </property>
-        </widget>
        </widget>
        <widget class="QWidget" name="Cost">
         <widget class="QLabel" name="label_6">
@@ -141,29 +118,6 @@
          </property>
          <property name="text">
           <string>Cost</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_10">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>90</y>
-           <width>71</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>value</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="Cost_value">
-         <property name="geometry">
-          <rect>
-           <x>70</x>
-           <y>90</y>
-           <width>91</width>
-           <height>21</height>
-          </rect>
          </property>
         </widget>
         <widget class="QLabel" name="label_11">
@@ -225,29 +179,6 @@
          </property>
          <property name="text">
           <string>Attack</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_13">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>90</y>
-           <width>71</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Value</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="Attack_value">
-         <property name="geometry">
-          <rect>
-           <x>70</x>
-           <y>90</y>
-           <width>91</width>
-           <height>21</height>
-          </rect>
          </property>
         </widget>
         <widget class="QLabel" name="label_14">
@@ -815,8 +746,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1205</width>
-     <height>25</height>
+     <width>1223</width>
+     <height>38</height>
     </rect>
    </property>
   </widget>

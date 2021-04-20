@@ -12,13 +12,10 @@ public:
     SearchRequest();
     SearchRequest(size_t hpMin,
                   size_t hpMax,
-                  size_t hp,
                   size_t costMin,
                   size_t costMax,
-                  size_t cost,
-                  size_t atackMin,
-                  size_t atackMax,
-                  size_t atack,
+                  size_t attackMin,
+                  size_t attackMax,
                   std::string name,
                   QList<QCheckBox*>& rarity,
                   QList<QCheckBox*>& cardType,
@@ -29,15 +26,12 @@ private:
     //HP
     size_t hpMin_ {};
     size_t hpMax_ {};
-    size_t hp_ {};
     //Cost
     size_t costMin_ {};
     size_t costMax_ {};
-    size_t cost_ {};
     //Atack
-    size_t atackMin_ {};
-    size_t atackMax_ {};
-    size_t atack_ {};
+    size_t attackMin_ {};
+    size_t attackMax_ {};
     //Name
     std::string name_ {};
     //Rarity
