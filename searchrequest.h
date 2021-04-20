@@ -2,7 +2,7 @@
 #define SEARCHREQUEST_H
 
 #include <cstddef>
-#include <bitset>
+#include <vector>
 #include <QList>
 #include <QCheckBox>
 
@@ -10,12 +10,12 @@ class SearchRequest
 {
 public:
     SearchRequest();
-    SearchRequest(size_t hpMin,
-                  size_t hpMax,
-                  size_t costMin,
-                  size_t costMax,
-                  size_t attackMin,
-                  size_t attackMax,
+    SearchRequest(int hpMin,
+                  int hpMax,
+                  int costMin,
+                  int costMax,
+                  int attackMin,
+                  int attackMax,
                   std::string name,
                   QList<QCheckBox*>& rarity,
                   QList<QCheckBox*>& cardType,
@@ -24,22 +24,22 @@ public:
     void ShowRequest();
 private:
     //HP
-    size_t hpMin_ {};
-    size_t hpMax_ {};
+    std::optional<size_t> hpMin_ {};
+    std::optional<size_t> hpMax_ {};
     //Cost
-    size_t costMin_ {};
-    size_t costMax_ {};
+    std::optional<size_t> costMin_ {};
+    std::optional<size_t> costMax_ {};
     //Atack
-    size_t attackMin_ {};
-    size_t attackMax_ {};
+    std::optional<size_t> attackMin_ {};
+    std::optional<size_t> attackMax_ {};
     //Name
     std::string name_ {};
     //Rarity
-    std::bitset<3> rarity_ {};
+    std::vector<std::string> rarity_ {};
     //Type
-    std::bitset<4> cardType_ {};
+    std::vector<std::string> cardType_ {};
     //Region
-    std::bitset<13> region_ {};
+    std::vector<std::string> region_ {};
 };
 
 #endif // SEARCHREQUEST_H
