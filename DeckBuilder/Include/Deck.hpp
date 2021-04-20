@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <vector>
 #include "Card.hpp"
@@ -5,7 +6,6 @@
 class Deck
 {
     private:
-    int numberOfCards;
     int numberOfHeroes;
     std::string firstRegion;
     std::string secondRegion;
@@ -14,6 +14,11 @@ class Deck
     public:
     Deck();
     ~Deck();
-    friend void addCard(Card &cardToAdd);
-    friend void removeCard(Card &cardToRemove);
+    void addCard(Card &cardToAdd);
+    void removeCard(int i);
+    int length();
+    std::vector <Card> getCardsAsVector();
+    int getNumberOfHeroes();
+    void increaseNumberOfHeroes();
+    void decreaseNumberOfHeroes();
 };
