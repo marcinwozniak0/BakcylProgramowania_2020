@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
     downloader.download();
     
     QApplication a(argc, argv);
+    a.setWindowIcon(QIcon("../../BakcylProgramowania_2020/source/icon.png"));
     MainWindow w;
     w.show();
     return a.exec();

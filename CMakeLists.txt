@@ -33,18 +33,19 @@ endif()
 
 include(External_GTest.cmake)
 
+#GTEST
 add_executable(bakcyl_2020_ut "test.cpp")
 target_link_libraries(bakcyl_2020_ut ${GTEST_MAIN_LIBRARY}
                                      ${GTEST_LIBRARY}
                                      ${GMOCK_MAIN_LIBRARY}
                                      ${GMOCK_LIBRARY})
 
-
 #LOGIC
 include_directories(${PROJECT_SOURCE_DIR}/Logger)
-file(GLOB LOGGER_LIB ${PROJECT_SOURCE_DIR}/Logger/Logger.cpp)
+file(GLOB LOGGER_LIB ${PROJECT_SOURCE_DIR}/Logger/*.cpp)
+add_subdirectory(${PROJECT_SOURCE_DIR}/DeckBuilder)
 
-
+#QT
 set(PROJECT_SOURCES
     main.cpp
     mainwindow.cpp
@@ -52,6 +53,8 @@ set(PROJECT_SOURCES
     mainwindow.ui
     filedownloader.cpp
     filedownloader.h
+    searchrequest.cpp
+    cardwindow.cpp
     ${LOGGER_LIB})
 
 add_executable(Deckbuilder ${PROJECT_SOURCES})
@@ -59,7 +62,7 @@ add_executable(Deckbuilder ${PROJECT_SOURCES})
 target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets ${SQLite3_LIBRARIES} JsonCpp::JsonCpp CURL::libcurl)
 
 # database builder
-include(${PROJECT_SOURCE_DIR}/db_builder/CMakeLists.txt)
+add_subdirectory(${PROJECT_SOURCE_DIR}/db_builder)
 
 # Valgrind
 find_program(VALGRIND "valgrind")
