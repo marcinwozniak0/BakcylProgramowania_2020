@@ -1,5 +1,6 @@
 #include "DeckBuilder.hpp"
 #include "Deck.hpp"
+#include "IllegalCardExceptions.cpp"
 
 DeckBuilder::DeckBuilder()
 {
@@ -27,7 +28,7 @@ int DeckBuilder::checkNumberOfCard(Card card)
 void DeckBuilder::addCard(Card &cardToAdd)
 {
     int deckLength = deck.length();
-    if (deckLength < maxNumberOfCards && checkNumberOfCard(cardToAdd) < maxNumberOfEachCard) 
+    if (deckLength < maxNumberOfCards && deckLength >= 0 && checkNumberOfCard(cardToAdd) < maxNumberOfEachCard) 
     {
         if (firstRegion == "") 
         {
@@ -39,7 +40,7 @@ void DeckBuilder::addCard(Card &cardToAdd)
         } 
         else if (!(firstRegion == cardToAdd.getRegion() || secondRegion == cardToAdd.getRegion())) 
         {
-            throw new std::exception;                                       //TODO: change exception
+            throw IllegalCardException("Invalid region");
             return;
         }
 
@@ -55,56 +56,67 @@ void DeckBuilder::addCard(Card &cardToAdd)
     } 
     else 
     {
-        throw new std::exception;                                            //TODO: change exception
+        throw IllegalCardException("Too few or too many cards");
     }
 }
 
 void DeckBuilder::removeCard(Card &cardToRemove)
 {
     int deckLength = deck.length();
-    for (int i = 0; i < deckLength; i++)
+    if (deckLength > 0)
     {
-        if (deck.getCardsAsVector().at(i) == cardToRemove)
+        for (int i = 0; i < deckLength; i++)
         {
-            std::string cardRegion = cardToRemove.getRegion();
-
-            if (cardToRemove.getType() == "hero")
+            if (deck.getCardsAsVector().at(i) == cardToRemove)
             {
-                deck.decreaseNumberOfHeroes();
-            }
+                std::string cardRegion = cardToRemove.getRegion();
 
-            deck.removeCard(i);
+                if (cardToRemove.getType() == "hero")
+                {
+                    deck.decreaseNumberOfHeroes();
+                }
+
+                deck.removeCard(i);
             
-            int counter = 0;
-            int deckLength = deck.length();
-            for (int j = 0; j < deckLength; j++)
-            {
-                if(deck.getCardsAsVector().at(j).getRegion() == cardRegion)
+                int counter = 0;
+                int deckLength = deck.length();
+                for (int j = 0; j < deckLength; j++)
                 {
-                    break;
-                } 
-                else 
-                {
-                    counter++;
+                    if(deck.getCardsAsVector().at(j).getRegion() == cardRegion)
+                    {
+                        break;
+                    } 
+                    else 
+                    {
+                        counter++;
+                    }
                 }
-            }
 
-            if (counter == deckLength)
-            {
-                if (firstRegion == cardRegion)
+                if (counter == deckLength)
                 {
-                    firstRegion = "";
-                    return;
-                } 
-                else if (secondRegion == cardRegion)
-                {
-                    secondRegion = "";
-                    return;
+                    if (firstRegion == cardRegion)
+                    {
+                        firstRegion = "";
+                        return;
+                    } 
+                    else if (secondRegion == cardRegion)
+                    {
+                        secondRegion = "";
+                        return;
+                    }
                 }
-            }
 
-            return;
+                return;
+            }
+            else
+            {
+                throw IllegalCardException("This card doesn't occur in this deck");
+            }
         }
+    }
+    else
+    {
+        throw IllegalCardException("There is no cards to remove");
     }
 }
 
