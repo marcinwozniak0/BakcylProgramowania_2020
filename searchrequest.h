@@ -10,16 +10,16 @@ class SearchRequest
 {
 public:
     SearchRequest();
-    SearchRequest(int hpMin,
-                  int hpMax,
-                  int costMin,
-                  int costMax,
-                  int attackMin,
-                  int attackMax,
+    SearchRequest(std::string hpMin,
+                  std::string hpMax,
+                  std::string costMin,
+                  std::string costMax,
+                  std::string attackMin,
+                  std::string attackMax,
                   std::string name,
-                  QList<QCheckBox*>& rarity,
-                  QList<QCheckBox*>& cardType,
-                  QList<QCheckBox*>& region);
+                  std::vector<std::string> rarity,
+                  std::vector<std::string> cardType,
+                  std::vector<std::string> region);
     //Devfunc
     void ShowRequest();
 private:

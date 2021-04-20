@@ -24,6 +24,8 @@ private:
     void createCards();
     void displayCards();
 
+    std::vector<std::string> convertCheckbox(std::string);
+
 private slots:
 
     void on_Search_B_clicked();

@@ -39,30 +39,34 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_Search_B_clicked(){
 
-    QRegularExpression rarity_regex("Rarity_?");
-    auto rarity = ui->Rarity->findChildren<QCheckBox*>(rarity_regex);
-    QRegularExpression type_regex("Typ_?");
-    auto type = ui->Type->findChildren<QCheckBox*>(type_regex);
-    QRegularExpression region_regex("Region_??");
-    auto regions = ui->Region->findChildren<QCheckBox*>(region_regex);
+    SearchRequest request(ui->Health_from->text().toStdString(),
+                          ui->Health_to->text().toStdString(),
 
-    SearchRequest request(ui->Health_from->text().toInt(),
-                          ui->Health_to->text().toInt(),
-
-                          ui->Cost_from->text().toInt(),
-                          ui->Cost_to->text().toInt(),
+                          ui->Cost_from->text().toStdString(),
+                          ui->Cost_to->text().toStdString(),
 
 
-                          ui->Attack_from->text().toInt(),
-                          ui->Attack_to->text().toInt(),
+                          ui->Attack_from->text().toStdString(),
+                          ui->Attack_to->text().toStdString(),
 
                           ui->Name_T->text().toStdString(),
-                          rarity,
-                          type,
-                          regions);
+                          convertCheckbox("Rarity_?"),
+                          convertCheckbox("Typ_?"),
+                          convertCheckbox("Region_??"));
 
     request.ShowRequest();
-    //TODO: Ustalić kolejność i znaczenie poszczególnych bitów w typie, rzadkości i regionach
+
+}
+std::vector<std::string> MainWindow::convertCheckbox(std::string regex){
+    QRegularExpression chexbox_regex(regex.c_str());
+    std::vector<std::string> checkboxNames;
+
+    for(auto& it : ui->groupBox_3->findChildren<QCheckBox*>(chexbox_regex)){
+        if(it->isChecked()){
+                checkboxNames.push_back(it->text().toUtf8().constData());
+        }
+    }
+    return checkboxNames;
 }
 void MainWindow::cardClicked(){
     QPushButton *button = (QPushButton *)sender();
