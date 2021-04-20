@@ -48,16 +48,37 @@ void DeckBuilder::addCard(Card &cardToAdd)
             deck.increaseNumberOfHeroes();
             deck.addCard(cardToAdd);
         } 
+        else if (cardToAdd.getType() == "hero" && deck.getNumberOfHeroes() >= maxNumberOfHeroes)
+        {
+            throw IllegalCardException("Too many heroes");
+            return;
+        }
         else 
         {
             deck.addCard(cardToAdd);
         }
     } 
-    else 
+    else if (deckLength >= maxNumberOfCards)
     {
-        throw IllegalCardException("Too few or too many cards");
+        throw IllegalCardException("Too many cards");
         return;
     }
+    else if (checkNumberOfCard(cardToAdd) >= maxNumberOfEachCard)
+    {
+        throw IllegalCardException("A card can't be added more than 3 times");
+        return;
+    }
+    else if (deckLength < 0)
+    {
+        throw IllegalCardException("Too few cards");
+        return;
+    }
+    else
+    {
+        throw IllegalCardException("Other exception");
+        return;
+    }
+    
 }
 
 void DeckBuilder::removeCard(Card &cardToRemove)
@@ -118,7 +139,7 @@ void DeckBuilder::removeCard(Card &cardToRemove)
     }
     else
     {
-        throw IllegalCardException("There is no cards to remove");
+        throw IllegalCardException("There are no cards to remove");
         return;
     }
 }
