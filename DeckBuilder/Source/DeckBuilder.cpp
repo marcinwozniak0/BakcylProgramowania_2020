@@ -1,13 +1,12 @@
 #include "DeckBuilder.hpp"
 #include "Deck.hpp"
-#include "IllegalCardExceptions.cpp"
+#include "IllegalCardExceptions.hpp"
 
 DeckBuilder::DeckBuilder()
 {
-    int maxNumberOfCards = 40;
-    int maxNumberOfHeroes = 6;
-    int maxNumberOfEachCard = 3;
-    int heroDef = 2;
+    const int maxNumberOfCards = 40;
+    const int maxNumberOfHeroes = 6;
+    const int maxNumberOfEachCard = 3;
     std::string firstRegion = "";
     std::string secondRegion = "";
 }

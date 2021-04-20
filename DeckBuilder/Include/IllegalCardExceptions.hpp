@@ -1,3 +1,4 @@
+#pragma once
 #include <exception>
 #include <string>
 
@@ -12,6 +13,5 @@ public:
         return message_.c_str();
     }
 };
-
 
 IllegalCardException::IllegalCardException(const std::string& message) : message_(message) {}
