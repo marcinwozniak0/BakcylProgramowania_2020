@@ -57,6 +57,7 @@ void DeckBuilder::addCard(Card &cardToAdd)
     else 
     {
         throw IllegalCardException("Too few or too many cards");
+        return;
     }
 }
 
@@ -67,6 +68,12 @@ void DeckBuilder::removeCard(Card &cardToRemove)
     {
         for (int i = 0; i < deckLength; i++)
         {
+            if (i == deckLength)
+            {
+                throw IllegalCardException("This card doesn't occur in this deck");
+                return;
+            }
+
             if (deck.getCardsAsVector().at(i) == cardToRemove)
             {
                 std::string cardRegion = cardToRemove.getRegion();
@@ -107,16 +114,13 @@ void DeckBuilder::removeCard(Card &cardToRemove)
                 }
 
                 return;
-            }
-            else
-            {
-                throw IllegalCardException("This card doesn't occur in this deck");
-            }
+            } 
         }
     }
     else
     {
         throw IllegalCardException("There is no cards to remove");
+        return;
     }
 }
 
