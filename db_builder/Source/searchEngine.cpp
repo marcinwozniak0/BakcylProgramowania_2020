@@ -27,16 +27,36 @@ struct DynamicQuery
 void DynamicQuery::addFilters(const Filters& filters)
 {
     queryText += " WHERE 1=1";
+    // cardName partial search
     if (filters.cardName.size() > 0)
     {
         paramQueue.push_back(filters.cardName);
         queryText += " AND cards.name LIKE '%'|| ? ||'%'";
     }
+    
+    // whitelists-based filters
     if (filters.regionNames.size() > 0)
     {
         paramQueue.insert(paramQueue.end(), filters.regionNames.begin(), filters.regionNames.end());
         queryText += " AND regions.name IN " + buildPlaceholdersList(filters.regionNames.size());
     }
+    if (filters.setNames.size() > 0)
+    {
+        paramQueue.insert(paramQueue.end(), filters.setNames.begin(), filters.setNames.end());
+        queryText += " AND sets.name IN " + buildPlaceholdersList(filters.setNames.size());
+    }
+    if (filters.rarityNames.size() > 0)
+    {
+        paramQueue.insert(paramQueue.end(), filters.rarityNames.begin(), filters.rarityNames.end());
+        queryText += " AND rarities.name IN " + buildPlaceholdersList(filters.rarityNames.size());
+    }
+    if (filters.spellSpeedNames.size() > 0)
+    {
+        paramQueue.insert(paramQueue.end(), filters.spellSpeedNames.begin(), filters.spellSpeedNames.end());
+        queryText += " AND spellSpeeds.name IN " + buildPlaceholdersList(filters.spellSpeedNames.size());
+    }
+    
+    // numeric-values range-based filters
     if (filters.minAttack.has_value())
     {
         paramQueue.push_back(std::to_string(*filters.minAttack));
@@ -46,6 +66,26 @@ void DynamicQuery::addFilters(const Filters& filters)
     {
         paramQueue.push_back(std::to_string(*filters.maxAttack));
         queryText += " AND attack <= ?";
+    }
+    if (filters.minCost.has_value())
+    {
+        paramQueue.push_back(std::to_string(*filters.minCost));
+        queryText += " AND cost >= ?";
+    }
+    if (filters.maxCost.has_value())
+    {
+        paramQueue.push_back(std::to_string(*filters.maxCost));
+        queryText += " AND cost <= ?";
+    }
+    if (filters.minHealth.has_value())
+    {
+        paramQueue.push_back(std::to_string(*filters.minHealth));
+        queryText += " AND health >= ?";
+    }
+    if (filters.maxHealth.has_value())
+    {
+        paramQueue.push_back(std::to_string(*filters.maxHealth));
+        queryText += " AND health <= ?";
     }
     queryText += " ";
 }
