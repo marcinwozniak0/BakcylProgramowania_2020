@@ -3,17 +3,15 @@
 
 #include <QPixmap>
 #include <QRegularExpression>
+#include <iostream>
 
-#include "cardwindow.h"
+#include "cardscontainer.h"
 #include "searchrequest.h"
-Card card;
-void CenterWindow(QWidget *widget);
-void showCard(QString path, QPushButton* button);
 
 constexpr size_t windowWight = 1200; //px
 constexpr size_t windowHeight = 800; //px
 
-void CenterWindow(QWidget *widget);
+void centerWindow(QWidget *widget);
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -21,60 +19,68 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
-
     ui->stackedWidget->setCurrentIndex(0);
-    DisplayCards();
     setFixedSize(windowWight,windowHeight);
-
     setFixedSize(windowWight,windowHeight);
-    CenterWindow(this);
+    centerWindow(this);
     this->setWindowTitle("Deckbuilder");
+
+    CardsContainer cardContainer(ui->groupBox_2);
+    for(auto& it : cardContainer.getCards()){
+        connect(it, &QPushButton::clicked, this, &MainWindow::cardClicked);
+    }
 
 }
 MainWindow::~MainWindow()
 {
+    delete ui;
 }
 
 
 void MainWindow::on_Search_B_clicked(){
 
-    QRegularExpression rarity_regex("Rarity_?");
-    auto rarity = ui->Rarity->findChildren<QCheckBox*>(rarity_regex);
-    QRegularExpression type_regex("Typ_?");
-    auto type = ui->Type->findChildren<QCheckBox*>(type_regex);
-    QRegularExpression region_regex("Region_??");
-    auto regions = ui->Region->findChildren<QCheckBox*>(region_regex);
+    SearchRequest request(ui->Health_from->text().toStdString(),
+                          ui->Health_to->text().toStdString(),
 
-    SearchRequest request(ui->Health_from->text().toInt(),
-                          ui->Health_to->text().toInt(),
-                          ui->Health_value->text().toInt(),
+                          ui->Cost_from->text().toStdString(),
+                          ui->Cost_to->text().toStdString(),
 
-                          ui->Cost_from->text().toInt(),
-                          ui->Cost_to->text().toInt(),
-                          ui->Cost_value->text().toInt(),
 
-                          ui->Attack_from->text().toInt(),
-                          ui->Attack_to->text().toInt(),
-                          ui->Attack_value->text().toInt(),
+                          ui->Attack_from->text().toStdString(),
+                          ui->Attack_to->text().toStdString(),
+
                           ui->Name_T->text().toStdString(),
-                          rarity,
-                          type,
-                          regions);
+                          convertCheckbox("Rarity_?"),
+                          convertCheckbox("Typ_?"),
+                          convertCheckbox("Region_??"));
 
     request.ShowRequest();
-    //TODO: Ustalić kolejność i znaczenie poszczególnych bitów w typie, rzadkości i regionach
+
 }
-void MainWindow::DisplayCards(){
-        QRegularExpression pic_regex("button_pic??");
-        auto childrensPic = ui->groupBox_2->findChildren<QPushButton*>(pic_regex);
-        for(auto& it : childrensPic){
-            showCard("../../BakcylProgramowania_2020/source/pic.png",it); //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po label
+std::vector<std::string> MainWindow::convertCheckbox(std::string regex){
+    QRegularExpression chexbox_regex(regex.c_str());
+    std::vector<std::string> checkboxNames;
+
+    for(auto& it : ui->groupBox_3->findChildren<QCheckBox*>(chexbox_regex)){
+        if(it->isChecked()){
+                checkboxNames.push_back(it->text().toUtf8().constData());
         }
+    }
+    return checkboxNames;
+}
+void MainWindow::cardClicked(){
+    QPushButton *button = (QPushButton *)sender();
+    emit displayCardWindow(button->property("Id").toUInt(), this);
+
+}
+void MainWindow::displayCardWindow(unsigned int id, QWidget* parent){ //TODO: Ustalić czy okno ma przyjmować kartę czy wystarczy samo jej id ustalone podczas ustawiania pix mapy.
+    std::cerr<< id << " ";                                          //      Przesyłanie całej karty wymagało by stworzenia podklasy QPushButton z odpowiednim polem
+    CardWindow cardW(id, parent);
+    cardW.setModal(true);
+    cardW.exec();
 }
 
-
-void CenterWindow(QWidget *widget){
+void centerWindow(QWidget *widget){
 
     int x, y;
     int screenWidth;
@@ -91,13 +97,6 @@ void CenterWindow(QWidget *widget){
 
     widget->setGeometry(x,y,windowWight,windowHeight);
 
-}
-
-void showCard(QString path, QPushButton* button){
-    QPixmap picture(path);
-    QIcon buttonIcon(picture);
-    button->setIcon(buttonIcon);
-    button->setIconSize(button->rect().size());
 }
 
 
@@ -132,10 +131,3 @@ void MainWindow::on_Region_B_clicked()
      ui->stackedWidget->setCurrentIndex(6);
 }
 
-void MainWindow::on_button_pic1_clicked()
-{
-
-    CardWindow cardw(card);
-    cardw.setModal(true);
-    cardw.exec();
-}
