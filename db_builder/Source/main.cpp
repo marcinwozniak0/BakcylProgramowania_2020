@@ -56,18 +56,43 @@ int main()
     sqlite3_exec(db.get(), "END TRANSACTION;", NULL, NULL, NULL);
 
     Pagination pagination;
-    pagination.limit = 3;
-    pagination.offset = 1;
+    pagination.limit = 20;
+    pagination.offset = 0;
     Filters filters;
-    filters.cardName = "yA";
-    filters.minAttack = 2;
-    filters.maxAttack = 4;
+    /* filters.cardName = "niemoż"; */
+    filters.regionNames = {"Ionia"};
+    filters.setNames = {"Zew Góry"};
+    filters.spellSpeedNames = {"Szybkie", "Błyskawiczne"};
+    filters.minCost = 2;
+    filters.maxCost = 4;
+    filters.minHealth = 0;
+    filters.maxHealth = 0;
     auto cards = searchCards(db, filters, pagination);
     std::cout << cards.size() << "\n";
     for (auto& card : cards)
     {
         std::cout << card.name << " : " << card.cardCode << "\n";
     }
+
+    // More QTish example for UI team (commented out, because I used not yet existing funcs):
+
+    /* filters.regionNames = extractTickedCheckboxesToWhitelist(regionsCheckboxes); */
+    /* if(minCostBox.isFilled()) */
+    /* { */
+    /*     filters.minCost = minCostBox.val; */
+    /* } */
+    /* if(maxCostBox.isFilled()) */
+    /* { */
+    /*     filters.minCost = maxCostBox.val; */
+    /* } */
+    /* //etc */
+    /* filters.cardName = getTextBoxVal(cardNameBox); */
+    /* pagination.limit = cardsPerPage; */
+    /* pagination.offset = calcOffset(cardsPerPage, pageNumber) // could be just cardsPerPage * (pageNumber - 1). If you want, we probably can keep that conversion at our place */
+
+    // Please do not force tight coupling of UI and database logic. We don't want to be dependent on you.
+    // Fortunately, I'm not a front-end developer, but light layer just converting UI elems to STL containers feel more reasonable for me
+    // than introducing another overcomplicated middleware object like `SearchRequest` proposed by UI team
 }
 
 void fillGlobals(unique_sqlite3& db, const Json::Value& json)
