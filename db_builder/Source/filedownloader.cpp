@@ -54,7 +54,7 @@ void FileDownloader::download()
         
         FILE *fileToTest = fopen(fileDirectory.c_str(), "r"); 
         
-        if(fileToTest)
+        /*if(fileToTest)
         {
             std::string msg = fileNames[i] + " already exists!";
             std::cout<<msg<<std::endl;
@@ -62,7 +62,7 @@ void FileDownloader::download()
             fclose(fileToTest);
             i++;
             continue;            
-        }
+        }*/
         
         //some curl setup     
         fp = fopen(fileNames[i].c_str(), "wb");
@@ -85,11 +85,11 @@ void FileDownloader::download()
         }
     
         //moving downloaded file to folder created with folderPath 
-        /*std::string newPath = directoryPath + "/" + fileNames[i];
+        std::string newPath = directoryPath + "/" + fileNames[i];
         if(rename(fileNames[i].c_str(), newPath.c_str()) < 0)
         {
             printf("ERROR! There's probly no directory 'data'. \n");
-        } */
+        } 
         
         fclose(fp);
         i++;

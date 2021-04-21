@@ -27,18 +27,18 @@ Json::Value getJsonFromFile(const std::string& filename, const std::string& down
     {
         file.close();
         
-    
-        fd::FileDownloader downloader;                                                              
-        downloader.createDirectory("./");
+        fd::FileDownloader downloader;  
+        std::string directoryPath_ = "./data";                            
+        downloader.createDirectory(directoryPath_);
     
         std::string links_[] = {download_url};
         std::string fileNames_[] = {filename};
         downloader.addLinks(links_, fileNames_, (sizeof(links_)/sizeof(links_[0])));
         downloader.download();
         
-        file.open(filename);
+        std::string filename_ = directoryPath_ + "/" + filename;
+        file.open(filename_);
         
-    
         // ya ya. This sucks, but it is sufficient for this PoC
         //throw std::runtime_error(
         //    std::string("There are no json in " + filename + " Download it from " + std::string(download_url)));
