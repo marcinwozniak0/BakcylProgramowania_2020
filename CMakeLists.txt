@@ -51,8 +51,6 @@ set(PROJECT_SOURCES
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
-    filedownloader.cpp
-    filedownloader.h
     searchrequest.cpp
     cardwindow.cpp
     ${LOGGER_LIB})

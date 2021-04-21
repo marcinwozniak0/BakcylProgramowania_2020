@@ -22,7 +22,7 @@ void FileDownloader::createDirectory(std::string directoryPath_)
     
     if(fs::exists(directoryPath))
     {
-        printf("Directory already exists! \n");
+        //printf("Directory already exists! \n");
     }
     else 
     {
@@ -85,11 +85,11 @@ void FileDownloader::download()
         }
     
         //moving downloaded file to folder created with folderPath 
-        std::string newPath = directoryPath + "/" + fileNames[i];
+        /*std::string newPath = directoryPath + "/" + fileNames[i];
         if(rename(fileNames[i].c_str(), newPath.c_str()) < 0)
         {
             printf("ERROR! There's probly no directory 'data'. \n");
-        } 
+        } */
         
         fclose(fp);
         i++;
