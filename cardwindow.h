@@ -1,5 +1,4 @@
-#ifndef CARDWINDOW_H
-#define CARDWINDOW_H
+#pragma once
 
 #include <QDialog>
 
@@ -26,4 +25,4 @@ private slots:
     void on_close_w_clicked();
 };
 
-#endif // CARDWINDOW_H
+

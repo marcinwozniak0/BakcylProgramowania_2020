@@ -1,5 +1,4 @@
-#ifndef CARDSCONTAINER_H
-#define CARDSCONTAINER_H
+#pragma once
 
 #include <QWidget>
 #include <QGridLayout>
@@ -31,4 +30,3 @@ private:
 
 };
 
-#endif // CARDSCONTAINER_H

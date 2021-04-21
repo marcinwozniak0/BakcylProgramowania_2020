@@ -34,6 +34,11 @@ void CardsContainer::createLayout(QWidget* parent)
 
     const size_t maxCardsDisplay = 15;
 
+    const size_t cardsInRow = 5;
+
+    const size_t marginTopBottom = 5;
+    const size_t marginLeftRight = 30;
+
     for(size_t i = 0; i < maxCardsDisplay; i++){
 
         cards_.push_back(new QPushButton(parent));
@@ -41,11 +46,11 @@ void CardsContainer::createLayout(QWidget* parent)
         cards_[i]->setMinimumSize(cardWight,cardHeight);
         cards_[i]->setFlat(true);
 
-        if((i+1)% 5 == 0){
-            posY += cardHeight + 5; //margin top/bottom
-            posX -= (cardWight + 30) * 4;
+        if((i+1)% cardsInRow == 0){
+            posY += cardHeight + marginTopBottom;
+            posX -= (cardWight + marginLeftRight) * (cardsInRow - 1);
         }else{
-            posX += cardWight + 30; //margin right/left
+            posX += cardWight + marginLeftRight;
         }
 
 

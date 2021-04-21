@@ -1,5 +1,4 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QMainWindow>
 #include <QDesktopWidget>
@@ -39,4 +38,4 @@ private slots:
     void displayCardWindow(unsigned int cardId, QWidget *parent);
 
 };
-#endif // MAINWINDOW_H
+

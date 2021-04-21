@@ -1,5 +1,4 @@
-#ifndef SEARCHREQUEST_H
-#define SEARCHREQUEST_H
+#pragma once
 
 #include <cstddef>
 #include <vector>
@@ -42,4 +41,3 @@ private:
     std::vector<std::string> region_ {};
 };
 
-#endif // SEARCHREQUEST_H
