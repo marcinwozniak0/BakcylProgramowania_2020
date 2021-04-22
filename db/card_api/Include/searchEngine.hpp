@@ -1,55 +1,9 @@
+#pragma once
+#include "baseCardApi.hpp"
 #include "sqlite_helper.hpp"
+#include <optional>
 #include <string>
 #include <vector>
-#include <optional>
-
-/* struct Set */
-/* { */
-/*     std::string name; */
-/*     std::string iconURL; */
-/* }; */
-
-// ##############
-// example interface for populating UI
-/* std::vector<Set> getSets() */ 
-// #############
-
-/* struct Region */
-/* { */
-/*     std::string name; */
-/*     std::string abbreviation; */
-/*     std::string iconURL: */
-/* }; */
-
-/* struct Rarity */
-/* { */
-/*     std::string name; */
-/* }; */
-
-/* struct SpellSpeed */
-/* { */
-/*     std::string name; */
-/* }; */
-
-struct Card
-{
-    std::string cardCode;
-    std::string name;
-    int attack;
-    int cost;
-    int health;
-    std::string artistName;
-    bool isCollectible;
-    std::string description;
-    std::string levelupDescription;
-    std::string flavorText;
-    std::string supertype;
-    std::string type;
-    /* Set set; */
-    /* Region region; */
-    /* Rarity rarity; */
-    /* SpellSpeed spellSpeed; */
-};
 
 struct Filters
 {
@@ -74,5 +28,7 @@ struct Pagination
     std::optional<int> offset;
     // offset is ignored if limit is empty
 };
+
+// TODO: Sorting
 
 std::vector<Card> searchCards(unique_sqlite3& db, const Filters& filters, const Pagination& pagination);

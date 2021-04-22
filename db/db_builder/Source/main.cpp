@@ -93,6 +93,35 @@ int main()
     // Please do not force tight coupling of UI and database logic. We don't want to be dependent on you.
     // Fortunately, I'm not a front-end developer, but light layer just converting UI elems to STL containers feel more reasonable for me
     // than introducing another overcomplicated middleware object like `SearchRequest` proposed by UI team
+
+    // getAll* examples:
+    std::cout<<"\nSety: \n";
+    auto sets = getAllSets(db);
+    for (auto& set : sets)
+    {
+        std::cout << set.name << "\n";
+    }
+
+    std::cout<<"\nRegiony: \n";
+    auto regions = getAllRegions(db);
+    for (auto& region : regions)
+    {
+        std::cout << region.name << " : " <<  region.abbreviation << "\n";
+    }
+
+    std::cout<<"\nRarities: \n";
+    auto rarities = getAllRarities(db);
+    for (auto& rarity : rarities)
+    {
+        std::cout << rarity.name << "\n";
+    }
+
+    std::cout<<"\nSpellSpeeds: \n";
+    auto spellSpeeds = getAllSpellSpeeds(db);
+    for (auto& spellSpeed : spellSpeeds)
+    {
+        std::cout << spellSpeed.name << "\n";
+    }
 }
 
 void fillGlobals(unique_sqlite3& db, const Json::Value& json)
