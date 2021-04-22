@@ -1,6 +1,5 @@
 #include "iostream"
 #include "jsonInserter.hpp"
-#include "searchEngine.hpp"
 #include "sqlite_helper.hpp"
 #include <cstring>
 #include <fstream>
@@ -55,73 +54,6 @@ int main()
 
     sqlite3_exec(db.get(), "END TRANSACTION;", NULL, NULL, NULL);
 
-    Pagination pagination;
-    pagination.limit = 20;
-    pagination.offset = 0;
-    Filters filters;
-    /* filters.cardName = "niemoż"; */
-    filters.regionNames = {"Ionia"};
-    filters.setNames = {"Zew Góry"};
-    filters.spellSpeedNames = {"Szybkie", "Błyskawiczne"};
-    filters.minCost = 2;
-    filters.maxCost = 4;
-    filters.minHealth = 0;
-    filters.maxHealth = 0;
-    auto cards = searchCards(db, filters, pagination);
-    std::cout << cards.size() << "\n";
-    for (auto& card : cards)
-    {
-        std::cout << card.name << " : " << card.cardCode << "\n";
-    }
-
-    // More QTish example for UI team (commented out, because I used not yet existing funcs):
-
-    /* filters.regionNames = extractTickedCheckboxesToWhitelist(regionsCheckboxes); */
-    /* if(minCostBox.isFilled()) */
-    /* { */
-    /*     filters.minCost = minCostBox.val; */
-    /* } */
-    /* if(maxCostBox.isFilled()) */
-    /* { */
-    /*     filters.minCost = maxCostBox.val; */
-    /* } */
-    /* //etc */
-    /* filters.cardName = getTextBoxVal(cardNameBox); */
-    /* pagination.limit = cardsPerPage; */
-    /* pagination.offset = calcOffset(cardsPerPage, pageNumber) // could be just cardsPerPage * (pageNumber - 1). If you want, we probably can keep that conversion at our place */
-
-    // Please do not force tight coupling of UI and database logic. We don't want to be dependent on you.
-    // Fortunately, I'm not a front-end developer, but light layer just converting UI elems to STL containers feel more reasonable for me
-    // than introducing another overcomplicated middleware object like `SearchRequest` proposed by UI team
-
-    // getAll* examples:
-    std::cout<<"\nSety: \n";
-    auto sets = getAllSets(db);
-    for (auto& set : sets)
-    {
-        std::cout << set.name << "\n";
-    }
-
-    std::cout<<"\nRegiony: \n";
-    auto regions = getAllRegions(db);
-    for (auto& region : regions)
-    {
-        std::cout << region.name << " : " <<  region.abbreviation << "\n";
-    }
-
-    std::cout<<"\nRarities: \n";
-    auto rarities = getAllRarities(db);
-    for (auto& rarity : rarities)
-    {
-        std::cout << rarity.name << "\n";
-    }
-
-    std::cout<<"\nSpellSpeeds: \n";
-    auto spellSpeeds = getAllSpellSpeeds(db);
-    for (auto& spellSpeed : spellSpeeds)
-    {
-        std::cout << spellSpeed.name << "\n";
-    }
 }
 
 void fillGlobals(unique_sqlite3& db, const Json::Value& json)

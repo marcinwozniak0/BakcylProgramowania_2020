@@ -7,3 +7,6 @@ endif()
 add_library(card_api STATIC ${SOURCE_FILES})
 target_include_directories(card_api PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Include)
 target_link_libraries(card_api ${SQLite3_LIBRARIES} sqlite_helper)
+
+add_executable(card_api_example card_api_example.cpp)
+target_link_libraries(card_api_example card_api)
