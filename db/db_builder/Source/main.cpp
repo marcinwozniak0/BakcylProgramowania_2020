@@ -77,29 +77,28 @@ void fillSet(unique_sqlite3& db, const Json::Value& set)
 
 void fillAssoc(unique_sqlite3& db, const Json::Value& cards, const std::string& table_name, const std::string& arrName)
 {
-    sqlite3_stmt* stmt = prepareInsertStatement(db, table_name.c_str(), 2);
+    auto stmt = prepareInsertStatement(db, table_name.c_str(), 2);
     for (const auto& card : cards)
     {
-        sqlite3_bind_text(stmt, 1, card["cardCode"].asCString(), -1, NULL);
+        sqlite3_bind_text(stmt.get(), 1, card["cardCode"].asCString(), -1, NULL);
         for (const auto& elem : card[arrName])
         {
-            sqlite3_bind_text(stmt, 2, elem.asCString(), -1, NULL);
+            sqlite3_bind_text(stmt.get(), 2, elem.asCString(), -1, NULL);
             execDumbStmt(db, stmt);
         }
     }
-    sqlite3_finalize(stmt);
 }
 
 void fillAssets(unique_sqlite3& db, const Json::Value& cards)
 {
-    sqlite3_stmt* stmt = prepareInsertStatement(db, "cardAssets", 3);
+    auto stmt = prepareInsertStatement(db, "cardAssets", 3);
     for (const auto& card : cards)
     {
-        sqlite3_bind_text(stmt, 1, card["cardCode"].asCString(), -1, NULL);
+        sqlite3_bind_text(stmt.get(), 1, card["cardCode"].asCString(), -1, NULL);
         for (const auto& asset : card["assets"])
         {
-            sqlite3_bind_text(stmt, 2, asset["gameAbsolutePath"].asCString(), -1, NULL);
-            sqlite3_bind_text(stmt, 3, asset["fullAbsolutePath"].asCString(), -1, NULL);
+            sqlite3_bind_text(stmt.get(), 2, asset["gameAbsolutePath"].asCString(), -1, NULL);
+            sqlite3_bind_text(stmt.get(), 3, asset["fullAbsolutePath"].asCString(), -1, NULL);
             execDumbStmt(db, stmt);
         }
     }

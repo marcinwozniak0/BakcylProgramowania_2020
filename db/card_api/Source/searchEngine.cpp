@@ -105,12 +105,12 @@ void DynamicQuery::addPagination(const Pagination& pagination)
     queryText += " ";
 }
 
-void bindParamQueue(sqlite3_stmt* stmt, const std::vector<std::string>& paramQueue)
+void bindParamQueue(unique_sqlite3_stmt& stmt, const std::vector<std::string>& paramQueue)
 {
     for (size_t i = 0; i < paramQueue.size(); ++i)
     {
         const int paramIdx = i + 1; // sqlite3_bind() starts indexing from 1
-        sqlite3_bind_text(stmt, paramIdx, paramQueue[i].c_str(), -1, NULL);
+        sqlite3_bind_text(stmt.get(), paramIdx, paramQueue[i].c_str(), -1, NULL);
     }
 }
 
@@ -131,23 +131,22 @@ std::vector<Card> searchCards(unique_sqlite3& db, const Filters& filters, const 
 
     std::vector<Card> cards;
     int rc;
-    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+    while ((rc = sqlite3_step(stmt.get())) == SQLITE_ROW)
     {
         Card card;
-        card.cardCode = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
-        card.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
-        card.attack = sqlite3_column_int(stmt, 2);
-        card.cost = sqlite3_column_int(stmt, 3);
-        card.health = sqlite3_column_int(stmt, 4);
-        card.artistName = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
-        card.isCollectible = sqlite3_column_int(stmt, 6);
-        card.description = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 7));
-        card.levelupDescription = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 8));
-        card.flavorText = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 9));
-        card.supertype = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 10));
-        card.type = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 11));
+        card.cardCode = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 0));
+        card.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 1));
+        card.attack = sqlite3_column_int(stmt.get(), 2);
+        card.cost = sqlite3_column_int(stmt.get(), 3);
+        card.health = sqlite3_column_int(stmt.get(), 4);
+        card.artistName = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 5));
+        card.isCollectible = sqlite3_column_int(stmt.get(), 6);
+        card.description = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 7));
+        card.levelupDescription = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 8));
+        card.flavorText = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 9));
+        card.supertype = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 10));
+        card.type = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 11));
         cards.push_back(card);
     }
-    sqlite3_finalize(stmt);
     return cards;
 }

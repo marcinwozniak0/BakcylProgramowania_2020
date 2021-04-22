@@ -14,7 +14,7 @@ unique_sqlite3 open_db(const char db_name[])
     return unique_sqlite3(tmp);
 }
 
-sqlite3_stmt* prepare_stmt(unique_sqlite3& db, const char query[])
+unique_sqlite3_stmt prepare_stmt(unique_sqlite3& db, const char query[])
 {
     sqlite3_stmt* stmt;
     int rc = sqlite3_prepare_v2(db.get(), query, -1, &stmt, NULL);
@@ -23,31 +23,30 @@ sqlite3_stmt* prepare_stmt(unique_sqlite3& db, const char query[])
         sqlite3_finalize(stmt);
         throw std::runtime_error(std::string("SQL Error: ") + sqlite3_errmsg(db.get()));
     }
-    return stmt;
+    return unique_sqlite3_stmt(stmt);
 }
-void execDumbStmt(unique_sqlite3& db, sqlite3_stmt* stmt)
+
+void execDumbStmt(unique_sqlite3& db, const unique_sqlite3_stmt& stmt)
 {
-    int rc = sqlite3_step(stmt);
+    int rc = sqlite3_step(stmt.get());
     if (rc != SQLITE_DONE)
     {
-        sqlite3_finalize(stmt);
         throw std::runtime_error(std::string("SQL Error: ") + sqlite3_errmsg(db.get()));
     }
-    sqlite3_reset(stmt);
+    sqlite3_reset(stmt.get());
 }
 
 const std::vector<std::string> getColumnNames(unique_sqlite3& db, const char tableName[])
 {
     auto stmt = prepare_stmt(db, "SELECT name FROM pragma_table_info(@table)");
-    sqlite3_bind_text(stmt, sqlite3_bind_parameter_index(stmt, "@table"), tableName, -1, NULL);
+    sqlite3_bind_text(stmt.get(), sqlite3_bind_parameter_index(stmt.get(), "@table"), tableName, -1, NULL);
     std::vector<std::string> output;
     int rc;
-    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+    while ((rc = sqlite3_step(stmt.get())) == SQLITE_ROW)
     {
-        std::string colName = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+        std::string colName = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 0));
         output.push_back(colName);
     }
-    sqlite3_finalize(stmt);
     if (rc != SQLITE_DONE)
     {
         throw std::runtime_error(std::string("SQL Error: ") + sqlite3_errmsg(db.get()));
@@ -72,7 +71,7 @@ std::string buildPlaceholdersList(int elemCount)
 }
 
 
-sqlite3_stmt* prepareInsertStatement(unique_sqlite3& db, const char table_name[], int colCount)
+unique_sqlite3_stmt prepareInsertStatement(unique_sqlite3& db, const char table_name[], int colCount)
 {
     // Unfortunately sqlite_bind_param() doesn't work for table identifiers.
     // We must resort to binding table_name using dumb string concat.
