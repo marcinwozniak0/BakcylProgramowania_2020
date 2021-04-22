@@ -148,5 +148,6 @@ std::vector<Card> searchCards(unique_sqlite3& db, const Filters& filters, const 
         card.type = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 11));
         cards.push_back(card);
     }
+    sqlite3_finalize(stmt);
     return cards;
 }
