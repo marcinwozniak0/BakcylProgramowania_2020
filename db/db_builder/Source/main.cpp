@@ -41,13 +41,13 @@ int main()
 
     // temporary ugly shit. We are going to abadon it for sake of auto downloading
     Json::Value globalsJson =
-        getJsonFromFile("globals-ru_ru.json", "https://dd.b.pvp.net/latest/core/ru_ru/data/globals-ru_ru.json");
+        getJsonFromFile("globals-pl_pl.json", "https://dd.b.pvp.net/latest/core/pl_pl/data/globals-pl_pl.json");
     fillGlobals(db, globalsJson);
     for (char i = '1'; i < '5'; ++i)
     {
         const auto setName = std::string("set") + i;
-        const auto fileName = setName + "-ru_ru.json";
-        auto url = "https://dd.b.pvp.net/latest/" + setName + "/ru_ru/data/" + fileName;
+        const auto fileName = setName + "-pl_pl.json";
+        auto url = "https://dd.b.pvp.net/latest/" + setName + "/pl_pl/data/" + fileName;
         Json::Value setJson = getJsonFromFile(fileName, url);
         fillSet(db, setJson);
     }
