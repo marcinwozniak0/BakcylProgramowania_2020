@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+namespace SqliteHelper
+{
 struct sqlite_deleter
 {
     void operator()(sqlite3* ptr)
@@ -35,3 +37,4 @@ std::string buildPlaceholdersList(int elemCount);
 // elemCount == 1 -> "(?)"
 // elemCount == 2 -> "(?, ?)"
 // ...
+}

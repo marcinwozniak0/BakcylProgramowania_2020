@@ -2,6 +2,8 @@
 #include <memory>
 #include <stdexcept>
 
+namespace SqliteHelper
+{
 unique_sqlite3 open_db(const char db_name[])
 {
     sqlite3* tmp;
@@ -85,4 +87,5 @@ unique_sqlite3_stmt prepareInsertStatement(unique_sqlite3& db, const char table_
     
     auto stmt = prepare_stmt(db, query.c_str());
     return stmt;
+}
 }

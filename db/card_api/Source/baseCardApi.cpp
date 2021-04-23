@@ -1,6 +1,6 @@
 #include "baseCardApi.hpp"
 
-std::vector<Set> getAllSets(unique_sqlite3& db)
+std::vector<Set> getAllSets(SqliteHelper::unique_sqlite3& db)
 {
     const char query[] = "SELECT name, iconAbsolutePath FROM sets";
     auto stmt = prepare_stmt(db, query);
@@ -16,7 +16,7 @@ std::vector<Set> getAllSets(unique_sqlite3& db)
     return sets;
 }
 
-std::vector<Region> getAllRegions(unique_sqlite3& db)
+std::vector<Region> getAllRegions(SqliteHelper::unique_sqlite3& db)
 {
     const char query[] = "SELECT name, abbreviation, iconAbsolutePath FROM regions";
     auto stmt = prepare_stmt(db, query);
@@ -33,7 +33,7 @@ std::vector<Region> getAllRegions(unique_sqlite3& db)
     return regions;
 }
 
-std::vector<Rarity> getAllRarities(unique_sqlite3& db)
+std::vector<Rarity> getAllRarities(SqliteHelper::unique_sqlite3& db)
 {
     const char query[] = "SELECT name FROM rarities";
     auto stmt = prepare_stmt(db, query);
@@ -48,7 +48,7 @@ std::vector<Rarity> getAllRarities(unique_sqlite3& db)
     return rarities;
 }
 
-std::vector<SpellSpeed> getAllSpellSpeeds(unique_sqlite3& db)
+std::vector<SpellSpeed> getAllSpellSpeeds(SqliteHelper::unique_sqlite3& db)
 {
     const char query[] = "SELECT name FROM spellSpeeds";
     auto stmt = prepare_stmt(db, query);

@@ -4,11 +4,11 @@
 
 namespace
 {
-void bindJsonDictToInsertStatement(unique_sqlite3_stmt& stmt, const std::vector<std::string>& colNames,
+void bindJsonDictToInsertStatement(SqliteHelper::unique_sqlite3_stmt& stmt, const std::vector<std::string>& colNames,
                                    const Json::Value& json);
 } // namespace
 
-void fillTableWithArrOfDicts(unique_sqlite3& db, const char table_name[], const Json::Value& json)
+void fillTableWithArrOfDicts(SqliteHelper::unique_sqlite3& db, const char table_name[], const Json::Value& json)
 {
     const auto colNames = getColumnNames(db, table_name);
     if (colNames.size() == 0)
@@ -26,7 +26,7 @@ void fillTableWithArrOfDicts(unique_sqlite3& db, const char table_name[], const 
 
 namespace
 {
-void bindJsonDictToInsertStatement(unique_sqlite3_stmt& stmt, const std::vector<std::string>& colNames,
+void bindJsonDictToInsertStatement(SqliteHelper::unique_sqlite3_stmt& stmt, const std::vector<std::string>& colNames,
                                    const Json::Value& dict)
 {
     for (size_t i = 0; i < colNames.size(); ++i)

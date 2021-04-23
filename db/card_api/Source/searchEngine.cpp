@@ -38,22 +38,22 @@ void DynamicQuery::addFilters(const Filters& filters)
     if (filters.regionNames.size() > 0)
     {
         paramQueue.insert(paramQueue.end(), filters.regionNames.begin(), filters.regionNames.end());
-        queryText += " AND regions.name IN " + buildPlaceholdersList(filters.regionNames.size());
+        queryText += " AND regions.name IN " + SqliteHelper::buildPlaceholdersList(filters.regionNames.size());
     }
     if (filters.setNames.size() > 0)
     {
         paramQueue.insert(paramQueue.end(), filters.setNames.begin(), filters.setNames.end());
-        queryText += " AND sets.name IN " + buildPlaceholdersList(filters.setNames.size());
+        queryText += " AND sets.name IN " + SqliteHelper::buildPlaceholdersList(filters.setNames.size());
     }
     if (filters.rarityNames.size() > 0)
     {
         paramQueue.insert(paramQueue.end(), filters.rarityNames.begin(), filters.rarityNames.end());
-        queryText += " AND rarities.name IN " + buildPlaceholdersList(filters.rarityNames.size());
+        queryText += " AND rarities.name IN " + SqliteHelper::buildPlaceholdersList(filters.rarityNames.size());
     }
     if (filters.spellSpeedNames.size() > 0)
     {
         paramQueue.insert(paramQueue.end(), filters.spellSpeedNames.begin(), filters.spellSpeedNames.end());
-        queryText += " AND spellSpeeds.name IN " + buildPlaceholdersList(filters.spellSpeedNames.size());
+        queryText += " AND spellSpeeds.name IN " + SqliteHelper::buildPlaceholdersList(filters.spellSpeedNames.size());
     }
     
     // numeric-values range-based filters
@@ -105,7 +105,7 @@ void DynamicQuery::addPagination(const Pagination& pagination)
     queryText += " ";
 }
 
-void bindParamQueue(unique_sqlite3_stmt& stmt, const std::vector<std::string>& paramQueue)
+void bindParamQueue(SqliteHelper::unique_sqlite3_stmt& stmt, const std::vector<std::string>& paramQueue)
 {
     for (size_t i = 0; i < paramQueue.size(); ++i)
     {
@@ -114,7 +114,7 @@ void bindParamQueue(unique_sqlite3_stmt& stmt, const std::vector<std::string>& p
     }
 }
 
-std::vector<Card> searchCards(unique_sqlite3& db, const Filters& filters, const Pagination& pagination)
+std::vector<Card> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& filters, const Pagination& pagination)
 {
     DynamicQuery dynQuery;
     dynQuery.queryText = "SELECT cardCode, cards.name, attack, cost, health, artistName, "
