@@ -2,6 +2,8 @@
 #include <optional>
 #include <sqlite_helper.hpp>
 
+namespace CardApi
+{
 // Convinience wrapper for building dynamic search queries.
 // Probably SQLi-safe. We use sqlite placeholders and paramQueue
 // to bind filters, pagination and sorting to sqlite_stmt later.
@@ -150,4 +152,5 @@ std::vector<Card> searchCards(unique_sqlite3& db, const Filters& filters, const 
     }
     sqlite3_finalize(stmt);
     return cards;
+}
 }

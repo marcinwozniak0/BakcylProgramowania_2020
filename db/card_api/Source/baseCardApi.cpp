@@ -1,5 +1,7 @@
 #include "baseCardApi.hpp"
 
+namespace CardApi
+{
 std::vector<Set> getAllSets(unique_sqlite3& db)
 {
     const char query[] = "SELECT name, iconAbsolutePath FROM sets";
@@ -65,4 +67,5 @@ std::vector<SpellSpeed> getAllSpellSpeeds(unique_sqlite3& db)
     }
     return spellSpeeds;
     sqlite3_finalize(stmt);
+}
 }
