@@ -55,6 +55,23 @@ const std::vector<std::string> getColumnNames(unique_sqlite3& db, const char tab
     return output;
 }
 
+std::string buildPlaceholdersList(int elemCount)
+{
+    std::string query = "(";
+    query.reserve(2 * elemCount + 1); // premature optimization :P
+    for (int i = 0; i < elemCount; ++i)
+    {
+        if (i != 0)
+        {
+            query += ',';
+        }
+        query += '?';
+    }
+    query += ')';
+    return query;
+}
+
+
 sqlite3_stmt* prepareInsertStatement(unique_sqlite3& db, const char table_name[], int colCount)
 {
     // Unfortunately sqlite_bind_param() doesn't work for table identifiers.
@@ -64,17 +81,9 @@ sqlite3_stmt* prepareInsertStatement(unique_sqlite3& db, const char table_name[]
     // SQLi-safe method colCount == 0 means that table doesn't exist so we don't inject it name AFAIK this should be
     // sufficient countermeasure. Prove me wrong. Also. In case of this parser, SQL injection isn't that big deal We are
     // storing data from only one entity. He doesn't need SQLi to read or malform it :P
-    std::string query = std::string("INSERT INTO ") + table_name + " VALUES(";
-    for (int i = 0; i < colCount; ++i)
-    {
-        if (i != 0)
-        {
-            query += ',';
-        }
-        query += '?';
-    }
-    query += ')';
-
+    std::string query = std::string("INSERT INTO ") + table_name + " VALUES";
+    query += buildPlaceholdersList(colCount);
+    
     auto stmt = prepare_stmt(db, query.c_str());
     return stmt;
 }

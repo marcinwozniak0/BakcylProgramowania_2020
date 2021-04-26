@@ -4,6 +4,6 @@ else()
     file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cpp)
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Include)
 add_executable(db_builder ${SOURCE_FILES})
-target_link_libraries(db_builder JsonCpp::JsonCpp ${SQLite3_LIBRARIES})
+target_include_directories(db_builder PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Include)
+target_link_libraries(db_builder JsonCpp::JsonCpp sqlite_helper)

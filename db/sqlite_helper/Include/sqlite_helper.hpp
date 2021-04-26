@@ -24,3 +24,10 @@ void execDumbStmt(unique_sqlite3& db, sqlite3_stmt* stmt);
 const std::vector<std::string> getColumnNames(unique_sqlite3& db, const char tableName[]);
 sqlite3_stmt* prepareInsertStatement(unique_sqlite3& db, const char table_name[], int colCount);
 // SQLi-insecure itself. Caller should check if getColumnNames() (SQLi-safe method) returns any columns
+
+std::string buildPlaceholdersList(int elemCount);
+// produces string with list of unnamed placeholders in paranthes
+// elemCount == 0 -> "()"
+// elemCount == 1 -> "(?)"
+// elemCount == 2 -> "(?, ?)"
+// ...
