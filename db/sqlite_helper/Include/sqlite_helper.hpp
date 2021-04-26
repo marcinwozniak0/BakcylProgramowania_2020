@@ -20,15 +20,15 @@ struct sqlite_deleter
     }
 };
 using unique_sqlite3 = std::unique_ptr<sqlite3, sqlite_deleter>;
-using unique_sqlite3_stmt = std::unique_ptr<sqlite3_stmt, sqlite_deleter>;
+using unique_stmt = std::unique_ptr<sqlite3_stmt, sqlite_deleter>;
 
 unique_sqlite3 open_db(const char db_name[]);
-unique_sqlite3_stmt prepare_stmt(unique_sqlite3& db, const char query[]);
-void execDumbStmt(unique_sqlite3& db, const unique_sqlite3_stmt& stmt);
+unique_stmt prepare_stmt(unique_sqlite3& db, const char query[]);
+void execDumbStmt(unique_sqlite3& db, const unique_stmt& stmt);
 // This is for dumb, not returning statements (eg. insert)
 
 const std::vector<std::string> getColumnNames(unique_sqlite3& db, const char tableName[]);
-unique_sqlite3_stmt prepareInsertStatement(unique_sqlite3& db, const char table_name[], int colCount);
+unique_stmt prepareInsertStatement(unique_sqlite3& db, const char table_name[], int colCount);
 // SQLi-insecure itself. Caller should check if getColumnNames() (SQLi-safe method) returns any columns
 
 std::string buildPlaceholdersList(int elemCount);

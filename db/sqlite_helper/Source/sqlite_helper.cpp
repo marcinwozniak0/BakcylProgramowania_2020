@@ -16,7 +16,7 @@ unique_sqlite3 open_db(const char db_name[])
     return unique_sqlite3(tmp);
 }
 
-unique_sqlite3_stmt prepare_stmt(unique_sqlite3& db, const char query[])
+unique_stmt prepare_stmt(unique_sqlite3& db, const char query[])
 {
     sqlite3_stmt* stmt;
     int rc = sqlite3_prepare_v2(db.get(), query, -1, &stmt, NULL);
@@ -25,10 +25,10 @@ unique_sqlite3_stmt prepare_stmt(unique_sqlite3& db, const char query[])
         sqlite3_finalize(stmt);
         throw std::runtime_error(std::string("SQL Error: ") + sqlite3_errmsg(db.get()));
     }
-    return unique_sqlite3_stmt(stmt);
+    return unique_stmt(stmt);
 }
 
-void execDumbStmt(unique_sqlite3& db, const unique_sqlite3_stmt& stmt)
+void execDumbStmt(unique_sqlite3& db, const unique_stmt& stmt)
 {
     int rc = sqlite3_step(stmt.get());
     if (rc != SQLITE_DONE)
@@ -73,7 +73,7 @@ std::string buildPlaceholdersList(int elemCount)
 }
 
 
-unique_sqlite3_stmt prepareInsertStatement(unique_sqlite3& db, const char table_name[], int colCount)
+unique_stmt prepareInsertStatement(unique_sqlite3& db, const char table_name[], int colCount)
 {
     // Unfortunately sqlite_bind_param() doesn't work for table identifiers.
     // We must resort to binding table_name using dumb string concat.

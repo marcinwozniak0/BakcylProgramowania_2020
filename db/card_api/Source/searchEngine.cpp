@@ -105,7 +105,7 @@ void DynamicQuery::addPagination(const Pagination& pagination)
     queryText += " ";
 }
 
-void bindParamQueue(SqliteHelper::unique_sqlite3_stmt& stmt, const std::vector<std::string>& paramQueue)
+void bindParamQueue(SqliteHelper::unique_stmt& stmt, const std::vector<std::string>& paramQueue)
 {
     for (size_t i = 0; i < paramQueue.size(); ++i)
     {
