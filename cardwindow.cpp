@@ -1,5 +1,6 @@
 #include "cardwindow.h"
 #include "ui_cardwindow.h"
+#include "iostream"
 
 CardWindow::CardWindow(QWidget *parent) :
     QDialog(parent),
@@ -7,10 +8,12 @@ CardWindow::CardWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 }
-CardWindow::CardWindow(unsigned int cardId, QWidget *parent) :
+CardWindow::CardWindow(unsigned int cardId, QLabel* DeckDisplay, DeckBuilder* deck ,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CardWindow),
-    cardId_(cardId)
+    cardId_(cardId),
+    DeckDisplay_(DeckDisplay),
+    deck_(deck)
 {
     ui->setupUi(this);
     QPixmap picture("../../BakcylProgramowania_2020/source/pic.png");
@@ -31,4 +34,7 @@ void CardWindow::on_close_w_clicked()
     close();
 }
 
-//TO-DO:: BUTTON ADD
+void CardWindow::on_add_w_clicked()
+{
+    DeckDisplay_->setText("lol");
+}

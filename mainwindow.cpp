@@ -8,6 +8,7 @@
 #include "cardscontainer.h"
 #include "searchrequest.h"
 
+
 constexpr size_t windowWight = 1200; //px
 constexpr size_t windowHeight = 800; //px
 
@@ -70,12 +71,11 @@ std::vector<std::string> MainWindow::convertCheckbox(std::string regex){
 }
 void MainWindow::cardClicked(){
     QPushButton *button = (QPushButton *)sender();
-    emit displayCardWindow(button->property("Id").toUInt(), this);
+    emit displayCardWindow(button->property("Id").toUInt());
 
 }
-void MainWindow::displayCardWindow(unsigned int id, QWidget* parent){ //TODO: Ustalić czy okno ma przyjmować kartę czy wystarczy samo jej id ustalone podczas ustawiania pix mapy.
-    std::cerr<< id << " ";                                          //      Przesyłanie całej karty wymagało by stworzenia podklasy QPushButton z odpowiednim polem
-    CardWindow cardW(id, parent);
+void MainWindow::displayCardWindow(unsigned int id){
+    CardWindow cardW(id,ui->groupBox_3->findChild<QLabel*>("DeckDisplay"), &deckbuilder, this);
     cardW.setModal(true);
     cardW.exec();
 }
