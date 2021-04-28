@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QDesktopWidget>
 
+#include "cardscontainer.h"
 #include "cardwindow.h"
 #include "DeckBuilder/Include/DeckBuilder.hpp"
 
@@ -26,6 +27,7 @@ private:
     void displayCards();
 
     std::vector<std::string> convertCheckbox(std::string);
+    CardsContainer* cardContainer;
     DeckBuilder deckbuilder;
 
 private slots:

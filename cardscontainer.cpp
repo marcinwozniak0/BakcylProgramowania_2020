@@ -64,3 +64,8 @@ void CardsContainer::showCard(QString path, QPushButton* button){
     button->setIcon(buttonIcon);
     button->setIconSize(button->rect().size());
 }
+CardsContainer::~CardsContainer(){
+    for(auto& it : cards_){
+        delete it;
+    }
+}

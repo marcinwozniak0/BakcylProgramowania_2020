@@ -4,7 +4,6 @@
 #include <QPixmap>
 #include <QRegularExpression>
 
-#include "cardscontainer.h"
 #include "searchrequest.h"
 
 
@@ -26,8 +25,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->setWindowTitle("Deckbuilder");
 
-    CardsContainer cardContainer(ui->Cards);
-    for(auto& it : cardContainer.getCards()){
+    cardContainer = new CardsContainer(ui->Cards);
+    for(auto& it : cardContainer->getCards()){
         connect(it, &QPushButton::clicked, this, &MainWindow::cardClicked);
     }
 
@@ -35,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete cardContainer;
 }
 
 
