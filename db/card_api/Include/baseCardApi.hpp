@@ -29,10 +29,10 @@ struct SpellSpeed
     std::string name;
 };
 
-std::vector<Set> getAllSets(unique_sqlite3& db);
-std::vector<Region> getAllRegions(unique_sqlite3& db);
-std::vector<Rarity> getAllRarities(unique_sqlite3& db);
-std::vector<SpellSpeed> getAllSpellSpeeds(unique_sqlite3& db);
+std::vector<Set> getAllSets(SqliteHelper::unique_sqlite3& db);
+std::vector<Region> getAllRegions(SqliteHelper::unique_sqlite3& db);
+std::vector<Rarity> getAllRarities(SqliteHelper::unique_sqlite3& db);
+std::vector<SpellSpeed> getAllSpellSpeeds(SqliteHelper::unique_sqlite3& db);
 
 struct Card
 {

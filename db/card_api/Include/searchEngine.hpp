@@ -33,5 +33,5 @@ struct Pagination
 
 // TODO: Sorting
 
-std::vector<Card> searchCards(unique_sqlite3& db, const Filters& filters, const Pagination& pagination);
+std::vector<Card> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& filters, const Pagination& pagination);
 }

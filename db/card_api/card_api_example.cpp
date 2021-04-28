@@ -2,7 +2,7 @@
 #include "searchEngine.hpp"
 #include <iostream>
 
-void searchExample(unique_sqlite3& db)
+void searchExample(SqliteHelper::unique_sqlite3& db)
 {
     CardApi::Pagination pagination;
     pagination.limit = 20;
@@ -24,7 +24,7 @@ void searchExample(unique_sqlite3& db)
     }
 }
 
-void getAllExample(unique_sqlite3& db)
+void getAllExample(SqliteHelper::unique_sqlite3& db)
 {
     // This could be useful for dynamic population of buttons
     std::cout << "\nSety: \n";
@@ -56,7 +56,7 @@ void getAllExample(unique_sqlite3& db)
     }
 }
 
-void searchFromUIExample(unique_sqlite3& db)
+void searchFromUIExample(SqliteHelper::unique_sqlite3& db)
 {
     // suggestion for using this api from UI
     // I used not-existing UI api to show how you could do it.
@@ -84,7 +84,7 @@ void searchFromUIExample(unique_sqlite3& db)
 
 int main()
 {
-    unique_sqlite3 db = open_db("database.sql");
+    auto db = SqliteHelper::open_db("database.sql");
     searchExample(db);
     getAllExample(db);
 }

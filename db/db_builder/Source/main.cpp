@@ -6,13 +6,13 @@
 #include <json/json.h>
 #include <sqlite3.h>
 
-void fillGlobals(unique_sqlite3& db, const Json::Value& json);
-void fillCards(unique_sqlite3& db, const Json::Value& json);
-void createTables(unique_sqlite3& db);
+void fillGlobals(SqliteHelper::unique_sqlite3& db, const Json::Value& json);
+void fillCards(SqliteHelper::unique_sqlite3& db, const Json::Value& json);
+void createTables(SqliteHelper::unique_sqlite3& db);
 std::string getJsonMemberNameWithoutNuls(Json::ValueIteratorBase it);
-void fillSet(unique_sqlite3& db, const Json::Value& set);
-void fillAssoc(unique_sqlite3& db, const Json::Value& cards, const std::string& table_name, const std::string& arrName);
-void fillAssets(unique_sqlite3& db, const Json::Value& cards);
+void fillSet(SqliteHelper::unique_sqlite3& db, const Json::Value& set);
+void fillAssoc(SqliteHelper::unique_sqlite3& db, const Json::Value& cards, const std::string& table_name, const std::string& arrName);
+void fillAssets(SqliteHelper::unique_sqlite3& db, const Json::Value& cards);
 
 bool is_empty(std::ifstream& pFile)
 {
@@ -35,7 +35,7 @@ Json::Value getJsonFromFile(const std::string& filename, const std::string& down
 
 int main()
 {
-    unique_sqlite3 db = open_db("database.sql");
+    SqliteHelper::unique_sqlite3 db = SqliteHelper::open_db("database.sql");
     sqlite3_exec(db.get(), "BEGIN TRANSACTION;", NULL, NULL, NULL);
     createTables(db);
 
@@ -56,7 +56,7 @@ int main()
 
 }
 
-void fillGlobals(unique_sqlite3& db, const Json::Value& json)
+void fillGlobals(SqliteHelper::unique_sqlite3& db, const Json::Value& json)
 {
     for (auto field = json.begin(); field != json.end(); ++field)
     {
@@ -66,7 +66,7 @@ void fillGlobals(unique_sqlite3& db, const Json::Value& json)
     }
 }
 
-void fillSet(unique_sqlite3& db, const Json::Value& set)
+void fillSet(SqliteHelper::unique_sqlite3& db, const Json::Value& set)
 {
     fillTableWithArrOfDicts(db, "cards", set);
     fillAssoc(db, set, "cardSubtypes", "subtypes");
@@ -75,31 +75,30 @@ void fillSet(unique_sqlite3& db, const Json::Value& set)
     fillAssets(db, set);
 }
 
-void fillAssoc(unique_sqlite3& db, const Json::Value& cards, const std::string& table_name, const std::string& arrName)
+void fillAssoc(SqliteHelper::unique_sqlite3& db, const Json::Value& cards, const std::string& table_name, const std::string& arrName)
 {
-    sqlite3_stmt* stmt = prepareInsertStatement(db, table_name.c_str(), 2);
+    auto stmt = prepareInsertStatement(db, table_name.c_str(), 2);
     for (const auto& card : cards)
     {
-        sqlite3_bind_text(stmt, 1, card["cardCode"].asCString(), -1, NULL);
+        sqlite3_bind_text(stmt.get(), 1, card["cardCode"].asCString(), -1, NULL);
         for (const auto& elem : card[arrName])
         {
-            sqlite3_bind_text(stmt, 2, elem.asCString(), -1, NULL);
+            sqlite3_bind_text(stmt.get(), 2, elem.asCString(), -1, NULL);
             execDumbStmt(db, stmt);
         }
     }
-    sqlite3_finalize(stmt);
 }
 
-void fillAssets(unique_sqlite3& db, const Json::Value& cards)
+void fillAssets(SqliteHelper::unique_sqlite3& db, const Json::Value& cards)
 {
-    sqlite3_stmt* stmt = prepareInsertStatement(db, "cardAssets", 3);
+    auto stmt = prepareInsertStatement(db, "cardAssets", 3);
     for (const auto& card : cards)
     {
-        sqlite3_bind_text(stmt, 1, card["cardCode"].asCString(), -1, NULL);
+        sqlite3_bind_text(stmt.get(), 1, card["cardCode"].asCString(), -1, NULL);
         for (const auto& asset : card["assets"])
         {
-            sqlite3_bind_text(stmt, 2, asset["gameAbsolutePath"].asCString(), -1, NULL);
-            sqlite3_bind_text(stmt, 3, asset["fullAbsolutePath"].asCString(), -1, NULL);
+            sqlite3_bind_text(stmt.get(), 2, asset["gameAbsolutePath"].asCString(), -1, NULL);
+            sqlite3_bind_text(stmt.get(), 3, asset["fullAbsolutePath"].asCString(), -1, NULL);
             execDumbStmt(db, stmt);
         }
     }
@@ -120,7 +119,7 @@ std::string getJsonMemberNameWithoutNuls(Json::ValueIteratorBase it)
     return memberName;
 }
 
-void createTables(unique_sqlite3& db)
+void createTables(SqliteHelper::unique_sqlite3& db)
 {
     // I have doubts about formating
     constexpr char query[] = R"""(
