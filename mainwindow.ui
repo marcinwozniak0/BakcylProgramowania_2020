@@ -42,7 +42,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>6</number>
        </property>
        <widget class="QWidget" name="BlankPage"/>
        <widget class="QWidget" name="Health">
@@ -490,7 +490,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>Pustka</string>
+          <string>The void</string>
          </property>
         </widget>
         <widget class="QCheckBox" name="Region_14">
@@ -529,7 +529,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>Wyspy cienia</string>
+          <string>Shadow isles</string>
          </property>
         </widget>
        </widget>
