@@ -3,14 +3,13 @@
 
 #include <QPixmap>
 #include <QRegularExpression>
-#include <iostream>
 
 #include "cardscontainer.h"
 #include "searchrequest.h"
 
 
-constexpr size_t windowWight = 1200; //px
-constexpr size_t windowHeight = 800; //px
+constexpr size_t windowWightInPx = 1200;
+constexpr size_t windowHeightInPx = 800;
 
 void centerWindow(QWidget *widget);
 
@@ -20,13 +19,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ui->stackedWidget->setCurrentIndex(0);
-    setFixedSize(windowWight,windowHeight);
-    setFixedSize(windowWight,windowHeight);
+    ui->Options->setCurrentIndex(0);
+
+    setFixedSize(windowWightInPx,windowHeightInPx);
     centerWindow(this);
+
     this->setWindowTitle("Deckbuilder");
 
-    CardsContainer cardContainer(ui->groupBox_2);
+    CardsContainer cardContainer(ui->Cards);
     for(auto& it : cardContainer.getCards()){
         connect(it, &QPushButton::clicked, this, &MainWindow::cardClicked);
     }
@@ -40,15 +40,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_Search_B_clicked(){
 
-    SearchRequest request(ui->Health_from->text().toStdString(),
-                          ui->Health_to->text().toStdString(),
+    SearchRequest request(ui->HealthFrom->text().toStdString(),
+                          ui->HealthTo->text().toStdString(),
 
-                          ui->Cost_from->text().toStdString(),
-                          ui->Cost_to->text().toStdString(),
+                          ui->CostFrom->text().toStdString(),
+                          ui->CostTo->text().toStdString(),
 
 
-                          ui->Attack_from->text().toStdString(),
-                          ui->Attack_to->text().toStdString(),
+                          ui->AttackFrom->text().toStdString(),
+                          ui->AttackTo->text().toStdString(),
 
                           ui->Name_T->text().toStdString(),
                           convertCheckbox("Rarity_?"),
@@ -62,7 +62,7 @@ std::vector<std::string> MainWindow::convertCheckbox(std::string regex){
     QRegularExpression chexbox_regex(regex.c_str());
     std::vector<std::string> checkboxNames;
 
-    for(auto& it : ui->groupBox_3->findChildren<QCheckBox*>(chexbox_regex)){
+    for(auto& it : ui->OptionsAndDeck->findChildren<QCheckBox*>(chexbox_regex)){
         if(it->isChecked()){
                 checkboxNames.push_back(it->text().toUtf8().constData());
         }
@@ -71,13 +71,13 @@ std::vector<std::string> MainWindow::convertCheckbox(std::string regex){
 }
 void MainWindow::cardClicked(){
     QPushButton *button = (QPushButton *)sender();
-    emit displayCardWindow(button->property("Id").toUInt());
+    displayCardWindow(button->property("Id").toUInt());
 
 }
-void MainWindow::displayCardWindow(unsigned int id){
-    CardWindow cardW(id,ui->groupBox_3->findChild<QLabel*>("DeckDisplay"), &deckbuilder, this);
-    cardW.setModal(true);
-    cardW.exec();
+void MainWindow::displayCardWindow(unsigned int cardId){
+    CardWindow cardWindow(cardId, ui->OptionsAndDeck->findChild<QLabel*>("DeckDisplay"), &deckbuilder, this);
+    cardWindow.setModal(true);
+    cardWindow.exec();
 }
 
 void centerWindow(QWidget *widget){
@@ -92,10 +92,10 @@ void centerWindow(QWidget *widget){
     screenHeight = desktop->height();
 
 
-    x = (screenWidth - windowWight) / 2;
-    y = (screenHeight - windowHeight) / 2;
+    x = (screenWidth - windowWightInPx) / 2;
+    y = (screenHeight - windowHeightInPx) / 2;
 
-    widget->setGeometry(x,y,windowWight,windowHeight);
+    widget->setGeometry(x,y,windowWightInPx,windowHeightInPx);
 
 }
 
@@ -103,31 +103,31 @@ void centerWindow(QWidget *widget){
 
 void MainWindow::on_Health_B_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->Options->setCurrentIndex(1);
 }
 
 void MainWindow::on_Cost_B_clicked()
 {
-     ui->stackedWidget->setCurrentIndex(2);
+     ui->Options->setCurrentIndex(2);
 }
 
 void MainWindow::on_Attack_B_clicked()
 {
-     ui->stackedWidget->setCurrentIndex(3);
+     ui->Options->setCurrentIndex(3);
 }
 
 void MainWindow::on_Type_B_clicked()
 {
-     ui->stackedWidget->setCurrentIndex(4);
+     ui->Options->setCurrentIndex(4);
 }
 
 void MainWindow::on_Rarity_B_clicked()
 {
-     ui->stackedWidget->setCurrentIndex(5);
+     ui->Options->setCurrentIndex(5);
 }
 
 void MainWindow::on_Region_B_clicked()
 {
-     ui->stackedWidget->setCurrentIndex(6);
+     ui->Options->setCurrentIndex(6);
 }
 
