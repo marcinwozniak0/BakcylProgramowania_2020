@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+namespace CardApi
+{
 struct Set
 {
     std::string name;
@@ -53,3 +55,4 @@ struct Card
     /* SpellSpeed spellSpeed; */
     // TODO: store info where icon is stored
 };
+}

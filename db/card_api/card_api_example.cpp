@@ -4,10 +4,10 @@
 
 void searchExample(SqliteHelper::unique_sqlite3& db)
 {
-    Pagination pagination;
+    CardApi::Pagination pagination;
     pagination.limit = 20;
     pagination.offset = 0;
-    Filters filters;
+    CardApi::Filters filters;
     /* filters.cardName = "niemoż"; */
     filters.regionNames = {"Ionia"};
     filters.setNames = {"Zew Góry"};
@@ -16,7 +16,7 @@ void searchExample(SqliteHelper::unique_sqlite3& db)
     filters.maxCost = 4;
     filters.minHealth = 0;
     filters.maxHealth = 0;
-    auto cards = searchCards(db, filters, pagination);
+    auto cards = CardApi::searchCards(db, filters, pagination);
     std::cout << cards.size() << "\n";
     for (auto& card : cards)
     {
@@ -28,28 +28,28 @@ void getAllExample(SqliteHelper::unique_sqlite3& db)
 {
     // This could be useful for dynamic population of buttons
     std::cout << "\nSety: \n";
-    auto sets = getAllSets(db);
+    auto sets = CardApi::getAllSets(db);
     for (auto& set : sets)
     {
         std::cout << set.name << "\n";
     }
 
     std::cout << "\nRegiony: \n";
-    auto regions = getAllRegions(db);
+    auto regions = CardApi::getAllRegions(db);
     for (auto& region : regions)
     {
         std::cout << region.name << " : " << region.abbreviation << "\n";
     }
 
     std::cout << "\nRarities: \n";
-    auto rarities = getAllRarities(db);
+    auto rarities = CardApi::getAllRarities(db);
     for (auto& rarity : rarities)
     {
         std::cout << rarity.name << "\n";
     }
 
     std::cout << "\nSpellSpeeds: \n";
-    auto spellSpeeds = getAllSpellSpeeds(db);
+    auto spellSpeeds = CardApi::getAllSpellSpeeds(db);
     for (auto& spellSpeed : spellSpeeds)
     {
         std::cout << spellSpeed.name << "\n";

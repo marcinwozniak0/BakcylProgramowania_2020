@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1144</width>
-    <height>660</height>
+    <width>1223</width>
+    <height>827</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,27 +21,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QGroupBox" name="groupBox_2">
-      <property name="title">
-       <string>Karty</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QGroupBox" name="groupBox">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>200</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>Wyszukiwarka</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1" rowspan="2">
+    <item row="1" column="1">
      <widget class="QGroupBox" name="groupBox_3">
       <property name="maximumSize">
        <size>
@@ -50,8 +30,713 @@
        </size>
       </property>
       <property name="title">
-       <string>Przyciski</string>
+       <string>Extensions</string>
       </property>
+      <widget class="QStackedWidget" name="stackedWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>0</y>
+         <width>231</width>
+         <height>281</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>6</number>
+       </property>
+       <widget class="QWidget" name="page"/>
+       <widget class="QWidget" name="Health">
+        <widget class="QLabel" name="label">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>100</width>
+           <height>30</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Health</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_7">
+         <property name="geometry">
+          <rect>
+           <x>2</x>
+           <y>60</y>
+           <width>41</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>from</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="Health_from">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>60</y>
+           <width>51</width>
+           <height>21</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="Health_to">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>60</y>
+           <width>51</width>
+           <height>21</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_8">
+         <property name="geometry">
+          <rect>
+           <x>110</x>
+           <y>60</y>
+           <width>21</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>to</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="Cost">
+        <widget class="QLabel" name="label_6">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>101</width>
+           <height>30</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Cost</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_11">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>60</y>
+           <width>41</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>from</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_12">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>60</y>
+           <width>21</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>to</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="Cost_to">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>60</y>
+           <width>51</width>
+           <height>21</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="Cost_from">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>60</y>
+           <width>51</width>
+           <height>21</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="Attack">
+        <widget class="QLabel" name="label_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>100</width>
+           <height>30</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Attack</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_14">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>60</y>
+           <width>41</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>from</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_15">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>60</y>
+           <width>21</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>to</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="Attack_to">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>60</y>
+           <width>51</width>
+           <height>21</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="Attack_from">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>60</y>
+           <width>51</width>
+           <height>21</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="Type">
+        <widget class="QLabel" name="label_3">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>20</y>
+           <width>100</width>
+           <height>30</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Type</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Type_1">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>60</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Champion</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Type_2">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>90</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Follower</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Type_3">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>120</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Spell</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Typ_4">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>150</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Landmark</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="Rarity">
+        <widget class="QLabel" name="label_4">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>20</y>
+           <width>100</width>
+           <height>30</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Rarity</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Rarity_1">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>70</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Common</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Rarity_2">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>100</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Rate</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Rarity_3">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>130</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Epic</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="Region">
+        <widget class="QLabel" name="label_5">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>30</y>
+           <width>100</width>
+           <height>30</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Region</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Region_1">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>60</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Bandle City</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Region_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>85</y>
+           <width>111</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Bilgewater</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Region_3">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>110</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Demacia</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Region_4">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>135</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Freljord</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Region_7">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>185</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Noxus</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Region_5">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>160</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Ixtal</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Region_11">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>110</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Shurima</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Region_12">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>135</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Targon</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Region_9">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>60</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Piltover</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Region_10">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>85</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Pustka</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Region_14">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>185</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Zaun</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Region_13">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>160</y>
+           <width>92</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Ionia</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="Region_8">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>210</y>
+           <width>131</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Wyspy cienia</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="minimumSize">
+       <size>
+        <width>1187</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>250</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QPushButton" name="Health_B">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>30</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Health</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Cost_B">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>30</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Cost</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Attack_B">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>30</y>
+         <width>141</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Attack</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Type_B">
+       <property name="geometry">
+        <rect>
+         <x>470</x>
+         <y>30</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Type</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="Name_T">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>80</y>
+         <width>261</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="placeholderText">
+        <string>Nazwa</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Rarity_B">
+       <property name="geometry">
+        <rect>
+         <x>45</x>
+         <y>77</y>
+         <width>121</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Rarity</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Region_B">
+       <property name="geometry">
+        <rect>
+         <x>480</x>
+         <y>80</y>
+         <width>121</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Region</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Search_B">
+       <property name="geometry">
+        <rect>
+         <x>850</x>
+         <y>70</y>
+         <width>231</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Search</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="Sortowanie_DB">
+       <property name="geometry">
+        <rect>
+         <x>848</x>
+         <y>30</y>
+         <width>231</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Alphabetically A-Z</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Alphabetically Z-A</string>
+        </property>
+       </item>
+      </widget>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>600</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Card</string>
+      </property>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>540</y>
+         <width>61</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>&lt;—</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="geometry">
+        <rect>
+         <x>470</x>
+         <y>540</y>
+         <width>61</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>—&gt;</string>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -61,7 +746,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1144</width>
+     <width>1223</width>
      <height>25</height>
     </rect>
    </property>
@@ -78,6 +763,11 @@
     <bool>false</bool>
    </attribute>
   </widget>
+  <action name="actionxdsd">
+   <property name="text">
+    <string>xdsd</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

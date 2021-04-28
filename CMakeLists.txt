@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.14)
 
 project(Bakcyl2020)
 
@@ -29,24 +29,29 @@ endif()
 
 include(External_GTest.cmake)
 
+#GTEST
 add_executable(bakcyl_2020_ut "test.cpp")
 target_link_libraries(bakcyl_2020_ut ${GTEST_MAIN_LIBRARY}
                                      ${GTEST_LIBRARY}
                                      ${GMOCK_MAIN_LIBRARY}
                                      ${GMOCK_LIBRARY})
 
-
 #LOGIC
 include_directories(${PROJECT_SOURCE_DIR}/Logger)
-file(GLOB LOGGER_LIB ${PROJECT_SOURCE_DIR}/Logger/Logger.cpp)
+file(GLOB LOGGER_LIB ${PROJECT_SOURCE_DIR}/Logger/*.cpp)
+add_subdirectory(${PROJECT_SOURCE_DIR}/DeckBuilder)
 
-
+#QT
 set(PROJECT_SOURCES
     main.cpp
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    searchrequest.cpp
+    cardwindow.cpp
+    cardscontainer.cpp
     ${LOGGER_LIB})
+
 
 add_executable(Deckbuilder ${PROJECT_SOURCES})
     
