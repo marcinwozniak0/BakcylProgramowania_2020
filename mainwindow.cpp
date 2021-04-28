@@ -131,3 +131,21 @@ void MainWindow::on_Region_B_clicked()
      ui->Options->setCurrentIndex(6);
 }
 
+
+void MainWindow::on_GoNext_B_clicked()
+{
+    int page = ui->NumberOfPage->text().toInt();
+    if(page < 1){
+        ui->NumberOfPage->setText("1");
+    }else{
+        ui->NumberOfPage->setText(QString::number(++page));
+    }
+}
+
+void MainWindow::on_GoBack_B_clicked()
+{
+    int page = ui->NumberOfPage->text().toInt();
+    if(page > 1){
+        ui->NumberOfPage->setText(QString::number(--page));
+    }
+}

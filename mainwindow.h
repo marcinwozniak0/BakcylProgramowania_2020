@@ -42,5 +42,7 @@ private slots:
     void cardClicked();
     void displayCardWindow(unsigned int cardId);
 
+    void on_GoNext_B_clicked();
+    void on_GoBack_B_clicked();
 };
 
