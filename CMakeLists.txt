@@ -39,7 +39,6 @@ target_link_libraries(bakcyl_2020_ut ${GTEST_MAIN_LIBRARY}
 #LOGIC
 include_directories(${PROJECT_SOURCE_DIR}/Logger)
 file(GLOB LOGGER_LIB ${PROJECT_SOURCE_DIR}/Logger/*.cpp)
-#add_subdirectory(${PROJECT_SOURCE_DIR}/DeckBuilder)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/DeckBuilder/Include)
 
 #QT

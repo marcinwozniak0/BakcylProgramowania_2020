@@ -1,6 +1,6 @@
 #include "cardwindow.h"
 #include "ui_cardwindow.h"
-#include "iostream"
+
 
 CardWindow::CardWindow(QWidget *parent) :
     QDialog(parent),
