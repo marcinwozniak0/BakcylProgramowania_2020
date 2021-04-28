@@ -4,6 +4,8 @@
 #include <QDesktopWidget>
 
 #include "cardwindow.h"
+#include "DeckBuilder/Include/DeckBuilder.hpp"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,6 +26,7 @@ private:
     void displayCards();
 
     std::vector<std::string> convertCheckbox(std::string);
+    DeckBuilder deckbuilder;
 
 private slots:
 
@@ -35,7 +38,7 @@ private slots:
     void on_Rarity_B_clicked();
     void on_Region_B_clicked();
     void cardClicked();
-    void displayCardWindow(unsigned int cardId, QWidget *parent);
+    void displayCardWindow(unsigned int cardId);
 
 };
 

@@ -534,6 +534,19 @@
         </widget>
        </widget>
       </widget>
+      <widget class="QLabel" name="DeckDisplay">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>290</y>
+         <width>231</width>
+         <height>291</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </widget>
     </item>
     <item row="0" column="0" colspan="2">

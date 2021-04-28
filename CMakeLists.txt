@@ -39,7 +39,7 @@ target_link_libraries(bakcyl_2020_ut ${GTEST_MAIN_LIBRARY}
 #LOGIC
 include_directories(${PROJECT_SOURCE_DIR}/Logger)
 file(GLOB LOGGER_LIB ${PROJECT_SOURCE_DIR}/Logger/*.cpp)
-add_subdirectory(${PROJECT_SOURCE_DIR}/DeckBuilder)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/DeckBuilder/Include)
 
 #QT
 set(PROJECT_SOURCES
@@ -50,7 +50,11 @@ set(PROJECT_SOURCES
     searchrequest.cpp
     cardwindow.cpp
     cardscontainer.cpp
-    ${LOGGER_LIB})
+    DeckBuilder/Source/DeckBuilder.cpp
+    DeckBuilder/Source/Deck.cpp
+    DeckBuilder/Source/Card.cpp
+    ${LOGGER_LIB}
+    )
 
 
 add_executable(Deckbuilder ${PROJECT_SOURCES})
