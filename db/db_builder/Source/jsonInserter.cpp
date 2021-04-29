@@ -52,7 +52,6 @@ void bindJsonDictToInsertStatement(SqliteHelper::unique_stmt& stmt, const std::v
         }
         else
         {
-            sqlite3_finalize(stmt.get());
             throw std::runtime_error("Unable to bind value to insert statement"); // poor msg. TODO: improve this
         }
     }
