@@ -133,7 +133,13 @@ std::vector<Card> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& f
      levelupDescriptionRaw,
      flavorText,
      supertype,
-     'type'
+     'type',
+     sets.name,
+     sets.nameRef,
+     regions.name,
+     regions.abbreviation,
+     rarities.name,
+     spellSpeeds.name
     FROM cards
     LEFT JOIN regions
      ON cards.regionRef = regions.nameRef
@@ -166,6 +172,12 @@ std::vector<Card> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& f
         card.flavorText = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 9));
         card.supertype = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 10));
         card.type = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 11));
+        card.set.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 12));
+        card.set.abbreviation = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 13));
+        card.region.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 14));
+        card.region.abbreviation = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 15));
+        card.rarity.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 16));
+        card.spellSpeed.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 17));
         cards.push_back(card);
     }
     return cards;

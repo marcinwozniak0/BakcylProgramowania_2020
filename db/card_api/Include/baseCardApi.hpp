@@ -49,11 +49,10 @@ struct Card
     std::string flavorText;
     std::string supertype;
     std::string type;
-    // TODO: store sets, regions etc. to which card belongs
-    /* Set set; */
-    /* Region region; */
-    /* Rarity rarity; */
-    /* SpellSpeed spellSpeed; */
+    Set set;
+    Region region;
+    Rarity rarity;
+    SpellSpeed spellSpeed;
     // TODO: store info where icon is stored
 };
 }
