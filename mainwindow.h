@@ -1,12 +1,12 @@
 #pragma once
 
-#include <QMainWindow>
 #include <QDesktopWidget>
+#include <QMainWindow>
 
 #include "cardscontainer.h"
 #include "cardwindow.h"
 #include "DeckBuilder/Include/DeckBuilder.hpp"
-
+#include "searchrequest.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,6 +29,8 @@ private:
     std::vector<std::string> convertCheckbox(std::string);
     CardsContainer* cardContainer;
     DeckBuilder deckbuilder;
+    SearchRequest* currentRequest;
+
 
 private slots:
 
@@ -44,5 +46,7 @@ private slots:
 
     void on_GoNext_B_clicked();
     void on_GoBack_B_clicked();
+
+    void on_NumberOfPage_editingFinished();
 };
 

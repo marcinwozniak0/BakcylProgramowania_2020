@@ -3,8 +3,7 @@
 
 #include <QPixmap>
 #include <QRegularExpression>
-
-#include "searchrequest.h"
+#include <iostream>
 
 
 constexpr size_t windowWightInPx = 1200;
@@ -30,32 +29,35 @@ MainWindow::MainWindow(QWidget *parent)
         connect(it, &QPushButton::clicked, this, &MainWindow::cardClicked);
     }
 
+    currentRequest = new SearchRequest;
+
 }
 MainWindow::~MainWindow()
 {
     delete ui;
     delete cardContainer;
+    delete currentRequest;
 }
 
 
 void MainWindow::on_Search_B_clicked(){
 
-    SearchRequest request(ui->HealthFrom->text().toStdString(),
-                          ui->HealthTo->text().toStdString(),
+    currentRequest->hpMin_ = ui->HealthFrom->text().toInt();
+    currentRequest->hpMax_ = ui->HealthTo->text().toInt();
 
-                          ui->CostFrom->text().toStdString(),
-                          ui->CostTo->text().toStdString(),
+    currentRequest->costMin_ = ui->CostFrom->text().toInt();
+    currentRequest->costMax_ = ui->CostTo->text().toInt();
 
+    currentRequest->attackMin_ = ui->AttackFrom->text().toInt();
+    currentRequest->attackMax_ = ui->AttackTo->text().toInt();
 
-                          ui->AttackFrom->text().toStdString(),
-                          ui->AttackTo->text().toStdString(),
+    currentRequest->name_ = ui->Name_T->text().toStdString();
 
-                          ui->Name_T->text().toStdString(),
-                          convertCheckbox("Rarity_?"),
-                          convertCheckbox("Typ_?"),
-                          convertCheckbox("Region_??"));
+    currentRequest->rarity_ = convertCheckbox("Rarity_?");
+    currentRequest->cardType_ = convertCheckbox("Typ_?");
+    currentRequest->region_ = convertCheckbox("Region_??");
 
-    request.ShowRequest();
+    currentRequest->ShowRequest();
 
 }
 std::vector<std::string> MainWindow::convertCheckbox(std::string regex){
@@ -136,10 +138,13 @@ void MainWindow::on_GoNext_B_clicked()
 {
     int page = ui->NumberOfPage->text().toInt();
     if(page < 1){
-        ui->NumberOfPage->setText("1");
+        ui->NumberOfPage->setText("2");
+        currentRequest->setPage(2);
     }else{
         ui->NumberOfPage->setText(QString::number(++page));
+        currentRequest->setPage(page);
     }
+
 }
 
 void MainWindow::on_GoBack_B_clicked()
@@ -147,5 +152,12 @@ void MainWindow::on_GoBack_B_clicked()
     int page = ui->NumberOfPage->text().toInt();
     if(page > 1){
         ui->NumberOfPage->setText(QString::number(--page));
+        currentRequest->setPage(page);
     }
+}
+
+
+void MainWindow::on_NumberOfPage_editingFinished()
+{
+    currentRequest->setPage(ui->NumberOfPage->text().toInt());
 }

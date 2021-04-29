@@ -1,31 +1,12 @@
 #include "searchrequest.h"
 #include<iostream>
 
-SearchRequest::SearchRequest(
-                             std::string hpMin,
-                             std::string hpMax,
-                             std::string costMin,
-                             std::string costMax,
-                             std::string attackMin,
-                             std::string attackMax,
-                             std::string name,
-                             std::vector<std::string> rarity,
-                             std::vector<std::string> cardType,
-                             std::vector<std::string> region) :
-    rarity_(rarity),
-    cardType_(cardType),
-    region_(region)
-{
-
-    hpMin != "" ? hpMin_=std::stoi(hpMin) : false;
-    hpMax != "" ? hpMax_=std::stoi(hpMax) : false;
-    costMin != "" ? costMin_=std::stoi(costMin) : false;
-    costMax != "" ? costMax_=std::stoi(costMax) : false;
-    attackMin != "" ? attackMin_=std::stoi(attackMin) : false;
-    attackMax != "" ? attackMax_=std::stoi(attackMax) : false;
-
-    name_=name;
-
+void SearchRequest::setPage(int page){
+    if(page < 1){
+        page_ = 1;
+    }else{
+        page_ = page;
+    }
 }
 
 //Devfunc

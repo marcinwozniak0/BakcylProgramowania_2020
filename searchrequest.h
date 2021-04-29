@@ -8,20 +8,11 @@
 class SearchRequest
 {
 public:
-    SearchRequest();
-    SearchRequest(std::string hpMin,
-                  std::string hpMax,
-                  std::string costMin,
-                  std::string costMax,
-                  std::string attackMin,
-                  std::string attackMax,
-                  std::string name,
-                  std::vector<std::string> rarity,
-                  std::vector<std::string> cardType,
-                  std::vector<std::string> region);
+    SearchRequest(){};
+    void setPage(int page);
     //Devfunc
     void ShowRequest();
-private:
+
     //HP
     std::optional<size_t> hpMin_ {};
     std::optional<size_t> hpMax_ {};
@@ -39,5 +30,9 @@ private:
     std::vector<std::string> cardType_ {};
     //Region
     std::vector<std::string> region_ {};
-};
 
+private:
+    //Page
+    int page_ {};
+
+};
