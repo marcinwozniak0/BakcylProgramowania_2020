@@ -4,7 +4,7 @@ namespace CardApi
 {
 std::vector<Set> getAllSets(SqliteHelper::unique_sqlite3& db)
 {
-    const char query[] = "SELECT name, iconAbsolutePath FROM sets";
+    const char query[] = "SELECT name, nameRef FROM sets";
     auto stmt = prepare_stmt(db, query);
     std::vector<Set> sets;
     int rc;
@@ -12,6 +12,7 @@ std::vector<Set> getAllSets(SqliteHelper::unique_sqlite3& db)
     {
         Set set;
         set.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 0));
+        set.abbreviation = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 1));
         /* set.iconURL = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)); */
         sets.push_back(set);
     }
@@ -20,7 +21,7 @@ std::vector<Set> getAllSets(SqliteHelper::unique_sqlite3& db)
 
 std::vector<Region> getAllRegions(SqliteHelper::unique_sqlite3& db)
 {
-    const char query[] = "SELECT name, abbreviation, iconAbsolutePath FROM regions";
+    const char query[] = "SELECT name, abbreviation FROM regions";
     auto stmt = prepare_stmt(db, query);
     std::vector<Region> regions;
     int rc;
