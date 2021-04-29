@@ -2,6 +2,28 @@
 #include "searchEngine.hpp"
 #include <iostream>
 
+void printCard(CardApi::Card card)
+{
+    std::cout << "Name: " << card.name << "\n"
+              << "Id: " << card.cardCode << "\n"
+              << "Attack: " << card.attack << "\n"
+              << "Cost: " << card.cost << "\n"
+              << "Health: " << card.health << "\n"
+              << "Artist name: " << card.artistName << "\n"
+              << "Is collectible: " << card.isCollectible << "\n"
+              << "Description: " << card.description << "\n"
+              << "Levelup description: " << card.levelupDescription << "\n"
+              << "Flavor text: " << card.flavorText << "\n"
+              << "Supertype: " << card.supertype << "\n"
+              << "Type: " << card.type << "\n"
+              << "Set name: " << card.set.name << "\n"
+              << "Set abbreviation: " << card.set.abbreviation << "\n"
+              << "Region name: " << card.region.name << "\n"
+              << "Region abbreviation: " << card.region.abbreviation << "\n"
+              << "Rarity name: " << card.rarity.name << "\n"
+              << "SpellSpeed name: " << card.spellSpeed.name << "\n";
+}
+
 void searchExample(SqliteHelper::unique_sqlite3& db)
 {
     CardApi::Pagination pagination;
@@ -20,7 +42,8 @@ void searchExample(SqliteHelper::unique_sqlite3& db)
     std::cout << cards.size() << "\n";
     for (auto& card : cards)
     {
-        std::cout << card.name << " : " << card.cardCode << "\n";
+        printCard(card);
+        std::cout << "\n";
     }
 }
 
