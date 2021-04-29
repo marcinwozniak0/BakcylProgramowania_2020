@@ -3,7 +3,6 @@
 
 #include <QPixmap>
 #include <QRegularExpression>
-#include <iostream>
 
 
 constexpr size_t windowWightInPx = 1200;
