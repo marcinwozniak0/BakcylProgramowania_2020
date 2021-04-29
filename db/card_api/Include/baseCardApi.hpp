@@ -9,6 +9,7 @@ namespace CardApi
 struct Set
 {
     std::string name;
+    std::string abbreviation;
     // TODO: store info where icon is stored
 };
 

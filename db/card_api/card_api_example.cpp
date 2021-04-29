@@ -31,7 +31,7 @@ void getAllExample(SqliteHelper::unique_sqlite3& db)
     auto sets = CardApi::getAllSets(db);
     for (auto& set : sets)
     {
-        std::cout << set.name << "\n";
+        std::cout << set.name << " : " << set.abbreviation << "\n";
     }
 
     std::cout << "\nRegiony: \n";
