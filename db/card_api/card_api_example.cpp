@@ -105,9 +105,26 @@ void searchFromUIExample(SqliteHelper::unique_sqlite3& db)
     // team
 }
 
+void getCardByIdExample(SqliteHelper::unique_sqlite3& db)
+{
+    std::optional<CardApi::Card> card = CardApi::getCardById(db, "2137JP2DGMD");
+    if (card.has_value())
+    {
+        printCard(*card);
+        std::cout << "\n";
+    }
+    card = CardApi::getCardById(db, "01NX014");
+    if (card.has_value())
+    {
+        printCard(*card);
+        std::cout << "\n";
+    }
+}
+
 int main()
 {
     auto db = SqliteHelper::open_db("database.sql");
     searchExample(db);
     getAllExample(db);
+    getCardByIdExample(db);
 }

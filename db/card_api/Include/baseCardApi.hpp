@@ -55,4 +55,7 @@ struct Card
     SpellSpeed spellSpeed;
     // TODO: store info where icon is stored
 };
+
+std::optional<Card> getCardById(SqliteHelper::unique_sqlite3& db, const std::string& cardCode);
+// exact match
 }
