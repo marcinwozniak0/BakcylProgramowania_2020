@@ -66,21 +66,20 @@ std::vector<SpellSpeed> getAllSpellSpeeds(SqliteHelper::unique_sqlite3& db)
     return spellSpeeds;
 }
 
-
 std::optional<Card> getCardById(SqliteHelper::unique_sqlite3& db, const std::string& cardCode)
 {
     std::string query = GET_ALL_CARDS_QUERY + " WHERE cardCode = ?";
     auto stmt = prepare_stmt(db, query.c_str());
     sqlite3_bind_text(stmt.get(), 1, cardCode.c_str(), -1, NULL);
     auto cards = getCardsFromStatement(db, stmt);
-    if(cards.size() == 1)
+    if (cards.size() == 1)
     {
         return cards[0];
     }
-    if(cards.size() == 0) // No card found. OK
+    if (cards.size() == 0) // No card found. OK
     {
         return {};
     }
     throw std::invalid_argument("Not unique card ids"); // That should never possibly happen. Maybe assert?
 }
-}
+} // namespace CardApi

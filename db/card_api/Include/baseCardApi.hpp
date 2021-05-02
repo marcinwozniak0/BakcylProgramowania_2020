@@ -58,4 +58,4 @@ struct Card
 
 std::optional<Card> getCardById(SqliteHelper::unique_sqlite3& db, const std::string& cardCode);
 // exact match
-}
+} // namespace CardApi

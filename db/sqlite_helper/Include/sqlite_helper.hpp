@@ -39,4 +39,4 @@ std::string buildPlaceholdersList(int elemCount);
 // ...
 
 std::string getStringColumn(unique_sqlite3& db, unique_stmt& stmt, int idx);
-}
+} // namespace SqliteHelper

@@ -36,7 +36,7 @@ void DynamicQuery::addFilters(const Filters& filters)
         paramQueue.push_back(filters.cardName);
         queryText += " AND cards.name LIKE '%'|| ? ||'%'";
     }
-    
+
     // whitelists-based filters
     if (filters.regionNames.size() > 0)
     {
@@ -58,7 +58,7 @@ void DynamicQuery::addFilters(const Filters& filters)
         paramQueue.insert(paramQueue.end(), filters.spellSpeedNames.begin(), filters.spellSpeedNames.end());
         queryText += " AND spellSpeeds.name IN " + SqliteHelper::buildPlaceholdersList(filters.spellSpeedNames.size());
     }
-    
+
     // numeric-values range-based filters
     if (filters.minAttack.has_value())
     {
@@ -95,11 +95,11 @@ void DynamicQuery::addFilters(const Filters& filters)
 
 void DynamicQuery::addPagination(const Pagination& pagination)
 {
-    if(pagination.limit.has_value())
+    if (pagination.limit.has_value())
     {
         queryText += " LIMIT ?";
         paramQueue.push_back(std::to_string(*pagination.limit));
-        if(pagination.offset.has_value())
+        if (pagination.offset.has_value())
         {
             queryText += " OFFSET ?";
             paramQueue.push_back(std::to_string(*pagination.offset));
