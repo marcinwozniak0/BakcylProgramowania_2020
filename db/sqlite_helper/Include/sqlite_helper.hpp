@@ -37,4 +37,6 @@ std::string buildPlaceholdersList(int elemCount);
 // elemCount == 1 -> "(?)"
 // elemCount == 2 -> "(?, ?)"
 // ...
+
+std::string getStringColumn(unique_sqlite3& db, unique_stmt& stmt, int idx);
 }

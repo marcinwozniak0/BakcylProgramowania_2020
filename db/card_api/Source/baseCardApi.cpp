@@ -13,9 +13,8 @@ std::vector<Set> getAllSets(SqliteHelper::unique_sqlite3& db)
     while ((rc = sqlite3_step(stmt.get())) == SQLITE_ROW)
     {
         Set set;
-        set.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 0));
-        set.abbreviation = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 1));
-        /* set.iconURL = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)); */
+        set.name = SqliteHelper::getStringColumn(db, stmt, 0);
+        set.abbreviation = SqliteHelper::getStringColumn(db, stmt, 1);
         sets.push_back(set);
     }
     return sets;
@@ -30,9 +29,8 @@ std::vector<Region> getAllRegions(SqliteHelper::unique_sqlite3& db)
     while ((rc = sqlite3_step(stmt.get())) == SQLITE_ROW)
     {
         Region region;
-        region.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 0));
-        region.abbreviation = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 1));
-        /* region.iconURL = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)); */
+        region.name = SqliteHelper::getStringColumn(db, stmt, 0);
+        region.abbreviation = SqliteHelper::getStringColumn(db, stmt, 1);
         regions.push_back(region);
     }
     return regions;
@@ -47,7 +45,7 @@ std::vector<Rarity> getAllRarities(SqliteHelper::unique_sqlite3& db)
     while ((rc = sqlite3_step(stmt.get())) == SQLITE_ROW)
     {
         Rarity rarity;
-        rarity.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 0));
+        rarity.name = SqliteHelper::getStringColumn(db, stmt, 0);
         rarities.push_back(rarity);
     }
     return rarities;
@@ -62,7 +60,7 @@ std::vector<SpellSpeed> getAllSpellSpeeds(SqliteHelper::unique_sqlite3& db)
     while ((rc = sqlite3_step(stmt.get())) == SQLITE_ROW)
     {
         SpellSpeed spellSpeed;
-        spellSpeed.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 0));
+        spellSpeed.name = SqliteHelper::getStringColumn(db, stmt, 0);
         spellSpeeds.push_back(spellSpeed);
     }
     return spellSpeeds;

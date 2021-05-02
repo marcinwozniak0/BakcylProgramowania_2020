@@ -46,7 +46,7 @@ const std::vector<std::string> getColumnNames(unique_sqlite3& db, const char tab
     int rc;
     while ((rc = sqlite3_step(stmt.get())) == SQLITE_ROW)
     {
-        std::string colName = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 0));
+        std::string colName = getStringColumn(db, stmt, 0);
         output.push_back(colName);
     }
     if (rc != SQLITE_DONE)
@@ -87,5 +87,21 @@ unique_stmt prepareInsertStatement(unique_sqlite3& db, const char table_name[], 
     
     auto stmt = prepare_stmt(db, query.c_str());
     return stmt;
+}
+
+std::string getStringColumn(unique_sqlite3& db, unique_stmt& stmt, int idx)
+{
+    const unsigned char* column_text = sqlite3_column_text(stmt.get(), idx);
+    if(column_text == NULL)
+    {
+        // sqlite_column_text returns NULL also when it is unable to alloc,
+        // so we need to check that
+        if(sqlite3_errcode(db.get()) == SQLITE_NOMEM)
+        {
+            throw std::bad_alloc();
+        }
+        return "";
+    }
+    return reinterpret_cast<const char*>(column_text);
 }
 }
