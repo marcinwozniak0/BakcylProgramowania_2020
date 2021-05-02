@@ -26,6 +26,7 @@ Json::Value getJsonFromFile(const std::string& filename, const std::string& down
     if (is_empty(file))
     {
         // ya ya. This sucks, but it is sufficient for this PoC
+        // Besides something tells me that it shouldn't be exception
         throw std::runtime_error(
             std::string("There are no json in " + filename + " Download it from " + std::string(download_url)));
     }
@@ -114,7 +115,7 @@ std::string getJsonMemberNameWithoutNuls(Json::ValueIteratorBase it)
     auto memberName = it.name();
     if (memberName.size() != std::strlen(memberName.c_str()))
     {
-        throw std::runtime_error("Json string must not have embedded NUL characters");
+        throw std::invalid_argument("Json string must not have embedded NUL characters");
     }
     return memberName;
 }
