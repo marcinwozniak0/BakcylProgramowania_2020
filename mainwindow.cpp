@@ -165,7 +165,9 @@ void MainWindow::on_NumberOfPage_editingFinished()
 
 void MainWindow::on_pushButton_clicked()
 {
-    DeckWindow deckWindow( &deckbuilder ,this);
+    this->hide();
+    DeckWindow deckWindow(&deckbuilder,this->geometry() ,this);
     deckWindow.setModal(true);
     deckWindow.exec();
+    this->show();
 }
