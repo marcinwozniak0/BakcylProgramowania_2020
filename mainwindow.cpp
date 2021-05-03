@@ -24,20 +24,18 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->setWindowTitle("Deckbuilder");
 
-    cardContainer = new CardsContainer(ui->Cards);
+    cardContainer = std::make_unique<CardsContainer>(ui->Cards);
     for(auto& it : cardContainer->getCards()){
         connect(it, &QPushButton::clicked, this, &MainWindow::cardClicked);
     }
 
-    currentRequest = new SearchRequest;
+    currentRequest = std::make_unique<SearchRequest>();
 
 
 }
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete cardContainer;
-    delete currentRequest;
 }
 
 
