@@ -547,6 +547,19 @@
         <string/>
        </property>
       </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>540</y>
+         <width>84</width>
+         <height>33</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Show Deck</string>
+       </property>
+      </widget>
      </widget>
     </item>
     <item row="0" column="0" colspan="2">
@@ -799,7 +812,7 @@
      <x>0</x>
      <y>0</y>
      <width>1223</width>
-     <height>25</height>
+     <height>29</height>
     </rect>
    </property>
   </widget>

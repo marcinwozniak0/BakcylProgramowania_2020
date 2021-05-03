@@ -4,6 +4,7 @@
 #include <QPixmap>
 #include <QRegularExpression>
 
+#include "deckwindow.h"
 
 constexpr size_t windowWightInPx = 1200;
 constexpr size_t windowHeightInPx = 800;
@@ -29,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     currentRequest = new SearchRequest;
+
 
 }
 MainWindow::~MainWindow()
@@ -159,4 +161,11 @@ void MainWindow::on_GoBack_B_clicked()
 void MainWindow::on_NumberOfPage_editingFinished()
 {
     currentRequest->setPage(ui->NumberOfPage->text().toInt());
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    DeckWindow deckWindow( &deckbuilder ,this);
+    deckWindow.setModal(true);
+    deckWindow.exec();
 }

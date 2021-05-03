@@ -50,6 +50,7 @@ set(PROJECT_SOURCES
     searchrequest.cpp
     cardwindow.cpp
     cardscontainer.cpp
+    deckwindow.cpp
     DeckBuilder/Source/DeckBuilder.cpp
     DeckBuilder/Source/Deck.cpp
     DeckBuilder/Source/Card.cpp

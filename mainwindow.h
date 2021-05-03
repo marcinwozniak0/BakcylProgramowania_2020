@@ -48,5 +48,6 @@ private slots:
     void on_GoBack_B_clicked();
 
     void on_NumberOfPage_editingFinished();
+    void on_pushButton_clicked();
 };
 
