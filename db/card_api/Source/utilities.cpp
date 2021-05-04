@@ -2,9 +2,6 @@
 #include <iostream>
 
 std::vector<CardApi::Card> getCardsFromStatement(SqliteHelper::unique_sqlite3& db, SqliteHelper::unique_stmt& stmt)
-// Populates vector of cards with data returned by statement
-// NOTE: Statement is assumed to be based on GET_ALL_CARDS_QUERY
-// and must return same positioned columns
 {
     std::vector<CardApi::Card> cards;
     int rc;

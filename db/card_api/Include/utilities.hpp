@@ -3,6 +3,8 @@
 #include "sqlite_helper.hpp"
 #include <string>
 
+// Internal helper. This should be private header. TODO
+
 // Query for getting all cards.
 // You could use it as base for more advanced queries with filters
 // Example:
