@@ -31,7 +31,13 @@ struct Pagination
     // offset is ignored if limit is empty
 };
 
-// TODO: Sorting
+struct Sorting
+{
+    //enum albo nw co
+    bool isReversed;    //default - false i wtedy idzie alfabetycznie
+    
+    Sorting();
+};
 
-std::vector<Card> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& filters, const Pagination& pagination);
+std::vector<Card> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& filters, const Pagination& pagination, const Sorting& sorting);
 } // namespace CardApi

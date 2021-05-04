@@ -1,6 +1,7 @@
 #include "searchEngine.hpp"
 #include "utilities.hpp"
 #include <optional>
+#include <iostream>
 #include <sqlite_helper.hpp>
 
 namespace CardApi
@@ -18,6 +19,7 @@ struct DynamicQuery
     // This sucks, but drawbacks seem to be nonsignificant in our usecase
     void addFilters(const Filters& filters);
     void addPagination(const Pagination& pagination);
+    void addSorting(const Sorting& sorting);
     // Reduntant spaces are better than lacking spaces
     // addFilters() and addPagination() add possibly reduntant spaces around appended query
     // We are dealing one-two bytes for simplicity, and bug-proofness. Seems fine
@@ -108,6 +110,24 @@ void DynamicQuery::addPagination(const Pagination& pagination)
     queryText += " ";
 }
 
+void DynamicQuery::addSorting(const Sorting& sorting)
+{
+    queryText += "ORDER BY ";
+    /* if(jest jakieś sortowanko) albo jakis switch
+    {
+        queryText += sortowanko + " ";
+        if(isReversed)
+        {
+            queryText += "DESC, ";
+        }
+        else
+        {
+            queryText += ", ";
+        }
+    } */  
+    queryText += "cards.name ";
+}
+
 void bindParamQueue(SqliteHelper::unique_stmt& stmt, const std::vector<std::string>& paramQueue)
 {
     for (size_t i = 0; i < paramQueue.size(); ++i)
@@ -117,14 +137,23 @@ void bindParamQueue(SqliteHelper::unique_stmt& stmt, const std::vector<std::stri
     }
 }
 
-std::vector<Card> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& filters, const Pagination& pagination)
+std::vector<Card> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& filters, const Pagination& pagination, const Sorting& sorting)
 {
     DynamicQuery dynQuery;
     dynQuery.queryText = GET_ALL_CARDS_QUERY;
     dynQuery.addFilters(filters);
+    dynQuery.addSorting(sorting);
     dynQuery.addPagination(pagination);
+    
+    std::cout << dynQuery.queryText << std::endl;   //mojeee
+    
     auto stmt = prepare_stmt(db, dynQuery.queryText.c_str());
     bindParamQueue(stmt, dynQuery.paramQueue);
     return getCardsFromStatement(db, stmt);
+}
+
+Sorting::Sorting()
+{
+    isReversed = false;
 }
 } // namespace CardApi
