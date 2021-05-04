@@ -1,7 +1,6 @@
 #include "searchEngine.hpp"
 #include "utilities.hpp"
 #include <optional>
-#include <iostream>
 #include <sqlite_helper.hpp>
 
 namespace CardApi
@@ -144,16 +143,8 @@ std::vector<Card> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& f
     dynQuery.addFilters(filters);
     dynQuery.addSorting(sorting);
     dynQuery.addPagination(pagination);
-    
-    std::cout << dynQuery.queryText << std::endl;   //mojeee
-    
     auto stmt = prepare_stmt(db, dynQuery.queryText.c_str());
     bindParamQueue(stmt, dynQuery.paramQueue);
     return getCardsFromStatement(db, stmt);
-}
-
-Sorting::Sorting()
-{
-    isReversed = false;
 }
 } // namespace CardApi

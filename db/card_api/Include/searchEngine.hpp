@@ -34,9 +34,7 @@ struct Pagination
 struct Sorting
 {
     //enum albo nw co
-    bool isReversed;    //default - false i wtedy idzie alfabetycznie
-    
-    Sorting();
+    bool isReversed = false;    //dla true - sortowanko antyalfabetyczne
 };
 
 std::vector<Card> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& filters, const Pagination& pagination, const Sorting& sorting);
