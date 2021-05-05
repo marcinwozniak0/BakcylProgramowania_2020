@@ -1,4 +1,4 @@
-#include "cardscontainer.h"
+#include "CardsContainer.h"
 
 #include <QVariant>
 #include <iostream>
@@ -13,7 +13,8 @@ CardsContainer::CardsContainer(QWidget* parent) :
     displayCards();
 }
 
-void CardsContainer::displayCards(){
+void CardsContainer::displayCards()
+{
 
         int i = 0;
         for(auto& it : cards_){
@@ -58,9 +59,16 @@ void CardsContainer::createLayout(QWidget* parent)
 
 }
 
-void CardsContainer::showCard(QString path, QPushButton* button){
+void CardsContainer::showCard(QString path, QPushButton* button)
+{
     QPixmap picture(path);
     QIcon buttonIcon(picture);
     button->setIcon(buttonIcon);
     button->setIconSize(button->rect().size());
+}
+CardsContainer::~CardsContainer()
+{
+    for(auto& it : cards_){
+        delete it;
+    }
 }

@@ -44,12 +44,13 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/DeckBuilder/Include)
 #QT
 set(PROJECT_SOURCES
     main.cpp
-    mainwindow.cpp
-    mainwindow.h
+    MainWindow.cpp
+    MainWindow.h
     mainwindow.ui
-    searchrequest.cpp
-    cardwindow.cpp
-    cardscontainer.cpp
+    SearchRequest.cpp
+    CardWindow.cpp
+    CardsContainer.cpp
+    DeckWindow.cpp
     DeckBuilder/Source/DeckBuilder.cpp
     DeckBuilder/Source/Deck.cpp
     DeckBuilder/Source/Card.cpp
