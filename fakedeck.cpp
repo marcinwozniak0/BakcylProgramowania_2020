@@ -1,5 +1,4 @@
-#include<fakedeck.hpp>
-DeckBuilder& FakeDeck::makeDeckBuilder()
+DeckBuilder& makeDeckBuilder()
 {
     DeckBuilder deckBuilder{};
     return deckBuilder;
