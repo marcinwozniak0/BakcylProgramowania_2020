@@ -17,7 +17,8 @@ DeckWindow::~DeckWindow()
     delete ui;
 }
 
-void DeckWindow::CheckDeckFullfilment(){
+void DeckWindow::CheckDeckFullfilment()
+{
 
     ui->deckFill->setValue(50);
 }
