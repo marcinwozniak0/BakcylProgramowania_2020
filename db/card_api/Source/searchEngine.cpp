@@ -1,7 +1,7 @@
 #include "searchEngine.hpp"
+#include "utilities.hpp"
 #include <optional>
 #include <sqlite_helper.hpp>
-#include <iostream>
 
 namespace CardApi
 {
@@ -36,7 +36,7 @@ void DynamicQuery::addFilters(const Filters& filters)
         paramQueue.push_back(filters.cardName);
         queryText += " AND cards.name LIKE '%'|| ? ||'%'";
     }
-    
+
     // whitelists-based filters
     if (filters.regionNames.size() > 0)
     {
@@ -58,7 +58,7 @@ void DynamicQuery::addFilters(const Filters& filters)
         paramQueue.insert(paramQueue.end(), filters.spellSpeedNames.begin(), filters.spellSpeedNames.end());
         queryText += " AND spellSpeeds.name IN " + SqliteHelper::buildPlaceholdersList(filters.spellSpeedNames.size());
     }
-    
+
     // numeric-values range-based filters
     if (filters.minAttack.has_value())
     {
@@ -95,11 +95,11 @@ void DynamicQuery::addFilters(const Filters& filters)
 
 void DynamicQuery::addPagination(const Pagination& pagination)
 {
-    if(pagination.limit.has_value())
+    if (pagination.limit.has_value())
     {
         queryText += " LIMIT ?";
         paramQueue.push_back(std::to_string(*pagination.limit));
-        if(pagination.offset.has_value())
+        if (pagination.offset.has_value())
         {
             queryText += " OFFSET ?";
             paramQueue.push_back(std::to_string(*pagination.offset));
@@ -120,66 +120,11 @@ void bindParamQueue(SqliteHelper::unique_stmt& stmt, const std::vector<std::stri
 std::vector<Card> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& filters, const Pagination& pagination)
 {
     DynamicQuery dynQuery;
-    dynQuery.queryText = R"""(
-    SELECT
-     cardCode,
-     cards.name,
-     attack,
-     cost,
-     health,
-     artistName,
-     collectible,
-     descriptionRaw,
-     levelupDescriptionRaw,
-     flavorText,
-     supertype,
-     'type',
-     sets.name,
-     sets.nameRef,
-     regions.name,
-     regions.abbreviation,
-     rarities.name,
-     spellSpeeds.name
-    FROM cards
-    LEFT JOIN regions
-     ON cards.regionRef = regions.nameRef
-    LEFT JOIN sets
-     ON cards.'set' = sets.nameRef
-    LEFT JOIN rarities
-     ON cards.rarityRef = rarities.nameRef
-    LEFT JOIN spellSpeeds
-     ON cards.spellSpeedRef = spellSpeeds.nameRef
-    )""";
+    dynQuery.queryText = GET_ALL_CARDS_QUERY;
     dynQuery.addFilters(filters);
     dynQuery.addPagination(pagination);
     auto stmt = prepare_stmt(db, dynQuery.queryText.c_str());
     bindParamQueue(stmt, dynQuery.paramQueue);
-
-    std::vector<Card> cards;
-    int rc;
-    while ((rc = sqlite3_step(stmt.get())) == SQLITE_ROW)
-    {
-        Card card;
-        card.cardCode = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 0));
-        card.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 1));
-        card.attack = sqlite3_column_int(stmt.get(), 2);
-        card.cost = sqlite3_column_int(stmt.get(), 3);
-        card.health = sqlite3_column_int(stmt.get(), 4);
-        card.artistName = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 5));
-        card.isCollectible = sqlite3_column_int(stmt.get(), 6);
-        card.description = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 7));
-        card.levelupDescription = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 8));
-        card.flavorText = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 9));
-        card.supertype = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 10));
-        card.type = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 11));
-        card.set.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 12));
-        card.set.abbreviation = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 13));
-        card.region.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 14));
-        card.region.abbreviation = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 15));
-        card.rarity.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 16));
-        card.spellSpeed.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt.get(), 17));
-        cards.push_back(card);
-    }
-    return cards;
+    return getCardsFromStatement(db, stmt);
 }
-}
+} // namespace CardApi

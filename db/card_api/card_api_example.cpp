@@ -26,6 +26,10 @@ void printCard(CardApi::Card card)
 
 void searchExample(SqliteHelper::unique_sqlite3& db)
 {
+    std::cout<<"\n---------------------\n";
+    std::cout<<"Search example\n";
+    std::cout<<"---------------------\n";
+
     CardApi::Pagination pagination;
     pagination.limit = 20;
     pagination.offset = 0;
@@ -39,17 +43,20 @@ void searchExample(SqliteHelper::unique_sqlite3& db)
     filters.minHealth = 0;
     filters.maxHealth = 0;
     auto cards = CardApi::searchCards(db, filters, pagination);
-    std::cout << cards.size() << "\n";
+    std::cout << "Liczba znalezionych kart: " << cards.size() << "\n";
     for (auto& card : cards)
     {
+        std::cout<<"\n--\n";
         printCard(card);
-        std::cout << "\n";
     }
 }
 
 void getAllExample(SqliteHelper::unique_sqlite3& db)
 {
     // This could be useful for dynamic population of buttons
+    std::cout<<"\n---------------------\n";
+    std::cout<<"getAll example\n";
+    std::cout<<"---------------------\n";
     std::cout << "\nSety: \n";
     auto sets = CardApi::getAllSets(db);
     for (auto& set : sets)
@@ -105,9 +112,30 @@ void searchFromUIExample(SqliteHelper::unique_sqlite3& db)
     // team
 }
 
+void getCardByIdExample(SqliteHelper::unique_sqlite3& db)
+{
+    std::cout<<"\n---------------------\n";
+    std::cout<<"getCardById example\n";
+    std::cout<<"---------------------\n";
+
+    std::optional<CardApi::Card> card = CardApi::getCardById(db, "2137JP2DGMD"); // obviously invalid id
+    if (card.has_value())
+    {
+        printCard(*card);
+        std::cout << "\n";
+    }
+    card = CardApi::getCardById(db, "01NX014"); // valid id
+    if (card.has_value())
+    {
+        printCard(*card);
+        std::cout << "\n";
+    }
+}
+
 int main()
 {
     auto db = SqliteHelper::open_db("database.sql");
     searchExample(db);
     getAllExample(db);
+    getCardByIdExample(db);
 }

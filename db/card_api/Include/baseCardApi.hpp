@@ -30,6 +30,7 @@ struct SpellSpeed
     std::string name;
 };
 
+// get all X. Could be useful for populating UI
 std::vector<Set> getAllSets(SqliteHelper::unique_sqlite3& db);
 std::vector<Region> getAllRegions(SqliteHelper::unique_sqlite3& db);
 std::vector<Rarity> getAllRarities(SqliteHelper::unique_sqlite3& db);
@@ -55,4 +56,7 @@ struct Card
     SpellSpeed spellSpeed;
     // TODO: store info where icon is stored
 };
-}
+
+std::optional<Card> getCardById(SqliteHelper::unique_sqlite3& db, const std::string& cardCode);
+// exact match
+} // namespace CardApi
