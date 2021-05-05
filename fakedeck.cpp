@@ -4,6 +4,7 @@
 DeckBuilder& makeDeckBuilder()
 {
     DeckBuilder deckBuilder{};
+
     Card c1{};
     c1.setCardCode("abc");
     c1.setAttack(24);
@@ -24,6 +25,7 @@ DeckBuilder& makeDeckBuilder()
     c1.setDescriptionRaw("ejncwecwecnwej cwejcwec wcwe wejc wejwe wew eejwejwe ejw");
     c1.setFlavorText("ewwejwjemdwe wewd wedwe dwe dwed");
     deckBuilder.addCard(c1);
+
     Card c2{};
     c2.setCardCode("foo");
     c2.setAttack(100);
@@ -44,6 +46,7 @@ DeckBuilder& makeDeckBuilder()
     c2.setDescriptionRaw("cen c vd vv fujef  fjre rejif e wuf wew fref  fre");
     c2.setFlavorText("cenjcnjj wefjwe fjwe fe wf wef wef we");
     deckBuilder.addCard(c2);
+
     Card c3{};
     c3.setCardCode("zxc");
     c3.setAttack(2238498);
@@ -64,5 +67,6 @@ DeckBuilder& makeDeckBuilder()
     c3.setDescriptionRaw("cnwejncewf cef ef wej f wef weuwe he diwe");
     c3.setFlavorText("cdcwdjjcwejcjwec cwewjwe we cwecwe cecwe");
     deckBuilder.addCard(c3);
+
     return deckBuilder;
 }
