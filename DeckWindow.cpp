@@ -1,4 +1,4 @@
-#include "deckwindow.h"
+#include "DeckWindow.h"
 #include "ui_deckwindow.h"
 
 DeckWindow::DeckWindow(DeckBuilder* deck, QRect geometry ,QWidget *parent) :

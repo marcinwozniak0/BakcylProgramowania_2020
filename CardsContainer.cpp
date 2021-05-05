@@ -1,4 +1,4 @@
-#include "cardscontainer.h"
+#include "CardsContainer.h"
 
 #include <QVariant>
 #include <iostream>

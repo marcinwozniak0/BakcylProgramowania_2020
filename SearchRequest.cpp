@@ -1,4 +1,4 @@
-#include "searchrequest.h"
+#include "SearchRequest.h"
 #include<iostream>
 
 void SearchRequest::setPage(int page){

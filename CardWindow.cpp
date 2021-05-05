@@ -1,4 +1,4 @@
-#include "cardwindow.h"
+#include "CardWindow.h"
 #include "ui_cardwindow.h"
 
 
