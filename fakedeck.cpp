@@ -11,7 +11,7 @@ DeckBuilder& makeDeckBuilder()
     c1.setHealth(42);
     c1.setName("Abc Xyz");
     c1.setRarity("Champion");
-    c1.setRegion("BANDLE CITY");
+    c1.setRegion("Bandle City");
     c1.setLevelupDescriptionRaw("jjejnejdnedjej eeidene de");
     c1.setSet("JDndjwn");
     c1.setSpellSpeed("JCEJNejne");
@@ -31,8 +31,8 @@ DeckBuilder& makeDeckBuilder()
     c2.setAttack(100);
     c2.setHealth(200);
     c2.setName("njcdjwjwjncjnjcnejncjncjecjnejnc");
-    c2.setRarity("ccnwcnwjnjwndjjdjejejje");
-    c2.setRegion("DlkwdwdnwdwkdDKKDMJW");
+    c2.setRarity("Rare");
+    c2.setRegion("Noxus");
     c2.setLevelupDescriptionRaw("eJCJEJenejnj n encjenjcejnc en");
     c2.setSet("CECh");
     c2.setSpellSpeed("cSSJn");
@@ -52,8 +52,8 @@ DeckBuilder& makeDeckBuilder()
     c3.setAttack(2238498);
     c3.setHealth(345);
     c3.setName("qwe");
-    c3.setRarity("Legend of legends");
-    c3.setRegion("BSUSHUIIDJWDIJDIOWio");
+    c3.setRarity("Common");
+    c3.setRegion("Freljord");
     c3.setLevelupDescriptionRaw("Hdwwdudjwu jwjdjd djwd w d wid");
     c3.setSet("NEJn");
     c3.setSpellSpeed("JNDH");
