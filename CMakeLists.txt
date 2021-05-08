@@ -51,9 +51,11 @@ set(PROJECT_SOURCES
     CardWindow.cpp
     CardsContainer.cpp
     DeckWindow.cpp
+    ErrorWindow.cpp
     DeckBuilder/Source/DeckBuilder.cpp
     DeckBuilder/Source/Deck.cpp
     DeckBuilder/Source/Card.cpp
+    FakeDeck.cpp
     ${LOGGER_LIB}
     )
 
