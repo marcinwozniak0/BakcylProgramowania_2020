@@ -1,7 +1,6 @@
 #include "CardWindow.h"
 #include "ui_cardwindow.h"
 
-
 CardWindow::CardWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CardWindow)
@@ -21,7 +20,7 @@ CardWindow::CardWindow(unsigned int cardId, QLabel* DeckDisplay, DeckBuilder* de
     int hp = ui->label->height();
     ui->label->setPixmap(picture.scaled(wp,hp,Qt::KeepAspectRatio));
     this->setWindowTitle("Card");
-
+    displayDeck();
 
 }
 CardWindow::~CardWindow()
@@ -36,5 +35,13 @@ void CardWindow::on_close_w_clicked()
 
 void CardWindow::on_add_w_clicked()
 {
-    DeckDisplay_->setText("lol");
+    //add card to Deck
+}
+
+void CardWindow::displayDeck(){
+    for(auto it : (deck_->getDeck()).getCardsAsVector()){
+        deckText_ += it.getName();
+        deckText_ += '\n';
+    }
+    DeckDisplay_->setText(QString::fromStdString(deckText_));
 }

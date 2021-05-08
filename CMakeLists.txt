@@ -55,7 +55,6 @@ set(PROJECT_SOURCES
     DeckBuilder/Source/DeckBuilder.cpp
     DeckBuilder/Source/Deck.cpp
     DeckBuilder/Source/Card.cpp
-    FakeDeck.cpp
     ${LOGGER_LIB}
     )
 

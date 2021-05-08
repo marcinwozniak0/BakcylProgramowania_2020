@@ -1,8 +1,7 @@
-#include "DeckBuilder/Include/DeckBuilder.hpp"
 #include "DeckBuilder/Include/Card.hpp"
-
-DeckBuilder& makeDeckBuilder()
-{
+#include "DeckBuilder/Include/DeckBuilder.hpp"
+namespace Fake {
+DeckBuilder makeDeckBuilder() {
     DeckBuilder deckBuilder{};
 
     Card c1{};
@@ -53,7 +52,7 @@ DeckBuilder& makeDeckBuilder()
     c3.setHealth(1);
     c3.setName("Juzef");
     c3.setRarity("Common");
-    c3.setRegion("Freljord");
+    c3.setRegion("Noxus");
     c3.setLevelupDescriptionRaw("Hdwwdudjwu jwjdjd djwd w d wid");
     c3.setSet("NEJn");
     c3.setSpellSpeed("JNDH");
@@ -70,3 +69,5 @@ DeckBuilder& makeDeckBuilder()
 
     return deckBuilder;
 }
+
+}  // namespace Fake

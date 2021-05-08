@@ -23,5 +23,6 @@ class DeckBuilder
     ~DeckBuilder();
     void addCard(Card &cardToAdd);
     void removeCard(Card &cardToRemove);
+    Deck getDeck(){return deck;}
 }; 
 

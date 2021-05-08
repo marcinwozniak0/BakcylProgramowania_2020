@@ -25,6 +25,9 @@ private:
     unsigned int cardId_;
     QLabel* DeckDisplay_;
     DeckBuilder* deck_;
+    std::string deckText_;
+
+    void displayDeck();
 
 private slots:
     void on_close_w_clicked();
