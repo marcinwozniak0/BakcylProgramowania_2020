@@ -33,7 +33,7 @@ void DeckBuilder::addCard(CardApi::Card &cardToAdd)
         } 
         else if (!(firstRegion == cardToAdd.region || secondRegion == cardToAdd.region))
         {
-            throw IllegalCardException("Invalid region");
+            ErrorWindow("Invalid region");
             return;
         }
 
@@ -44,7 +44,7 @@ void DeckBuilder::addCard(CardApi::Card &cardToAdd)
         } 
         else if (cardToAdd.type == "hero" && deck.getNumberOfHeroes() >= maxNumberOfHeroes)
         {
-            throw IllegalCardException("Too many heroes");
+            ErrorWindow("Too many heroes");
             return;
         }
         else 
@@ -54,22 +54,22 @@ void DeckBuilder::addCard(CardApi::Card &cardToAdd)
     } 
     else if (deckLength >= maxNumberOfCards)
     {
-        throw IllegalCardException("Too many cards");
+        ErrorWindow("Too many cards");
         return;
     }
     else if (checkNumberOfCard(cardToAdd) >= maxNumberOfEachCard)
     {
-        throw IllegalCardException("A card can't be added more than 3 times");
+        ErrorWindow("A card can't be added more than 3 times");
         return;
     }
     else if (deckLength < 0)
     {
-        throw IllegalCardException("Too few cards");
+        ErrorWindow("Too few cards");
         return;
     }
     else
     {
-        throw IllegalCardException("Other exception");
+        ErrorWindow("Other exception");
         return;
     }
     
@@ -85,7 +85,7 @@ void DeckBuilder::removeCard(CardApi::Card &cardToRemove)
         {
             if (i == deckLength)
             {
-                throw IllegalCardException("This card doesn't occur in this deck");
+                ErrorWindow("This card doesn't occur in this deck");
                 return;
             }
 
@@ -134,7 +134,7 @@ void DeckBuilder::removeCard(CardApi::Card &cardToRemove)
     }
     else
     {
-        throw IllegalCardException("There are no cards to remove");
+        ErrorWindow("There are no cards to remove");
         return;
     }
 }
@@ -149,7 +149,7 @@ void DeckBuilder::addCardByID (SqliteHelper::unique_sqlite3& db, const std::stri
     }
     else
     {
-        throw IllegalCardException("Invalid ID");
+        ErrorWindow("Invalid ID");
     }
 }
 
@@ -163,6 +163,6 @@ void DeckBuilder::removeCardByID (SqliteHelper::unique_sqlite3& db, const std::s
     }
     else
     {
-        throw IllegalCardException("Invalid ID");
+        ErrorWindow("Invalid ID");
     }
 }

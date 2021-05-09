@@ -5,6 +5,7 @@
 #include <optional>
 
 #include "Deck.hpp"
+#include "../../ErrorWindow.h"
 
 
 
