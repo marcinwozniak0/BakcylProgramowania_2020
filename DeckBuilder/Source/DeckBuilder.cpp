@@ -24,7 +24,7 @@ int DeckBuilder::checkNumberOfCard(Card card)
     return number;
 }
 
-void DeckBuilder::addCard(Card &cardToAdd)
+void DeckBuilder::addCard(std::optional<CardApi::Card> &cardToAdd)
 {
     int deckLength = deck.length();
     if (deckLength < maxNumberOfCards && deckLength >= 0 && checkNumberOfCard(cardToAdd) < maxNumberOfEachCard) 
@@ -81,7 +81,7 @@ void DeckBuilder::addCard(Card &cardToAdd)
     
 }
 
-void DeckBuilder::removeCard(Card &cardToRemove)
+void DeckBuilder::removeCard(std::optional<CardApi::Card> &cardToRemove)
 {
     int deckLength = deck.length();
     if (deckLength > 0)
@@ -146,7 +146,7 @@ void DeckBuilder::removeCard(Card &cardToRemove)
 
 void DeckBuilder::addCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode)
 {
-    card = CardApi::getCardById(db, cardCode);
+    std::optional<CardApi::Card> card = CardApi::getCardById(db, cardCode);
 
     if (card.has_value())
     {
@@ -160,7 +160,7 @@ void DeckBuilder::addCardByID (SqliteHelper::unique_sqlite3& db, const std::stri
 
 void DeckBuilder::removeCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode)
 {
-    card = CardApi::getCardById(db, cardCode);
+    std::optional<CardApi::Card> card = CardApi::getCardById(db, cardCode);
 
     if (card.has_value())
     {
