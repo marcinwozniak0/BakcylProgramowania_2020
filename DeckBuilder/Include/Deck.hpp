@@ -11,6 +11,7 @@ class Deck
     std::string secondRegion;
     std::vector <Card> deck;
 
+
     public:
     Deck();
     ~Deck();

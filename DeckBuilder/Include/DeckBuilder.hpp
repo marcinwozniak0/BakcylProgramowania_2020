@@ -21,6 +21,10 @@ class DeckBuilder
     public:
     DeckBuilder();
     ~DeckBuilder();
+    int getDeckLength()
+    {
+        return deck.length();
+    }
     void addCard(Card &cardToAdd);
     void removeCard(Card &cardToRemove);
 }; 
