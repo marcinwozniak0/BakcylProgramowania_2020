@@ -18,6 +18,7 @@ struct Region
     std::string name;
     std::string abbreviation;
     // TODO: store info where icon is stored
+    bool operator==(const Region& other) const{return (name == other.name);}
 };
 
 struct Rarity
@@ -50,10 +51,13 @@ struct Card
     std::string flavorText;
     std::string supertype;
     std::string type;
+
     Set set;
     Region region;
     Rarity rarity;
     SpellSpeed spellSpeed;
+
+    bool operator==(const Card& other) const{return (cardCode == other.cardCode);}
     // TODO: store info where icon is stored
 };
 

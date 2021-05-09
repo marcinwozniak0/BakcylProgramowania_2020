@@ -5,10 +5,10 @@ Deck::Deck()
     int numberOfHeroes = 0;
     std::string firstRegion = "";
     std::string secondRegion = "";
-    std::vector <Card> deck;
+    std::vector <CardApi::Card> deck;
 }
 
-void Deck::addCard(Card &cardToAdd) 
+void Deck::addCard(CardApi::Card &cardToAdd) 
 {
     deck.push_back(cardToAdd);
 }
@@ -23,7 +23,7 @@ int Deck::length()
     return deck.size();
 }
 
-std::vector <Card> Deck::getCardsAsVector() 
+std::vector<CardApi::Card> Deck::getCardsAsVector() 
 {
     return deck;
 }

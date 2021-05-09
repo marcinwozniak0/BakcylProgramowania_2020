@@ -2,30 +2,29 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "Card.hpp"
+#include <optional>
+
 #include "Deck.hpp"
-#include "../../db/card_api/Include/baseCardApi.hpp"
+
 
 
 class DeckBuilder 
 {
-    private:
-    int maxNumberOfCards;
-    int maxNumberOfHeroes;
-    int maxNumberOfEachCard;
+   private:
+    int maxNumberOfCards = 40;
+    int maxNumberOfHeroes = 6;
+    int maxNumberOfEachCard = 3;
     int heroDef;
-    std::string firstRegion;
-    std::string secondRegion;
-    std::map <Card, int> cardCount;
+    CardApi::Region firstRegion {};
+    CardApi::Region secondRegion {};
+    std::map <CardApi::Card, int> cardCount;
     Deck deck;
 
-    public:
-    DeckBuilder();
-    ~DeckBuilder();
-    void addCard(std::optional<CardApi::Card>& cardToAdd);
-    void removeCard(std::optional<CardApi::Card>& cardToRemove);
+   public:
+    void addCard(CardApi::Card& cardToAdd);
+    void removeCard(CardApi::Card& cardToRemove);
     void addCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode);
     void removeCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode);
-    int checkNumberOfCard(Card card);
+    int checkNumberOfCard(CardApi::Card card);
 }; 
 

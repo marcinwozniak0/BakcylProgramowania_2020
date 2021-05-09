@@ -1,5 +1,5 @@
-#include "baseCardApi.hpp"
-#include "utilities.hpp"
+#include "../Include/baseCardApi.hpp"
+#include "../Include/utilities.hpp"
 #include <stdexcept>
 
 namespace CardApi

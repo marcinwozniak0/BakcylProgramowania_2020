@@ -53,7 +53,9 @@ set(PROJECT_SOURCES
     DeckWindow.cpp
     DeckBuilder/Source/DeckBuilder.cpp
     DeckBuilder/Source/Deck.cpp
-    DeckBuilder/Source/Card.cpp
+    db/card_api/Source/baseCardApi.cpp
+    db/card_api/Source/utilities.cpp
+    db/sqlite_helper/Source/sqlite_helper.cpp
     ${LOGGER_LIB}
     )
 
