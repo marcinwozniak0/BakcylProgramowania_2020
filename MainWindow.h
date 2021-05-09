@@ -4,10 +4,10 @@
 #include <QMainWindow>
 #include <memory>
 
-#include "cardscontainer.h"
-#include "cardwindow.h"
+#include "CardsContainer.h"
+#include "CardWindow.h"
 #include "DeckBuilder/Include/DeckBuilder.hpp"
-#include "searchrequest.h"
+#include "SearchRequest.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

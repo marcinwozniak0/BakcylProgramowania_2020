@@ -1,7 +1,8 @@
-#include "searchrequest.h"
+#include "SearchRequest.h"
 #include<iostream>
 
-void SearchRequest::setPage(int page){
+void SearchRequest::setPage(int page)
+{
     if(page < 1){
         page_ = 1;
     }else{
@@ -10,7 +11,8 @@ void SearchRequest::setPage(int page){
 }
 
 //Devfunc
-void SearchRequest::ShowRequest(){
+void SearchRequest::ShowRequest()
+{
 
         std::cerr<<"HP from " << hpMin_.value_or(1) << " to " << hpMax_.value_or(999) <<'\n';
 

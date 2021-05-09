@@ -8,7 +8,6 @@
 class SearchRequest
 {
 public:
-    SearchRequest(){};
     void setPage(int page);
     //Devfunc
     void ShowRequest();
@@ -32,7 +31,6 @@ public:
     std::vector<std::string> region_ {};
 
 private:
-    //Page
     int page_ {};
 
 };
