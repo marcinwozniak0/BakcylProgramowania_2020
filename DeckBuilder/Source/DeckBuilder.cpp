@@ -144,4 +144,32 @@ void DeckBuilder::removeCard(Card &cardToRemove)
     }
 }
 
+void DeckBuilder::addCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode)
+{
+    card = CardApi::getCardById(db, cardCode);
+
+    if (card.has_value())
+    {
+        addCard(card);
+    }
+    else
+    {
+        throw IllegalCardException("Invalid ID");
+    }
+}
+
+void DeckBuilder::removeCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode)
+{
+    card = CardApi::getCardById(db, cardCode);
+
+    if (card.has_value())
+    {
+        removeCard(card);
+    }
+    else
+    {
+        throw IllegalCardException("Invalid ID");
+    }
+}
+
 DeckBuilder::~DeckBuilder() {}
