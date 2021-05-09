@@ -22,7 +22,7 @@ find_package(JsonCpp)
 if (NOT JsonCpp_FOUND)
     message(SEND_ERROR "jsoncpp, or jsoncpp-dev package not found, please install it")
 endif()
-find_package(Qt5 COMPONENTS Widgets)
+find_package(Qt5 COMPONENTS Widgets Charts)
 if (NOT Qt5_FOUND)
     message(SEND_ERROR "qt5 package not found, please install it")
 endif()
@@ -63,7 +63,7 @@ set(PROJECT_SOURCES
 
 add_executable(Deckbuilder ${PROJECT_SOURCES})
     
-target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets ${SQLite3_LIBRARIES} JsonCpp::JsonCpp)
+target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets Qt5::Charts ${SQLite3_LIBRARIES} JsonCpp::JsonCpp)
 
 # database
 add_subdirectory(${PROJECT_SOURCE_DIR}/db/sqlite_helper)
