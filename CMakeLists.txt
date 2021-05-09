@@ -54,7 +54,9 @@ set(PROJECT_SOURCES
     ErrorWindow.cpp
     DeckBuilder/Source/DeckBuilder.cpp
     DeckBuilder/Source/Deck.cpp
-    DeckBuilder/Source/Card.cpp
+    db/card_api/Source/baseCardApi.cpp
+    db/card_api/Source/utilities.cpp
+    db/sqlite_helper/Source/sqlite_helper.cpp
     ${LOGGER_LIB}
     )
 
@@ -63,8 +65,10 @@ add_executable(Deckbuilder ${PROJECT_SOURCES})
     
 target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets ${SQLite3_LIBRARIES} JsonCpp::JsonCpp)
 
-# database builder
-add_subdirectory(${PROJECT_SOURCE_DIR}/db_builder)
+# database
+add_subdirectory(${PROJECT_SOURCE_DIR}/db/sqlite_helper)
+add_subdirectory(${PROJECT_SOURCE_DIR}/db/db_builder)
+add_subdirectory(${PROJECT_SOURCE_DIR}/db/card_api)
 
 # Valgrind
 find_program(VALGRIND "valgrind")

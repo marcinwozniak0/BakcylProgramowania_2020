@@ -3,7 +3,7 @@
 #include <QDialog>
 #include <QLabel>
 
-#include "DeckBuilder/Include/Card.hpp"
+
 #include "DeckBuilder/Include/DeckBuilder.hpp"
 
 

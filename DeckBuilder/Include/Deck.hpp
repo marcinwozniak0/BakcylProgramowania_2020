@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "Card.hpp"
+#include "../../db/card_api/Include/baseCardApi.hpp"
 
 class Deck
 {
@@ -9,15 +9,15 @@ class Deck
     int numberOfHeroes;
     std::string firstRegion;
     std::string secondRegion;
-    std::vector <Card> deck;
+    std::vector <CardApi::Card> deck;
 
     public:
     Deck();
     ~Deck();
-    void addCard(Card &cardToAdd);
+    void addCard(CardApi::Card &cardToAdd);
     void removeCard(int i);
     int length();
-    std::vector <Card> getCardsAsVector();
+    std::vector <CardApi::Card> getCardsAsVector();
     int getNumberOfHeroes();
     void increaseNumberOfHeroes();
     void decreaseNumberOfHeroes();

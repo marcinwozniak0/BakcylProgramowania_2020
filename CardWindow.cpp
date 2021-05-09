@@ -35,12 +35,12 @@ void CardWindow::on_close_w_clicked()
 
 void CardWindow::on_add_w_clicked()
 {
-    //add card to Deck
+
 }
 
 void CardWindow::displayDeck(){
     for(auto it : (deck_->getDeck()).getCardsAsVector()){
-        deckText_ += it.getName();
+        deckText_ += it.name;
         deckText_ += '\n';
     }
     DeckDisplay_->setText(QString::fromStdString(deckText_));

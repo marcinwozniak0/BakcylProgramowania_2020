@@ -6,10 +6,6 @@
 
 #include "DeckWindow.h"
 
-//Dev
-#include "FakeDeck.cpp"
-#include <iostream>
-
 constexpr size_t windowWightInPx = 1200;
 constexpr size_t windowHeightInPx = 800;
 
@@ -34,13 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     currentRequest = std::make_unique<SearchRequest>();
-
-    //Dev
-    try {
-        deckbuilder = Fake::makeDeckBuilder();
-    }  catch (std::exception &e) {
-        std::cerr<<e.what();
-    }
 
 }
 MainWindow::~MainWindow()

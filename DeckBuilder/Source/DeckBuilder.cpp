@@ -2,19 +2,11 @@
 #include "Deck.hpp"
 #include "IllegalCardExceptions.hpp"
 
-DeckBuilder::DeckBuilder()
-{
-    maxNumberOfCards = 40;
-    maxNumberOfHeroes = 6;
-    maxNumberOfEachCard = 3;
-    std::string firstRegion = "";
-    std::string secondRegion = "";
-}
+int DeckBuilder::checkNumberOfCard(CardApi::Card card) 
 
-int DeckBuilder::checkNumberOfCard(Card card) 
 {
     int number = 0;
-    for (Card c : deck.getCardsAsVector()) 
+    for (auto c : deck.getCardsAsVector()) 
     {
         if (c == card) 
         {
@@ -24,31 +16,33 @@ int DeckBuilder::checkNumberOfCard(Card card)
     return number;
 }
 
-void DeckBuilder::addCard(Card &cardToAdd)
+void DeckBuilder::addCard(CardApi::Card &cardToAdd)
 {
+    CardApi::Region voidRegion;
+
     int deckLength = deck.length();
-    if (deckLength < maxNumberOfCards && deckLength >= 0 && checkNumberOfCard(cardToAdd) < maxNumberOfEachCard) 
+    if (deckLength < maxNumberOfCards && deckLength >= 0 && checkNumberOfCard(cardToAdd) < maxNumberOfEachCard)
     {
-        if (firstRegion == "") 
+        if (firstRegion == voidRegion)
         {
-            firstRegion = cardToAdd.getRegion();
+            firstRegion = cardToAdd.region;
         } 
-        else if (secondRegion == "") 
+        else if (secondRegion == voidRegion)
         {
-            secondRegion = cardToAdd.getRegion();
+            secondRegion = cardToAdd.region;
         } 
-        else if (!(firstRegion == cardToAdd.getRegion() || secondRegion == cardToAdd.getRegion())) 
+        else if (!(firstRegion == cardToAdd.region || secondRegion == cardToAdd.region))
         {
             throw IllegalCardException("Invalid region");
             return;
         }
 
-        if (cardToAdd.getType() == "hero" && deck.getNumberOfHeroes() < maxNumberOfHeroes) //TODO: correct type of hero, ask SQL(!)
+        if (cardToAdd.type == "hero" && deck.getNumberOfHeroes() < maxNumberOfHeroes) //TODO: correct type of hero, ask SQL(!)
         {       
             deck.increaseNumberOfHeroes();
             deck.addCard(cardToAdd);
         } 
-        else if (cardToAdd.getType() == "hero" && deck.getNumberOfHeroes() >= maxNumberOfHeroes)
+        else if (cardToAdd.type == "hero" && deck.getNumberOfHeroes() >= maxNumberOfHeroes)
         {
             throw IllegalCardException("Too many heroes");
             return;
@@ -81,8 +75,9 @@ void DeckBuilder::addCard(Card &cardToAdd)
     
 }
 
-void DeckBuilder::removeCard(Card &cardToRemove)
+void DeckBuilder::removeCard(CardApi::Card &cardToRemove)
 {
+    CardApi::Region voidRegion;
     int deckLength = deck.length();
     if (deckLength > 0)
     {
@@ -96,9 +91,9 @@ void DeckBuilder::removeCard(Card &cardToRemove)
 
             if (deck.getCardsAsVector().at(i) == cardToRemove)
             {
-                std::string cardRegion = cardToRemove.getRegion();
+                CardApi::Region cardRegion = cardToRemove.region;
 
-                if (cardToRemove.getType() == "hero")
+                if (cardToRemove.type == "hero")
                 {
                     deck.decreaseNumberOfHeroes();
                 }
@@ -109,7 +104,7 @@ void DeckBuilder::removeCard(Card &cardToRemove)
                 int deckLength = deck.length();
                 for (int j = 0; j < deckLength; j++)
                 {
-                    if(deck.getCardsAsVector().at(j).getRegion() == cardRegion)
+                    if(deck.getCardsAsVector().at(j).region == cardRegion)
                     {
                         break;
                     } 
@@ -123,12 +118,12 @@ void DeckBuilder::removeCard(Card &cardToRemove)
                 {
                     if (firstRegion == cardRegion)
                     {
-                        firstRegion = "";
+                        firstRegion = voidRegion;
                         return;
                     } 
                     else if (secondRegion == cardRegion)
                     {
-                        secondRegion = "";
+                        secondRegion = voidRegion;
                         return;
                     }
                 }
@@ -144,4 +139,30 @@ void DeckBuilder::removeCard(Card &cardToRemove)
     }
 }
 
-DeckBuilder::~DeckBuilder() {}
+void DeckBuilder::addCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode)
+{
+    std::optional<CardApi::Card> card = CardApi::getCardById(db, cardCode);
+
+    if (card.has_value())
+    {
+        addCard(card.value());
+    }
+    else
+    {
+        throw IllegalCardException("Invalid ID");
+    }
+}
+
+void DeckBuilder::removeCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode)
+{
+    std::optional<CardApi::Card> card = CardApi::getCardById(db, cardCode);
+
+    if (card.has_value())
+    {
+        removeCard(card.value());
+    }
+    else
+    {
+        throw IllegalCardException("Invalid ID");
+    }
+}
