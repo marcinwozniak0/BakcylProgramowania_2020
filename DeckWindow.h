@@ -4,7 +4,7 @@
 #include <QtCharts>
 #include <memory>
 
-#include "DeckBuilder/Include/DeckBuilder.hpp"
+#include "DeckBuilder.hpp"
 
 namespace Ui {
 class DeckWindow;

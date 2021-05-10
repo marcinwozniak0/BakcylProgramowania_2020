@@ -34,13 +34,8 @@ DeckWindow::~DeckWindow()
     delete ui;
 }
 
-<<<<<<< HEAD:deckwindow.cpp
+
 void DeckWindow::CheckDeckFullfilment(){
     ui->deckFill->setValue(deck_->getDeckLength());
-=======
-void DeckWindow::CheckDeckFullfilment()
-{
 
-    ui->deckFill->setValue(50);
->>>>>>> 7facb55245999e71276365a4370c7dd63cf49039:DeckWindow.cpp
 }

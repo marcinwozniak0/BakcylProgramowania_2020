@@ -4,7 +4,7 @@
 #include <QLabel>
 
 
-#include "DeckBuilder/Include/DeckBuilder.hpp"
+#include "DeckBuilder.hpp"
 
 
 namespace Ui {

@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "../../db/card_api/Include/baseCardApi.hpp"
+#include "baseCardApi.hpp"
 
 class Deck
 {
