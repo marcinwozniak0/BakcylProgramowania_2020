@@ -16,6 +16,28 @@ FileDownloader::FileDownloader()
     curl = curl_easy_init();
 }
 
+bool FileDownloader::isFileDownloaded(std::string fileName_)
+{  
+    std::string c = directoryPath + "/" + fileName_;
+    std::ifstream ifexfile(c.c_str()); 
+    if(ifexfile)
+    {
+        std::string msg = fileName_ + " already exists!";
+        std::cout<<msg<<std::endl;
+        
+        return true;        
+    }
+    else 
+    {
+        return false;
+    }
+}
+
+void FileDownloader::addDirectoryPath(std::string directoryPath_)
+{
+    directoryPath = directoryPath_;
+}
+
 void FileDownloader::createDirectory(std::string directoryPath_)
 {
     directoryPath = directoryPath_;
@@ -42,28 +64,25 @@ void FileDownloader::addLinks(std::string links_[], std::string fileNames_[], in
     }
 }
 
-void FileDownloader::download()
+void FileDownloader::download(bool checkIfExists)
 {   
     CURLcode res;
     
     long unsigned int i = 0;
     while(i < links.size())
     {  
-        //checking if file already exists    
-        std::string fileDirectory = directoryPath + "/" + fileNames[i];
-        
-        FILE *fileToTest = fopen(fileDirectory.c_str(), "r"); 
-        
-        /*if(fileToTest)
+        if(checkIfExists)
         {
-            std::string msg = fileNames[i] + " already exists!";
-            std::cout<<msg<<std::endl;
-            
-            fclose(fileToTest);
-            i++;
-            continue;            
-        }*/
+            if(isFileDownloaded(fileNames[i]))
+            {       
+                i++;
+                continue;
+            }
+        }
         
+        std::string msg = "Downloading " + fileNames[i] + ", please be patient";
+        std::cout<<msg<<std::endl;
+    
         //some curl setup     
         fp = fopen(fileNames[i].c_str(), "wb");
     

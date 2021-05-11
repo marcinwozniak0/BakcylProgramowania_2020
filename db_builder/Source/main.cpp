@@ -13,6 +13,9 @@ std::string getJsonMemberNameWithoutNuls(Json::ValueIteratorBase it);
 void fillSet(unique_sqlite3& db, const Json::Value& set);
 void fillAssoc(unique_sqlite3& db, const Json::Value& cards, const std::string& table_name, const std::string& arrName);
 void fillAssets(unique_sqlite3& db, const Json::Value& cards);
+void downloadZipWithImages();
+
+std::string directoryPath_ = "./data";
 
 bool is_empty(std::ifstream& pFile)
 {
@@ -27,14 +30,13 @@ Json::Value getJsonFromFile(const std::string& filename, const std::string& down
     {
         file.close();
         
-        fd::FileDownloader downloader;  
-        std::string directoryPath_ = "./data";                            
+        fd::FileDownloader downloader;                              
         downloader.createDirectory(directoryPath_);
     
         std::string links_[] = {download_url};
         std::string fileNames_[] = {filename};
         downloader.addLinks(links_, fileNames_, (sizeof(links_)/sizeof(links_[0])));
-        downloader.download();
+        downloader.download(false);
         
         std::string filename_ = directoryPath_ + "/" + filename;
         file.open(filename_);
@@ -53,6 +55,24 @@ int main()
     sqlite3_exec(db.get(), "BEGIN TRANSACTION;", NULL, NULL, NULL);
     createTables(db);
 
+    fd::FileDownloader downloader;  
+    downloader.addDirectoryPath(directoryPath_);
+    
+    // Downloading Zips with images
+    // adding info for downloading (links, file names)
+    std::string links_[] = {"https://dd.b.pvp.net/latest/set1-lite-en_us.zip"
+                           ,"https://dd.b.pvp.net/latest/set2-lite-en_us.zip"
+                           ,"https://dd.b.pvp.net/latest/set3-lite-en_us.zip"
+                           ,"https://dd.b.pvp.net/latest/set4-lite-en_us.zip"};
+    std::string fileNames_[] = {"set1-lite-en_us.zip"
+                               ,"set2-lite-en_us.zip"
+                               ,"set3-lite-en_us.zip"
+                               ,"set4-lite-en_us.zip"};
+    downloader.addLinks(links_, fileNames_, (sizeof(links_)/sizeof(links_[0])));
+    
+    downloader.download(true);
+    
+    
     // temporary ugly shit. We are going to abadon it for sake of auto downloading
     Json::Value globalsJson =
         getJsonFromFile("globals-en_us.json", "https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json");
