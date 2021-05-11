@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
         connect(it, &QPushButton::clicked, this, &MainWindow::cardClicked);
     }
 
-    currentRequest = std::make_unique<SearchRequest>();
+    currentRequest = std::make_unique<CardApi::Filters>();
 
     dataBase = SqliteHelper::open_db(dataBaseParth.c_str());
 }
@@ -43,23 +43,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_Search_B_clicked(){
 
-    currentRequest->hpMin_ = ui->HealthFrom->text().toInt();
-    currentRequest->hpMax_ = ui->HealthTo->text().toInt();
+    currentRequest->minHealth = ui->HealthFrom->text().toInt();
+    currentRequest->maxHealth = ui->HealthTo->text().toInt();
 
-    currentRequest->costMin_ = ui->CostFrom->text().toInt();
-    currentRequest->costMax_ = ui->CostTo->text().toInt();
+    currentRequest->minCost = ui->CostFrom->text().toInt();
+    currentRequest->maxCost = ui->CostTo->text().toInt();
 
-    currentRequest->attackMin_ = ui->AttackFrom->text().toInt();
-    currentRequest->attackMax_ = ui->AttackTo->text().toInt();
+    currentRequest->minAttack = ui->AttackFrom->text().toInt();
+    currentRequest->maxAttack = ui->AttackTo->text().toInt();
 
-    currentRequest->name_ = ui->Name_T->text().toStdString();
+    currentRequest->cardName = ui->Name_T->text().toStdString();
 
-    currentRequest->rarity_ = convertCheckbox("Rarity_?");
-    currentRequest->cardType_ = convertCheckbox("Typ_?");
-    currentRequest->region_ = convertCheckbox("Region_??");
-
-    currentRequest->ShowRequest();
-
+    currentRequest->rarityNames = convertCheckbox("Rarity_?");
+    //currentRequest->cardType_ = convertCheckbox("Typ_?"); //TODO
+    currentRequest->regionNames = convertCheckbox("Region_??");
 }
 std::vector<std::string> MainWindow::convertCheckbox(std::string regex){
     QRegularExpression chexbox_regex(regex.c_str());

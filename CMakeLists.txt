@@ -50,7 +50,6 @@ set(PROJECT_SOURCES
     MainWindow.cpp
     MainWindow.h
     mainwindow.ui
-    SearchRequest.cpp
     CardWindow.cpp
     CardsContainer.cpp
     DeckWindow.cpp
@@ -59,6 +58,7 @@ set(PROJECT_SOURCES
     DeckBuilder/Source/Deck.cpp
     db/card_api/Source/baseCardApi.cpp
     db/card_api/Source/utilities.cpp
+    db/card_api/Source/searchEngine.cpp
     db/sqlite_helper/Source/sqlite_helper.cpp
     ${LOGGER_LIB}
     )

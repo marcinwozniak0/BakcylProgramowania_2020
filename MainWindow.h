@@ -7,7 +7,7 @@
 #include "CardsContainer.h"
 #include "CardWindow.h"
 #include "DeckBuilder/Include/DeckBuilder.hpp"
-#include "SearchRequest.h"
+#include "searchEngine.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,7 +29,7 @@ private:
 
     std::vector<std::string> convertCheckbox(std::string);
     std::unique_ptr<CardsContainer> cardContainer;
-    std::unique_ptr<SearchRequest> currentRequest;
+    std::unique_ptr<CardApi::Filters> currentRequest;
     DeckBuilder deckbuilder;
     SqliteHelper::unique_sqlite3 dataBase;
 

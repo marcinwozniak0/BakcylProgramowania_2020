@@ -1,7 +1,7 @@
 #include "searchEngine.hpp"
 #include "utilities.hpp"
 #include <optional>
-#include <sqlite_helper.hpp>
+#include "../../sqlite_helper/Include/sqlite_helper.hpp"
 
 namespace CardApi
 {
@@ -95,17 +95,14 @@ void DynamicQuery::addFilters(const Filters& filters)
 
 void DynamicQuery::addPagination(const Pagination& pagination)
 {
-    if (pagination.limit.has_value())
-    {
         queryText += " LIMIT ?";
-        paramQueue.push_back(std::to_string(*pagination.limit));
+        paramQueue.push_back(std::to_string(pagination.limit));
         if (pagination.offset.has_value())
         {
             queryText += " OFFSET ?";
             paramQueue.push_back(std::to_string(*pagination.offset));
         }
-    }
-    queryText += " ";
+
 }
 
 void bindParamQueue(SqliteHelper::unique_stmt& stmt, const std::vector<std::string>& paramQueue)
@@ -127,4 +124,13 @@ std::vector<Card> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& f
     bindParamQueue(stmt, dynQuery.paramQueue);
     return getCardsFromStatement(db, stmt);
 }
+
+void Filters::setPage(const int page){
+    if(page < 1){
+        pagination.offset = 1;
+    }else{
+        pagination.offset = (page - 1) * pagination.limit + 1;
+    }
+}
+
 } // namespace CardApi
