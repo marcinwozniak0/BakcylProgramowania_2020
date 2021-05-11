@@ -6,6 +6,8 @@
 
 #include "DeckWindow.h"
 
+
+const std::string dataBaseParth = "database.sql";
 constexpr size_t windowWightInPx = 1200;
 constexpr size_t windowHeightInPx = 800;
 
@@ -31,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     currentRequest = std::make_unique<SearchRequest>();
 
+    dataBase = SqliteHelper::open_db(dataBaseParth.c_str());
 }
 MainWindow::~MainWindow()
 {
@@ -71,11 +74,11 @@ std::vector<std::string> MainWindow::convertCheckbox(std::string regex){
 }
 void MainWindow::cardClicked(){
     QPushButton *button = (QPushButton *)sender();
-    displayCardWindow(button->property("Id").toUInt());
+    displayCardWindow(button->property("Id").toString().toStdString());
 
 }
-void MainWindow::displayCardWindow(unsigned int cardId){
-    CardWindow cardWindow(cardId, ui->OptionsAndDeck->findChild<QLabel*>("DeckDisplay"), &deckbuilder, this);
+void MainWindow::displayCardWindow(std::string cardId){
+    CardWindow cardWindow(cardId, ui->OptionsAndDeck->findChild<QLabel*>("DeckDisplay"), &deckbuilder, &dataBase, this);
     cardWindow.setModal(true);
     cardWindow.exec();
 }
@@ -161,10 +164,11 @@ void MainWindow::on_NumberOfPage_editingFinished()
 }
 
 void MainWindow::on_pushButton_clicked()
-{
-    this->hide();
-    DeckWindow deckWindow(&deckbuilder,this->geometry() ,this);
-    deckWindow.setModal(true);
-    deckWindow.exec();
-    this->show();
+{   
+        this->hide();
+        DeckWindow deckWindow(&deckbuilder,this->geometry() ,this);
+        deckWindow.setModal(true);
+        deckWindow.exec();
+        deckWindow.deleteLater();
+        this->show();
 }

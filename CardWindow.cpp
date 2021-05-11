@@ -7,12 +7,13 @@ CardWindow::CardWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 }
-CardWindow::CardWindow(unsigned int cardId, QLabel* DeckDisplay, DeckBuilder* deck ,QWidget *parent) :
+CardWindow::CardWindow(std::string cardId, QLabel* DeckDisplay, DeckBuilder* deck, SqliteHelper::unique_sqlite3* DataBase, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CardWindow),
     cardId_(cardId),
     DeckDisplay_(DeckDisplay),
-    deck_(deck)
+    deck_(deck),
+    DataBase_(DataBase)
 {
     ui->setupUi(this);
     QPixmap picture("../../BakcylProgramowania_2020/source/pic.png");
@@ -20,8 +21,6 @@ CardWindow::CardWindow(unsigned int cardId, QLabel* DeckDisplay, DeckBuilder* de
     int hp = ui->label->height();
     ui->label->setPixmap(picture.scaled(wp,hp,Qt::KeepAspectRatio));
     this->setWindowTitle("Card");
-    displayDeck();
-
 }
 CardWindow::~CardWindow()
 {
@@ -35,10 +34,12 @@ void CardWindow::on_close_w_clicked()
 
 void CardWindow::on_add_w_clicked()
 {
-
+    deck_->addCardByID(*DataBase_, cardId_);
+    displayDeck();
 }
 
 void CardWindow::displayDeck(){
+    deckText_ = "";
     for(auto it : (deck_->getDeck()).getCardsAsVector()){
         deckText_ += it.name;
         deckText_ += '\n';

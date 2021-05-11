@@ -1,7 +1,8 @@
 #include "DeckWindow.h"
 #include "ui_deckwindow.h"
 
-DeckWindow::DeckWindow(DeckBuilder* deck, QRect geometry ,QWidget *parent) :
+#include <iostream>
+DeckWindow::DeckWindow(DeckBuilder* deck, QRect geometry, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DeckWindow),
     deck_(deck)
@@ -16,21 +17,33 @@ DeckWindow::DeckWindow(DeckBuilder* deck, QRect geometry ,QWidget *parent) :
 void DeckWindow::CreateTypesChart()
 {
 
-    series = std::make_unique<QPieSeries>();
-    series->append("Test",10);
-    series->append("Lol",40);
-    series->append("xD",69);
-    chart = std::make_unique<QChart>();
-    chart->addSeries(series.get());
-    // TODO
-    //chart->setBackgroundVisible(true);
-    //chart->setTheme(QChart::C);
-    chartview = std::make_unique<QChartView>(chart.get(), ui->Statystyki);
-    chartview->setGeometry(300, 10, 300, 200);
+    series = new QPieSeries();
+    series->setVisible(false);
+    series->append(" ",0);
+    series->append("Bochaterowie",40);
+    series->append("Specjalne",40);
+    series->append("Spell",69);
+
+
+    for (int i = 1; i < 4; i++) {
+        QPieSlice *slice = series->slices().at(i);
+        slice->setLabelVisible(true);
+        slice->setPen(QPen(Qt::black));
+        slice->setBrush(QColor((i*100)%255,(i*100)%255,(i*100)%255));
+        slice->setLabelColor(Qt::white);
+    }
+    chart = new QChart();
+    chart->addSeries(series);
+    chart->setBackgroundVisible(false);
+    chartview = new QChartView(chart, ui->Statystyki);
+    chartview->setGeometry(300, 0, 350, 200);
 
 }
 DeckWindow::~DeckWindow()
 {
+//    delete series;
+//    delete chartview; // IDK jak to kosuję to apka crashuje. I <3 QT
+    delete chart;
     delete ui;
 }
 

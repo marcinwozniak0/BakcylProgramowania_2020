@@ -15,12 +15,10 @@ CardsContainer::CardsContainer(QWidget* parent) :
 
 void CardsContainer::displayCards()
 {
-
-        int i = 0;
+        QVariant i = "01NX014";
         for(auto& it : cards_){
             showCard("../../BakcylProgramowania_2020/source/pic.png",it); //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po buttonach
             it->setProperty("Id", i);                                     //TODO: ID powinno być id karty
-            i++;
         }
 }
 

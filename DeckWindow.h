@@ -23,9 +23,10 @@ private:
     void CheckDeckFullfilment();
     void CreateTypesChart();
     DeckBuilder* deck_;
-    std::unique_ptr<QPieSeries> series;
-    std::unique_ptr<QChart> chart;
-    std::unique_ptr<QChartView> chartview;
+
+    QPieSeries* series;
+    QChart* chart;
+    QChartView* chartview;
 };
 
 

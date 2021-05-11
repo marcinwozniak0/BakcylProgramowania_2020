@@ -17,15 +17,16 @@ class CardWindow : public QDialog
 
 public:
     explicit CardWindow(QWidget *parent = nullptr);
-     CardWindow(unsigned int cardId, QLabel* DeckDisplay, DeckBuilder* deck ,QWidget *parent = nullptr);
+     CardWindow(std::string cardId, QLabel* DeckDisplay, DeckBuilder* deck, SqliteHelper::unique_sqlite3* DataBase, QWidget *parent = nullptr);
     ~CardWindow();
 
 private:
     Ui::CardWindow *ui;
-    unsigned int cardId_;
+    std::string cardId_;
     QLabel* DeckDisplay_;
     DeckBuilder* deck_;
     std::string deckText_;
+    SqliteHelper::unique_sqlite3* DataBase_;
 
     void displayDeck();
 
