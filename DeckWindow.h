@@ -1,8 +1,10 @@
 #pragma once
 
 #include <QDialog>
+#include <QtCharts>
+#include <memory>
 
-#include "DeckBuilder/Include/DeckBuilder.hpp"
+#include "DeckBuilder.hpp"
 
 namespace Ui {
 class DeckWindow;
@@ -19,7 +21,12 @@ public:
 private:
     Ui::DeckWindow *ui;
     void CheckDeckFullfilment();
+    void CreateTypesChart();
     DeckBuilder* deck_;
+
+    QPieSeries* series;
+    QChart* chart;
+    QChartView* chartview;
 };
 
 

@@ -1,12 +1,22 @@
 #pragma once
 #include "baseCardApi.hpp"
-#include "sqlite_helper.hpp"
+#include "../../sqlite_helper/Include/sqlite_helper.hpp"
 #include <optional>
 #include <string>
 #include <vector>
 
+const size_t limitOfCard = 15;
+
 namespace CardApi
 {
+
+struct Pagination
+{
+    int limit = limitOfCard;
+    std::optional<int> offset;
+    // offset is ignored if limit is empty
+};
+
 struct Filters
 {
     // empty filter means no filter
@@ -22,13 +32,9 @@ struct Filters
     std::optional<int> maxCost;
     std::optional<int> minHealth;
     std::optional<int> maxHealth;
-};
 
-struct Pagination
-{
-    std::optional<int> limit;
-    std::optional<int> offset;
-    // offset is ignored if limit is empty
+    void setPage(const int page);
+    Pagination pagination;
 };
 
 // TODO: Sorting

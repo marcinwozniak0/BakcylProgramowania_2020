@@ -6,6 +6,8 @@
 
 #include "DeckWindow.h"
 
+
+const std::string dataBaseParth = "database.sql";
 constexpr size_t windowWightInPx = 1200;
 constexpr size_t windowHeightInPx = 800;
 
@@ -29,9 +31,9 @@ MainWindow::MainWindow(QWidget *parent)
         connect(it, &QPushButton::clicked, this, &MainWindow::cardClicked);
     }
 
-    currentRequest = std::make_unique<SearchRequest>();
+    currentRequest = std::make_unique<CardApi::Filters>();
 
-
+    dataBase = SqliteHelper::open_db(dataBaseParth.c_str());
 }
 MainWindow::~MainWindow()
 {
@@ -41,23 +43,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_Search_B_clicked(){
 
-    currentRequest->hpMin_ = ui->HealthFrom->text().toInt();
-    currentRequest->hpMax_ = ui->HealthTo->text().toInt();
+    currentRequest->minHealth = ui->HealthFrom->text().toInt();
+    currentRequest->maxHealth = ui->HealthTo->text().toInt();
 
-    currentRequest->costMin_ = ui->CostFrom->text().toInt();
-    currentRequest->costMax_ = ui->CostTo->text().toInt();
+    currentRequest->minCost = ui->CostFrom->text().toInt();
+    currentRequest->maxCost = ui->CostTo->text().toInt();
 
-    currentRequest->attackMin_ = ui->AttackFrom->text().toInt();
-    currentRequest->attackMax_ = ui->AttackTo->text().toInt();
+    currentRequest->minAttack = ui->AttackFrom->text().toInt();
+    currentRequest->maxAttack = ui->AttackTo->text().toInt();
 
-    currentRequest->name_ = ui->Name_T->text().toStdString();
+    currentRequest->cardName = ui->Name_T->text().toStdString();
 
-    currentRequest->rarity_ = convertCheckbox("Rarity_?");
-    currentRequest->cardType_ = convertCheckbox("Typ_?");
-    currentRequest->region_ = convertCheckbox("Region_??");
-
-    currentRequest->ShowRequest();
-
+    currentRequest->rarityNames = convertCheckbox("Rarity_?");
+    //currentRequest->cardType_ = convertCheckbox("Typ_?"); //TODO
+    currentRequest->regionNames = convertCheckbox("Region_??");
 }
 std::vector<std::string> MainWindow::convertCheckbox(std::string regex){
     QRegularExpression chexbox_regex(regex.c_str());
@@ -72,11 +71,11 @@ std::vector<std::string> MainWindow::convertCheckbox(std::string regex){
 }
 void MainWindow::cardClicked(){
     QPushButton *button = (QPushButton *)sender();
-    displayCardWindow(button->property("Id").toUInt());
+    displayCardWindow(button->property("Id").toString().toStdString());
 
 }
-void MainWindow::displayCardWindow(unsigned int cardId){
-    CardWindow cardWindow(cardId, ui->OptionsAndDeck->findChild<QLabel*>("DeckDisplay"), &deckbuilder, this);
+void MainWindow::displayCardWindow(std::string cardId){
+    CardWindow cardWindow(cardId, ui->OptionsAndDeck->findChild<QLabel*>("DeckDisplay"), &deckbuilder, &dataBase, this);
     cardWindow.setModal(true);
     cardWindow.exec();
 }
@@ -162,10 +161,11 @@ void MainWindow::on_NumberOfPage_editingFinished()
 }
 
 void MainWindow::on_pushButton_clicked()
-{
-    this->hide();
-    DeckWindow deckWindow(&deckbuilder,this->geometry() ,this);
-    deckWindow.setModal(true);
-    deckWindow.exec();
-    this->show();
+{   
+        this->hide();
+        DeckWindow deckWindow(&deckbuilder,this->geometry() ,this);
+        deckWindow.setModal(true);
+        deckWindow.exec();
+        deckWindow.deleteLater();
+        this->show();
 }

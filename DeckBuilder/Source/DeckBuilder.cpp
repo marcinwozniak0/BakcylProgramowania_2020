@@ -1,20 +1,13 @@
 #include "DeckBuilder.hpp"
 #include "Deck.hpp"
 #include "IllegalCardExceptions.hpp"
+#include "../../ErrorWindow.h"
 
-DeckBuilder::DeckBuilder()
-{
-    const int maxNumberOfCards = 40;
-    const int maxNumberOfHeroes = 6;
-    const int maxNumberOfEachCard = 3;
-    std::string firstRegion = "";
-    std::string secondRegion = "";
-}
+int DeckBuilder::checkNumberOfCard(CardApi::Card card) 
 
-int DeckBuilder::checkNumberOfCard(Card card) 
 {
     int number = 0;
-    for (Card c : deck.getCardsAsVector()) 
+    for (auto c : deck.getCardsAsVector()) 
     {
         if (c == card) 
         {
@@ -24,33 +17,35 @@ int DeckBuilder::checkNumberOfCard(Card card)
     return number;
 }
 
-void DeckBuilder::addCard(Card &cardToAdd)
+void DeckBuilder::addCard(CardApi::Card &cardToAdd)
 {
+    CardApi::Region voidRegion;
+
     int deckLength = deck.length();
-    if (deckLength < maxNumberOfCards && deckLength >= 0 && checkNumberOfCard(cardToAdd) < maxNumberOfEachCard) 
+    if (deckLength < maxNumberOfCards && deckLength >= 0 && checkNumberOfCard(cardToAdd) < maxNumberOfEachCard)
     {
-        if (firstRegion == "") 
+        if (firstRegion == voidRegion)
         {
-            firstRegion = cardToAdd.getRegion();
+            firstRegion = cardToAdd.region;
         } 
-        else if (secondRegion == "") 
+        else if (secondRegion == voidRegion)
         {
-            secondRegion = cardToAdd.getRegion();
+            secondRegion = cardToAdd.region;
         } 
-        else if (!(firstRegion == cardToAdd.getRegion() || secondRegion == cardToAdd.getRegion())) 
+        else if (!(firstRegion == cardToAdd.region || secondRegion == cardToAdd.region))
         {
-            throw IllegalCardException("Invalid region");
+            ErrorWindow("Invalid region");
             return;
         }
 
-        if (cardToAdd.getType() == "hero" && deck.getNumberOfHeroes() < maxNumberOfHeroes) //TODO: correct type of hero, ask SQL(!)
+        if (cardToAdd.type == "hero" && deck.getNumberOfHeroes() < maxNumberOfHeroes) //TODO: correct type of hero, ask SQL(!)
         {       
             deck.increaseNumberOfHeroes();
             deck.addCard(cardToAdd);
         } 
-        else if (cardToAdd.getType() == "hero" && deck.getNumberOfHeroes() >= maxNumberOfHeroes)
+        else if (cardToAdd.type == "hero" && deck.getNumberOfHeroes() >= maxNumberOfHeroes)
         {
-            throw IllegalCardException("Too many heroes");
+            ErrorWindow("Too many heroes");
             return;
         }
         else 
@@ -60,29 +55,30 @@ void DeckBuilder::addCard(Card &cardToAdd)
     } 
     else if (deckLength >= maxNumberOfCards)
     {
-        throw IllegalCardException("Too many cards");
+        ErrorWindow("Too many cards");
         return;
     }
     else if (checkNumberOfCard(cardToAdd) >= maxNumberOfEachCard)
     {
-        throw IllegalCardException("A card can't be added more than 3 times");
+        ErrorWindow("A card can't be added more than 3 times");
         return;
     }
     else if (deckLength < 0)
     {
-        throw IllegalCardException("Too few cards");
+        ErrorWindow("Too few cards");
         return;
     }
     else
     {
-        throw IllegalCardException("Other exception");
+        ErrorWindow("Other exception");
         return;
     }
     
 }
 
-void DeckBuilder::removeCard(Card &cardToRemove)
+void DeckBuilder::removeCard(CardApi::Card &cardToRemove)
 {
+    CardApi::Region voidRegion;
     int deckLength = deck.length();
     if (deckLength > 0)
     {
@@ -90,15 +86,15 @@ void DeckBuilder::removeCard(Card &cardToRemove)
         {
             if (i == deckLength)
             {
-                throw IllegalCardException("This card doesn't occur in this deck");
+                ErrorWindow("This card doesn't occur in this deck");
                 return;
             }
 
             if (deck.getCardsAsVector().at(i) == cardToRemove)
             {
-                std::string cardRegion = cardToRemove.getRegion();
+                CardApi::Region cardRegion = cardToRemove.region;
 
-                if (cardToRemove.getType() == "hero")
+                if (cardToRemove.type == "hero")
                 {
                     deck.decreaseNumberOfHeroes();
                 }
@@ -109,7 +105,7 @@ void DeckBuilder::removeCard(Card &cardToRemove)
                 int deckLength = deck.length();
                 for (int j = 0; j < deckLength; j++)
                 {
-                    if(deck.getCardsAsVector().at(j).getRegion() == cardRegion)
+                    if(deck.getCardsAsVector().at(j).region == cardRegion)
                     {
                         break;
                     } 
@@ -123,12 +119,12 @@ void DeckBuilder::removeCard(Card &cardToRemove)
                 {
                     if (firstRegion == cardRegion)
                     {
-                        firstRegion = "";
+                        firstRegion = voidRegion;
                         return;
                     } 
                     else if (secondRegion == cardRegion)
                     {
-                        secondRegion = "";
+                        secondRegion = voidRegion;
                         return;
                     }
                 }
@@ -139,9 +135,35 @@ void DeckBuilder::removeCard(Card &cardToRemove)
     }
     else
     {
-        throw IllegalCardException("There are no cards to remove");
+        ErrorWindow("There are no cards to remove");
         return;
     }
 }
 
-DeckBuilder::~DeckBuilder() {}
+void DeckBuilder::addCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode)
+{
+    std::optional<CardApi::Card> card = CardApi::getCardById(db, cardCode);
+
+    if (card.has_value())
+    {
+        addCard(card.value());
+    }
+    else
+    {
+        ErrorWindow("Invalid ID");
+    }
+}
+
+void DeckBuilder::removeCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode)
+{
+    std::optional<CardApi::Card> card = CardApi::getCardById(db, cardCode);
+
+    if (card.has_value())
+    {
+        removeCard(card.value());
+    }
+    else
+    {
+        ErrorWindow("Invalid ID");
+    }
+}

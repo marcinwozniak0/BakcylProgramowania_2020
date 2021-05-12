@@ -1,4 +1,4 @@
-#include "utilities.hpp"
+#include "../Include/utilities.hpp"
 #include <iostream>
 
 std::vector<CardApi::Card> getCardsFromStatement(SqliteHelper::unique_sqlite3& db, SqliteHelper::unique_stmt& stmt)
