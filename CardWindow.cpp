@@ -38,9 +38,10 @@ void CardWindow::on_add_w_clicked()
     displayDeck();
 }
 
-void CardWindow::displayDeck(){
+void CardWindow::displayDeck()
+{
     deckText_ = "";
-    for(auto it : (deck_->getDeck()).getCardsAsVector()){
+    for(auto it : deck_->getDeck().getCardsAsVector()){
         deckText_ += it.name;
         deckText_ += '\n';
     }
