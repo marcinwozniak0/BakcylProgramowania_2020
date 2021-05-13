@@ -1,7 +1,9 @@
 #include "DeckWindow.h"
 #include "ui_deckwindow.h"
 
-#include <iostream>
+const size_t deckWindowWigth = 890;
+const size_t deckWindowHeigth = 525;
+
 DeckWindow::DeckWindow(DeckBuilder* deck, QRect geometry, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DeckWindow),
@@ -9,9 +11,10 @@ DeckWindow::DeckWindow(DeckBuilder* deck, QRect geometry, QWidget *parent) :
 {
     ui->setupUi(this);
     setGeometry(geometry);
-    setFixedSize(geometry.width(), geometry.height());
+    setFixedSize(deckWindowWigth, deckWindowHeigth);
     CheckDeckFullfilment();
     CreateTypesChart();
+    CheckDeckStats();
 
 }
 void DeckWindow::CreateTypesChart()
@@ -39,6 +42,14 @@ void DeckWindow::CreateTypesChart()
     chartview->setGeometry(300, 0, 350, 200);
 
 }
+void DeckWindow::CheckDeckStats()
+{
+    ui->Statystyki->findChild<QLabel*>("Region1")->setText(QString::fromStdString(deck_->firstRegion.name));
+    ui->Statystyki->findChild<QLabel*>("Region2")->setText(QString::fromStdString(deck_->secondRegion.name));
+
+
+}
+
 DeckWindow::~DeckWindow()
 {
 //    delete series;

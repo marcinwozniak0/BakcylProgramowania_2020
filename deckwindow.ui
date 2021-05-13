@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>898</width>
-    <height>524</height>
+    <width>887</width>
+    <height>527</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
   <widget class="QGroupBox" name="Statystyki">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>20</y>
      <width>621</width>
      <height>211</height>
@@ -41,7 +41,7 @@
    <property name="title">
     <string/>
    </property>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="Title">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -59,7 +59,7 @@
      <string>Deck statistics</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="Regions_T">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -72,7 +72,7 @@
      <string>Regions:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="Region1">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -85,7 +85,7 @@
      <string>REGION1</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="Cost_T">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -98,7 +98,7 @@
      <string>Average Cost:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="Cost">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -111,20 +111,20 @@
      <string>AvgCost</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="Region2">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>180</x>
       <y>60</y>
       <width>61</width>
-      <height>18</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
      <string>REGION2</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_8">
+   <widget class="QLabel" name="Health_T">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -137,7 +137,7 @@
      <string>Average Health:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_9">
+   <widget class="QLabel" name="Health">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -150,12 +150,12 @@
      <string>AvgHealth</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_10">
+   <widget class="QLabel" name="SpellSpeed_T">
     <property name="geometry">
      <rect>
       <x>30</x>
       <y>140</y>
-      <width>131</width>
+      <width>141</width>
       <height>18</height>
      </rect>
     </property>
@@ -163,12 +163,12 @@
      <string>Average spell speed:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_11">
+   <widget class="QLabel" name="SpellSpeed">
     <property name="geometry">
      <rect>
       <x>170</x>
       <y>140</y>
-      <width>62</width>
+      <width>71</width>
       <height>18</height>
      </rect>
     </property>
@@ -176,7 +176,7 @@
      <string>AvgSpeed</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_12">
+   <widget class="QLabel" name="Attack_T">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -189,7 +189,7 @@
      <string>Average Attack:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_13">
+   <widget class="QLabel" name="Attack">
     <property name="geometry">
      <rect>
       <x>140</x>

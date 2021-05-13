@@ -22,6 +22,7 @@ private:
     Ui::DeckWindow *ui;
     void CheckDeckFullfilment();
     void CreateTypesChart();
+    void CheckDeckStats();
     DeckBuilder* deck_;
 
     QPieSeries* series;

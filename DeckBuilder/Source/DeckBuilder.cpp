@@ -3,6 +3,7 @@
 #include "IllegalCardExceptions.hpp"
 #include "../../ErrorWindow.h"
 
+#include <iostream>
 int DeckBuilder::checkNumberOfCard(CardApi::Card card) 
 
 {
@@ -28,7 +29,7 @@ void DeckBuilder::addCard(CardApi::Card &cardToAdd)
         {
             firstRegion = cardToAdd.region;
         } 
-        else if (secondRegion == voidRegion)
+        else if (secondRegion == voidRegion && !(cardToAdd.region == firstRegion))
         {
             secondRegion = cardToAdd.region;
         } 
@@ -41,7 +42,7 @@ void DeckBuilder::addCard(CardApi::Card &cardToAdd)
         if (cardToAdd.type == "hero" && deck.getNumberOfHeroes() < maxNumberOfHeroes) //TODO: correct type of hero, ask SQL(!)
         {       
             deck.increaseNumberOfHeroes();
-            deck.addCard(cardToAdd);
+            deck.addCard(cardToAdd);          
         } 
         else if (cardToAdd.type == "hero" && deck.getNumberOfHeroes() >= maxNumberOfHeroes)
         {
@@ -51,6 +52,15 @@ void DeckBuilder::addCard(CardApi::Card &cardToAdd)
         else 
         {
             deck.addCard(cardToAdd);
+        }
+
+        if(cardCount[cardToAdd] >= 1)
+        {
+            cardCount[cardToAdd]++;
+        }
+        else
+        {
+            cardCount[cardToAdd] = 1;
         }
     } 
     else if (deckLength >= maxNumberOfCards)
@@ -100,6 +110,7 @@ void DeckBuilder::removeCard(CardApi::Card &cardToRemove)
                 }
 
                 deck.removeCard(i);
+                cardCount[cardToRemove]--;
             
                 int counter = 0;
                 int deckLength = deck.length();
@@ -170,15 +181,5 @@ void DeckBuilder::removeCardByID (SqliteHelper::unique_sqlite3& db, const std::s
 
 std::map<CardApi::Card,int> DeckBuilder::getCardCountMap()
 {
-  cardCount.clear();
-  for (const auto& card : deck.getCardsAsVector())
-  {
-    if(cardCount[card] >= 1)
-    {
-        cardCount[card]++;
-    }
-    else
-        cardCount[card] = 1;
-  }
   return cardCount;
 }
