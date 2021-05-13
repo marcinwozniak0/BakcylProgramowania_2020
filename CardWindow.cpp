@@ -41,8 +41,11 @@ void CardWindow::on_add_w_clicked()
 void CardWindow::displayDeck()
 {
     deckText_ = "";
-    for(auto it : deck_->getDeck().getCardsAsVector()){
-        deckText_ += it.name;
+    for(const auto& [key, value] : deck_->getCardCountMap()){
+
+        deckText_ += std::to_string(value);
+        deckText_ += "x ";
+        deckText_ += key.name;
         deckText_ += '\n';
     }
     DeckDisplay_->setPlainText(QString::fromStdString(deckText_));

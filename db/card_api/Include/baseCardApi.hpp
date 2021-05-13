@@ -59,6 +59,7 @@ struct Card
 
     bool operator==(const Card& other) const{return (cardCode == other.cardCode);}
     // TODO: store info where icon is stored
+    bool operator<(const Card& other) const{return (name < other.name);}
 };
 
 std::optional<Card> getCardById(SqliteHelper::unique_sqlite3& db, const std::string& cardCode);

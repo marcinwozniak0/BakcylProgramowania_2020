@@ -7,7 +7,7 @@ int DeckBuilder::checkNumberOfCard(CardApi::Card card)
 
 {
     int number = 0;
-    for (auto c : deck.getCardsAsVector()) 
+    for (const auto& c : deck.getCardsAsVector())
     {
         if (c == card) 
         {
@@ -166,4 +166,19 @@ void DeckBuilder::removeCardByID (SqliteHelper::unique_sqlite3& db, const std::s
     {
         ErrorWindow("Invalid ID");
     }
+}
+
+std::map<CardApi::Card,int> DeckBuilder::getCardCountMap()
+{
+  cardCount.clear();
+  for (const auto& card : deck.getCardsAsVector())
+  {
+    if(cardCount[card] >= 1)
+    {
+        cardCount[card]++;
+    }
+    else
+        cardCount[card] = 1;
+  }
+  return cardCount;
 }
