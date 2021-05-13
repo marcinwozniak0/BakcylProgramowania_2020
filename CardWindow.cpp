@@ -7,7 +7,7 @@ CardWindow::CardWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 }
-CardWindow::CardWindow(std::string cardId, QLabel* DeckDisplay, DeckBuilder* deck, SqliteHelper::unique_sqlite3* DataBase, QWidget *parent) :
+CardWindow::CardWindow(std::string cardId, QPlainTextEdit* DeckDisplay, DeckBuilder* deck, SqliteHelper::unique_sqlite3* DataBase, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CardWindow),
     cardId_(cardId),
@@ -45,5 +45,5 @@ void CardWindow::displayDeck()
         deckText_ += it.name;
         deckText_ += '\n';
     }
-    DeckDisplay_->setText(QString::fromStdString(deckText_));
+    DeckDisplay_->setPlainText(QString::fromStdString(deckText_));
 }

@@ -75,7 +75,7 @@ void MainWindow::cardClicked(){
 
 }
 void MainWindow::displayCardWindow(std::string cardId){
-    CardWindow cardWindow(cardId, ui->OptionsAndDeck->findChild<QLabel*>("DeckDisplay"), &deckbuilder, &dataBase, this);
+    CardWindow cardWindow(cardId, ui->OptionsAndDeck->findChild<QPlainTextEdit*>("DeckDisplay"), &deckbuilder, &dataBase, this);
     cardWindow.setModal(true);
     cardWindow.exec();
 }
