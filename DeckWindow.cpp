@@ -18,62 +18,19 @@ DeckWindow::DeckWindow(DeckBuilder* deck, QRect geometry, QWidget *parent) :
 }
 void DeckWindow::CreateTypesChart()
 {
-    int units = 0;
-    int skills = 0;
-    int spells = 0;
-    int landmarks = 0;
- /* Pierwszy pomysł na zdobycie ilości typów. Niestety wszystkie typy kart na ten moment nazywają się "type" :p
-    for(const auto& card : deck_->getDeck().getCardsAsVector())
-    {
-        switch(card.type[0])
-        {
-            case 'J': // "Jednostka"
-                units++;
-                break;
+    CardsTypes types;
 
-            case 'U': // "Umiejętność"
-                skills++;
-                break;
-
-            case 'Z': // "Zaklęcie"
-                spells++;
-                break;
-
-            case 'L': // "Lokacja"
-                landmarks++;
-                break;
-        }
-    }
-
-*/
+    CheckCardsTypes(types);
 
     series = new QPieSeries();
     series->setVisible(false);
     series->setPieSize(0.5);
     series->setHoleSize(0.2);
 
-int piesize = 0;
-if(units > 0)
-{
-    series->append(QString::fromStdString("Units: "+std::to_string(units)),units);
-    piesize++;
-}
-if(skills > 0)
-{
-    series->append(QString::fromStdString("Skills: "+std::to_string(skills)),skills);
-    piesize++;
-}
-if(spells > 0)
-{
-    series->append(QString::fromStdString("Spells: "+std::to_string(spells)),spells);
-    piesize++;
-}
-if(landmarks > 0)
-{
-    series->append(QString::fromStdString("Landmarks: "+std::to_string(landmarks)),landmarks);
-    piesize++;
-}
-for (int i = 0; i < piesize; i++) {
+    size_t graphSize = CreateGraph(types);
+
+    for(size_t i = 0; i < graphSize; i++)
+    {
         QPieSlice* slice = series->slices().at(i);
         slice->setLabelVisible(true);
         slice->setBorderWidth(0);
@@ -83,7 +40,6 @@ for (int i = 0; i < piesize; i++) {
     }
     //series->slices().at(selected)->setExploded(true);
 
-
     chart = new QChart();
     chart->addSeries(series);
     chart->setBackgroundVisible(false);
@@ -91,6 +47,58 @@ for (int i = 0; i < piesize; i++) {
     chartview->setGeometry(270, -50, 400, 300);
 
 }
+
+void DeckWindow::CheckCardsTypes(CardsTypes& types)
+{
+    for(const auto& card : deck_->getDeck().getCardsAsVector())
+    {
+        switch(card.type[0])
+        {
+            case 'J': // "Jednostka"
+                types.units++;
+                break;
+
+            case 'U': // "Umiejętność"
+                types.skills++;
+                break;
+
+            case 'Z': // "Zaklęcie"
+                types.spells++;
+                break;
+
+            case 'L': // "Lokacja"
+                types.landmarks++;
+                break;
+        }
+    }
+}
+
+size_t DeckWindow::CreateGraph(CardsTypes& types)
+{
+    size_t size {};
+    if(types.units > 0)
+    {
+        series->append(QString::fromStdString("Units: "+std::to_string(types.units)), types.units);
+        size++;
+    }
+    if(types.skills > 0)
+    {
+        series->append(QString::fromStdString("Skills: "+std::to_string(types.skills)), types.skills);
+        size++;
+    }
+    if(types.spells > 0)
+    {
+        series->append(QString::fromStdString("Spells: "+std::to_string(types.spells)), types.spells);
+        size++;
+    }
+    if(types.landmarks > 0)
+    {
+        series->append(QString::fromStdString("Landmarks: "+std::to_string(types.landmarks)), types.landmarks);
+        size++;
+    }
+    return size;
+}
+
 void DeckWindow::CheckDeckStats()
 {
 

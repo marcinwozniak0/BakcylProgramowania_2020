@@ -6,6 +6,14 @@
 
 #include "DeckBuilder.hpp"
 
+struct CardsTypes
+{
+    size_t units {};
+    size_t skills {};
+    size_t spells {};
+    size_t landmarks {};
+};
+
 namespace Ui {
 class DeckWindow;
 }
@@ -23,6 +31,9 @@ private:
     void CheckDeckFullfillment();
     void CreateTypesChart();
     void CheckDeckStats();
+    void CheckCardsTypes(CardsTypes& types);
+    size_t CreateGraph(CardsTypes&);
+
     DeckBuilder* deck_;
 
     QPieSeries* series;
