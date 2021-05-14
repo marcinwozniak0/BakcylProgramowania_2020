@@ -150,32 +150,6 @@
      <string>AvgHealth</string>
     </property>
    </widget>
-   <widget class="QLabel" name="SpellSpeed_T">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>140</y>
-      <width>141</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Average spell speed:</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="SpellSpeed">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>140</y>
-      <width>71</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>AvgSpeed</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="Attack_T">
     <property name="geometry">
      <rect>

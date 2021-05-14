@@ -20,7 +20,7 @@ public:
 
 private:
     Ui::DeckWindow *ui;
-    void CheckDeckFullfilment();
+    void CheckDeckFullfillment();
     void CreateTypesChart();
     void CheckDeckStats();
     DeckBuilder* deck_;
