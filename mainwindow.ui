@@ -267,7 +267,7 @@
      <widget class="QGroupBox" name="OptionsAndDeck">
       <property name="maximumSize">
        <size>
-        <width>250</width>
+        <width>280</width>
         <height>16777215</height>
        </size>
       </property>
@@ -792,9 +792,9 @@
       <widget class="QPlainTextEdit" name="DeckDisplay">
        <property name="geometry">
         <rect>
-         <x>23</x>
+         <x>5</x>
          <y>259</y>
-         <width>211</width>
+         <width>270</width>
          <height>281</height>
         </rect>
        </property>
@@ -812,7 +812,7 @@
      <x>0</x>
      <y>0</y>
      <width>1223</width>
-     <height>23</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

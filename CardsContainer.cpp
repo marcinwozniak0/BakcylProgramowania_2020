@@ -9,7 +9,6 @@ CardsContainer::CardsContainer(QWidget* parent) :
 {
 
     createLayout(parent_);
-
     displayCards();
 }
 

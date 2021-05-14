@@ -3,6 +3,7 @@
 #include <QDialog>
 #include <QtCharts>
 #include <memory>
+#include <vector>
 
 #include "DeckBuilder.hpp"
 
@@ -32,10 +33,12 @@ private:
     void CreateTypesChart();
     void CheckDeckStats();
     void CheckCardsTypes(CardsTypes& types);
+    void CreateDeckDysplay();
     size_t CreateGraph(CardsTypes&);
 
     DeckBuilder* deck_;
 
+    std::vector<QPushButton*> cardInDeckAsButtons;
     QPieSeries* series;
     QChart* chart;
     QChartView* chartview;

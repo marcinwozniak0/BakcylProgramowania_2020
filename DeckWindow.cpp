@@ -15,6 +15,8 @@ DeckWindow::DeckWindow(DeckBuilder* deck, QRect geometry, QWidget *parent) :
     CreateTypesChart();
     CheckDeckStats();
 
+    CreateDeckDysplay();
+
 }
 void DeckWindow::CreateTypesChart()
 {
@@ -119,14 +121,39 @@ void DeckWindow::CheckDeckStats()
     ui->Statystyki->findChild<QLabel*>("Attack")->setText(QString::number(attacksum/decksize));
 }
 
+void DeckWindow::CheckDeckFullfillment()
+{
+    ui->deckFill->setValue(deck_->getDeckLength());
+
+}
+
+void DeckWindow::CreateDeckDysplay()
+{
+
+    auto * scrollArea = new QScrollArea(this);
+    scrollArea->setWidget(ui->CardsInDeck);
+    scrollArea->setGeometry(10,230,340,290);
+    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    QRect positionAndSize {5,5,300,20};
+
+    int heigth = 30;
+
+    for(const auto& [key, value] : deck_->getCardCountMap())
+    {
+        QPushButton* button = new QPushButton(ui->CardsInDeck);
+        button->setText(QString::number(value) + "x " + QString::fromStdString(key.name));
+        button->setGeometry(positionAndSize);
+        positionAndSize.moveTop(heigth);
+        heigth += 25;
+    }
+    ui->CardsInDeck->setGeometry(10,230,340, heigth < 290 ? 286 : heigth - 25);
+
+}
+
 DeckWindow::~DeckWindow()
 {
     delete chart;
     delete ui;
 }
 
-
-void DeckWindow::CheckDeckFullfillment(){
-    ui->deckFill->setValue(deck_->getDeckLength());
-
-}
