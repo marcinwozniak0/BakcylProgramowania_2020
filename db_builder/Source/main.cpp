@@ -40,10 +40,6 @@ Json::Value getJsonFromFile(const std::string& filename, const std::string& down
         
         std::string filename_ = directoryPath_ + "/" + filename;
         file.open(filename_);
-        
-        // ya ya. This sucks, but it is sufficient for this PoC
-        //throw std::runtime_error(
-        //    std::string("There are no json in " + filename + " Download it from " + std::string(download_url)));
     }
     file >> json;
     return json;
