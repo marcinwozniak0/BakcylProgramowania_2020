@@ -62,8 +62,7 @@ void FileDownloader::download(bool checkIfExists)
 {   
     CURLcode res;
     
-    long unsigned int i = 0;
-    while(i < links.size())
+    for(unsigned int i = 0; i < links.size(); i++)
     {  
         if(checkIfExists)
         {

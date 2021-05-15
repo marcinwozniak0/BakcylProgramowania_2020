@@ -13,11 +13,11 @@ namespace fd
         CURL *curl;
         FILE *fp;
              
-        std::vector <std::string>links;
-        std::vector <std::string>fileNames;
-        std::string directoryPath = ""; 
+        std::vector <std::string> links;
+        std::vector <std::string> fileNames;
+        std::string directoryPath = "";
                                                                                 
-        public:  
+        public:
         FileDownloader();
         bool isFileDownloaded(std::string fileName_);                                           // checks if file is already downloaded (checks in directory given in directoryPath)
         void addDirectoryPath(std::string directoryPath_);                                      
