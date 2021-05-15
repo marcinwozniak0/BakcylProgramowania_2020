@@ -13,9 +13,8 @@ std::string getJsonMemberNameWithoutNuls(Json::ValueIteratorBase it);
 void fillSet(unique_sqlite3& db, const Json::Value& set);
 void fillAssoc(unique_sqlite3& db, const Json::Value& cards, const std::string& table_name, const std::string& arrName);
 void fillAssets(unique_sqlite3& db, const Json::Value& cards);
-void downloadZipWithImages();
 
-std::string directoryPath_ = "./data";
+static std::string directoryPath_ = "./data";
 
 bool is_empty(std::ifstream& pFile)
 {
@@ -32,10 +31,12 @@ Json::Value getJsonFromFile(const std::string& filename, const std::string& down
         
         fd::FileDownloader downloader;                              
         downloader.createDirectory(directoryPath_);
-    
-        std::string links_[] = {download_url};
-        std::string fileNames_[] = {filename};
-        downloader.addLinks(links_, fileNames_, (sizeof(links_)/sizeof(links_[0])));
+
+        std::vector <std::string> links_;
+        links_.push_back(download_url);
+        std::vector <std::string> fileNames_;
+        fileNames_.push_back(filename);
+        downloader.addLinks(links_, fileNames_, links_.size());
         downloader.download(false);
         
         std::string filename_ = directoryPath_ + "/" + filename;
@@ -56,15 +57,19 @@ int main()
     
     // Downloading Zips with images
     // adding info for downloading (links, file names)
-    std::string links_[] = {"https://dd.b.pvp.net/latest/set1-lite-en_us.zip"
-                           ,"https://dd.b.pvp.net/latest/set2-lite-en_us.zip"
-                           ,"https://dd.b.pvp.net/latest/set3-lite-en_us.zip"
-                           ,"https://dd.b.pvp.net/latest/set4-lite-en_us.zip"};
-    std::string fileNames_[] = {"set1-lite-en_us.zip"
-                               ,"set2-lite-en_us.zip"
-                               ,"set3-lite-en_us.zip"
-                               ,"set4-lite-en_us.zip"};
-    downloader.addLinks(links_, fileNames_, (sizeof(links_)/sizeof(links_[0])));
+    std::vector <std::string> links_;
+    links_.push_back("https://dd.b.pvp.net/latest/set1-lite-en_us.zip");
+    links_.push_back("https://dd.b.pvp.net/latest/set2-lite-en_us.zip");
+    links_.push_back("https://dd.b.pvp.net/latest/set3-lite-en_us.zip");
+    links_.push_back("https://dd.b.pvp.net/latest/set4-lite-en_us.zip");
+    
+    std::vector <std::string> fileNames_;
+    fileNames_.push_back("set1-lite-en_us.zip");
+    fileNames_.push_back("set2-lite-en_us.zip");
+    fileNames_.push_back("set3-lite-en_us.zip");
+    fileNames_.push_back("set4-lite-en_us.zip");
+    
+    downloader.addLinks(links_, fileNames_, links_.size());
     
     downloader.download(true);
     

@@ -52,16 +52,10 @@ void FileDownloader::createDirectory(std::string directoryPath_)
     }
 }
 
-void FileDownloader::addLinks(std::string links_[], std::string fileNames_[], int numberOfLinks)
+void FileDownloader::addLinks(std::vector <std::string> links_, std::vector <std::string> fileNames_, int numberOfLinks)
 {
-    for(int i = 0; i < numberOfLinks; i++)
-    {
-        std::string l = links_[i];
-        links.push_back(l);
-        
-        std::string n = fileNames_[i];
-        fileNames.push_back(n);
-    }
+    links = links_;
+    fileNames = fileNames_;
 }
 
 void FileDownloader::download(bool checkIfExists)
