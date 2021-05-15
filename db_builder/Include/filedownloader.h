@@ -1,5 +1,4 @@
-#ifndef FILEDOWNLOADER_H
-#define FILEDOWNLOADER_H
+#pragma once
 
 #include <curl/curl.h>
 #include <iostream>
@@ -30,4 +29,3 @@ namespace fd
     };
 }
 
-#endif
