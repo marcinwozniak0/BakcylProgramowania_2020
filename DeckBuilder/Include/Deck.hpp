@@ -22,4 +22,5 @@ class Deck
     int getNumberOfHeroes();
     void increaseNumberOfHeroes();
     void decreaseNumberOfHeroes();
+    void clearCards(){deck.clear();}
 };

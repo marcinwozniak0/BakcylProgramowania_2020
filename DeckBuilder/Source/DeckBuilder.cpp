@@ -183,3 +183,10 @@ std::map<CardApi::Card,int> DeckBuilder::getCardCountMap()
 {
   return cardCount;
 }
+void DeckBuilder::resetDeck()
+{
+    cardCount.clear();
+    deck.clearCards();
+    firstRegion.name = "";
+    secondRegion.name = "";
+}

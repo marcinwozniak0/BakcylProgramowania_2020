@@ -1,12 +1,16 @@
+#include <iostream>
+
 #include "DeckWindow.h"
 #include "ui_deckwindow.h"
+
 const size_t deckWindowWidth = 890;
 const size_t deckWindowHeight = 525;
 
-DeckWindow::DeckWindow(DeckBuilder* deck, QRect geometry, QWidget *parent) :
+DeckWindow::DeckWindow(DeckBuilder* deck, QRect geometry, SqliteHelper::unique_sqlite3* dataBase, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DeckWindow),
-    deck_(deck)
+    deck_(deck),
+    dataBase_(dataBase)
 {
     ui->setupUi(this);
     setGeometry(geometry);
@@ -14,8 +18,13 @@ DeckWindow::DeckWindow(DeckBuilder* deck, QRect geometry, QWidget *parent) :
     CheckDeckFullfillment();
     CreateTypesChart();
     CheckDeckStats();
-
     CreateDeckDysplay();
+
+    if(deck->getDeck().getCardsAsVector().size() > 0){
+        currentCard_ = deck->getDeck().getCardsAsVector().at(0);
+    }
+
+    ConnectCard();
 
 }
 void DeckWindow::CreateTypesChart()
@@ -24,16 +33,16 @@ void DeckWindow::CreateTypesChart()
 
     CheckCardsTypes(types);
 
-    series = new QPieSeries();
-    series->setVisible(false);
-    series->setPieSize(0.5);
-    series->setHoleSize(0.2);
+    series_ = new QPieSeries();
+    series_->setVisible(false);
+    series_->setPieSize(0.5);
+    series_->setHoleSize(0.2);
 
     size_t graphSize = CreateGraph(types);
 
     for(size_t i = 0; i < graphSize; i++)
     {
-        QPieSlice* slice = series->slices().at(i);
+        QPieSlice* slice = series_->slices().at(i);
         slice->setLabelVisible(true);
         slice->setBorderWidth(0);
         slice->setBorderColor(Qt::transparent);
@@ -42,11 +51,20 @@ void DeckWindow::CreateTypesChart()
     }
     //series->slices().at(selected)->setExploded(true);
 
-    chart = new QChart();
-    chart->addSeries(series);
-    chart->setBackgroundVisible(false);
-    chartview = new QChartView(chart, ui->Statystyki);
-    chartview->setGeometry(270, -50, 400, 300);
+    chart_ = new QChart();
+    chart_->addSeries(series_);
+    chart_->setBackgroundVisible(false);
+    chartview_ = new QChartView(chart_, ui->Statystyki);
+    chartview_->setGeometry(270, -50, 400, 300);
+
+}
+
+void DeckWindow::ConnectCard()
+{
+    for (auto& it : cardInDeckAsButtons_)
+    {
+        connect(it.get(), &QPushButton::clicked, this, &DeckWindow::cardClicked);
+    }
 
 }
 
@@ -80,22 +98,22 @@ size_t DeckWindow::CreateGraph(CardsTypes& types)
     size_t size {};
     if(types.units > 0)
     {
-        series->append(QString::fromStdString("Units: "+std::to_string(types.units)), types.units);
+        series_->append(QString::fromStdString("Units: "+std::to_string(types.units)), types.units);
         size++;
     }
     if(types.skills > 0)
     {
-        series->append(QString::fromStdString("Skills: "+std::to_string(types.skills)), types.skills);
+        series_->append(QString::fromStdString("Skills: "+std::to_string(types.skills)), types.skills);
         size++;
     }
     if(types.spells > 0)
     {
-        series->append(QString::fromStdString("Spells: "+std::to_string(types.spells)), types.spells);
+        series_->append(QString::fromStdString("Spells: "+std::to_string(types.spells)), types.spells);
         size++;
     }
     if(types.landmarks > 0)
     {
-        series->append(QString::fromStdString("Landmarks: "+std::to_string(types.landmarks)), types.landmarks);
+        series_->append(QString::fromStdString("Landmarks: "+std::to_string(types.landmarks)), types.landmarks);
         size++;
     }
     return size;
@@ -130,30 +148,54 @@ void DeckWindow::CheckDeckFullfillment()
 void DeckWindow::CreateDeckDysplay()
 {
 
-    auto * scrollArea = new QScrollArea(this);
+    scrollArea = std::make_unique<QScrollArea>(this);
     scrollArea->setWidget(ui->CardsInDeck);
     scrollArea->setGeometry(10,230,340,290);
     scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ShowDeckDysplay();
 
+}
+void DeckWindow::ShowDeckDysplay()
+{
     QRect positionAndSize {5,5,300,20};
 
     int heigth = 30;
 
     for(const auto& [key, value] : deck_->getCardCountMap())
     {
-        QPushButton* button = new QPushButton(ui->CardsInDeck);
+        std::shared_ptr button = std::make_shared<QPushButton>(ui->CardsInDeck);
         button->setText(QString::number(value) + "x " + QString::fromStdString(key.name));
         button->setGeometry(positionAndSize);
+        button->setProperty("Id", QString::fromStdString(key.cardCode));
         positionAndSize.moveTop(heigth);
         heigth += 25;
+        cardInDeckAsButtons_.push_back(button);
     }
     ui->CardsInDeck->setGeometry(10,230,340, heigth < 290 ? 286 : heigth - 25);
+    cardInDeckAsButtons_.shrink_to_fit();
+}
+
+
+void DeckWindow::cardClicked()
+{
+    QPushButton *button = (QPushButton *)sender();
+    currentCard_ = (CardApi::getCardById(*dataBase_, button->property("Id").toString().toStdString())).value();
+}
+void DeckWindow::on_Back_B_clicked()
+{
+    close();
+}
+void DeckWindow::on_ResetDeck_B_clicked()
+{
+    deck_->resetDeck();
+    ShowDeckDysplay();
+    cardInDeckAsButtons_.clear();
 
 }
 
 DeckWindow::~DeckWindow()
 {
-    delete chart;
+    delete chart_;
     delete ui;
 }
 
