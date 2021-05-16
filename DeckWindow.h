@@ -46,6 +46,7 @@ private:
     QPieSeries* series_;
     QChart* chart_;
     QChartView* chartview_;
+    CardsTypes types_;
 private slots:
     void cardClicked();
     void on_Back_B_clicked();

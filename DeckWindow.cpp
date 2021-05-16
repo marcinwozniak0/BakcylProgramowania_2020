@@ -29,16 +29,14 @@ DeckWindow::DeckWindow(DeckBuilder* deck, QRect geometry, SqliteHelper::unique_s
 }
 void DeckWindow::CreateTypesChart()
 {
-    CardsTypes types;
-
-    CheckCardsTypes(types);
+    CheckCardsTypes(types_);
 
     series_ = new QPieSeries();
     series_->setVisible(false);
     series_->setPieSize(0.5);
     series_->setHoleSize(0.2);
 
-    size_t graphSize = CreateGraph(types);
+    size_t graphSize = CreateGraph(types_);
 
     for(size_t i = 0; i < graphSize; i++)
     {
@@ -49,7 +47,7 @@ void DeckWindow::CreateTypesChart()
         slice->setBrush(QColor(0,100,((i+130)*70)%256));
         slice->setLabelColor(Qt::gray);
     }
-    //series->slices().at(selected)->setExploded(true);
+    series_->slices().at(0)->setExploded(true);
 
     chart_ = new QChart();
     chart_->addSeries(series_);
@@ -190,7 +188,8 @@ void DeckWindow::on_ResetDeck_B_clicked()
     deck_->resetDeck();
     ShowDeckDysplay();
     cardInDeckAsButtons_.clear();
-
+    delete chart_;
+    CreateTypesChart();
 }
 
 DeckWindow::~DeckWindow()
