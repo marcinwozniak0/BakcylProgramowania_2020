@@ -37,7 +37,7 @@ Json::Value getJsonFromFile(const std::string& filename, const std::string& down
         std::vector <std::string> fileNames_;
         fileNames_.push_back(filename);
         downloader.addLinks(links_, fileNames_, links_.size());
-        downloader.download(false);
+        downloader.performDownloading(false);
         
         std::string filename_ = directoryPath_ + "/" + filename;
         file.open(filename_);
@@ -71,8 +71,7 @@ int main()
     
     downloader.addLinks(links_, fileNames_, links_.size());
     
-    downloader.download(true);
-    
+    downloader.performDownloading(true);
     
     // temporary ugly shit. We are going to abadon it for sake of auto downloading
     Json::Value globalsJson =

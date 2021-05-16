@@ -16,14 +16,16 @@ namespace fd
         std::vector <std::string> links;
         std::vector <std::string> fileNames;
         std::string directoryPath = "";
-                                                                                
+                                         
         public:
         FileDownloader();
-        bool isFileDownloaded(std::string fileName_);                                           
-        void addDirectoryPath(std::string directoryPath_);                                      
-        void download(bool checkIfExists);                                                       
-        void addLinks(std::vector <std::string> links_, std::vector <std::string> fileNames_, int numberOfLinks);       
-        void createDirectory(std::string directoryPath_);                                       
+        void addDirectoryPath(std::string directoryPath_);
+        void createDirectory(std::string directoryPath_);
+        void addLinks(std::vector <std::string> links_, std::vector <std::string> fileNames_, int numberOfLinks);
+        bool isFileDownloaded(std::string fileName_);
+        void download(int i);
+        // performDownloading checks if file is already downloaded (if checkIfExists if TRUE)
+        // if file doesn't already exists performDownloading calls download for the actual downloading 
+        void performDownloading(bool checkIfExists);
     };
 }
-
