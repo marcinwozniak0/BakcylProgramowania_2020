@@ -6,8 +6,7 @@
 
 #include "Deck.hpp"
 #include "ErrorWindow.h"
-
-
+#include "base64.h"
 
 class DeckBuilder 
 {

@@ -165,10 +165,11 @@ void DeckBuilder::removeCardByID (SqliteHelper::unique_sqlite3& db, const std::s
     }
 }
 
-std::string DeckBuilder::getEncodedDeck() {
+std::string DeckBuilder::getEncodedDeck() 
+{
     std::string stringToEncode = "";
     std::vector<CardApi::Card> cardsVector = deck.getCardsAsVector();
-    for (int i = 0; i < cardsVector.size(); i++)
+    for (long unsigned int i = 0; i < cardsVector.size(); i++)
     {
         stringToEncode = stringToEncode + cardsVector.at(i).cardCode + "|";
     }
@@ -183,7 +184,7 @@ std::string DeckBuilder::getEncodedDeck() {
 void DeckBuilder::setFromEncoded(SqliteHelper::unique_sqlite3& db, std::string encodedDeck) 
 {
     std::string cardID = "";
-    for (int i = 0; i < encodedDeck.length(); i++) 
+    for (long unsigned int i = 0; i < encodedDeck.length(); i++) 
     {
         if (encodedDeck.at(i) == '|') 
         {

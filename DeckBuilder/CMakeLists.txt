@@ -5,6 +5,7 @@ else()
 endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Include)
+include_directories(${PROJECT_SOURCE_DIR}/cpp-base64)
 
 add_executable(DeckBuilderSources ${SOURCE_FILES})
 target_link_libraries (DeckBuilderSources PUBLIC card_api QT_LIBS)
