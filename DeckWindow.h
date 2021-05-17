@@ -36,6 +36,8 @@ private:
     void CreateDeckDisplay();
     void ConnectCard();
     void ShowDeckDisplay();
+    void CheckRemovedCards();
+
     size_t CreateGraph(CardsTypes&);
 
     DeckBuilder* deck_;

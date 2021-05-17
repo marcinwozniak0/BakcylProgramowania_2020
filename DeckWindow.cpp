@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <string>
 #include "DeckWindow.h"
 #include "ui_deckwindow.h"
 
@@ -177,6 +177,31 @@ void DeckWindow::ShowDeckDisplay()
     cardInDeckAsButtons_.shrink_to_fit();
 }
 
+void DeckWindow::CheckRemovedCards()
+{
+    for(size_t i=cardInDeckAsButtons_.size()-1; i >= 0; i--)
+    {
+
+        auto& it = cardInDeckAsButtons_[i];
+        if(it->property("Id").toString().toStdString() == currentCard_.cardCode )
+        {
+            std::string id_str = it->text().toStdString();
+            id_str[0]--;
+            if(id_str[0] == 48)
+            {
+                // it.reset();
+                cardInDeckAsButtons_.erase(cardInDeckAsButtons_.begin() + i);
+                currentCard_ = deck_->getDeck().getCardsAsVector()[0];
+
+            }
+            else{
+                it->setText(QString::fromStdString(id_str));
+            }
+            break;
+        }
+    }
+}
+
 
 void DeckWindow::cardClicked()
 {
@@ -192,16 +217,14 @@ void DeckWindow::on_ResetDeck_B_clicked()
     deck_->resetDeck();
     ShowDeckDisplay();
     cardInDeckAsButtons_.clear();
-    delete chart_;
-    CreateTypesChart();
 }
 
 void DeckWindow::on_DeleteCard_B_clicked()
 {
     deck_->removeCard(currentCard_);
-    delete chartview_;
-    CreateTypesChart();
     CheckDeckFullfillment();
+    CheckDeckStats();
+    CheckRemovedCards();
 }
 
 DeckWindow::~DeckWindow()
