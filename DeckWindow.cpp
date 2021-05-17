@@ -241,7 +241,6 @@ void DeckWindow::on_DeleteCard_B_clicked()
 {
     for(size_t i = 0; i < cardInDeckAsButtons_.size(); i++){
         auto& it = cardInDeckAsButtons_[i];
-        std::cerr << i <<" - "<< (CardApi::getCardById(*dataBase_, it->property("Id").toString().toStdString())).value().name << '\n';
     }
     deck_->removeCard(currentCard_);
     CheckDeckFullfillment();
@@ -249,7 +248,6 @@ void DeckWindow::on_DeleteCard_B_clicked()
     CheckRemovedCards();
     for(size_t i = 0; i < cardInDeckAsButtons_.size(); i++){
         auto& it = cardInDeckAsButtons_[i];
-        std::cerr << i <<" - "<< (CardApi::getCardById(*dataBase_, it->property("Id").toString().toStdString())).value().name<< '\n';
     }
 }
 
