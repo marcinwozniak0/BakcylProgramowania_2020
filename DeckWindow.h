@@ -37,6 +37,7 @@ private:
     void ConnectCard();
     void ShowDeckDisplay();
     void CheckRemovedCards();
+    void moveCardsOneUp(size_t pos);
 
     size_t CreateGraph(CardsTypes&);
 

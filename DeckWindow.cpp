@@ -47,7 +47,10 @@ void DeckWindow::CreateTypesChart()
         slice->setBrush(QColor(0,100,((i+130)*70)%256));
         slice->setLabelColor(Qt::gray);
     }
-    series_->slices().at(0)->setExploded(true);
+    if(!series_->slices().empty()){
+        series_->slices().at(0)->setExploded(true);
+
+    }
 
     chart_ = new QChart();
     chart_->addSeries(series_);
@@ -179,26 +182,41 @@ void DeckWindow::ShowDeckDisplay()
 
 void DeckWindow::CheckRemovedCards()
 {
-    for(size_t i=cardInDeckAsButtons_.size()-1; i >= 0; i--)
+
+    for(size_t i = 0; i < cardInDeckAsButtons_.size(); i++)
     {
 
         auto& it = cardInDeckAsButtons_[i];
+
         if(it->property("Id").toString().toStdString() == currentCard_.cardCode )
         {
+
             std::string id_str = it->text().toStdString();
             id_str[0]--;
             if(id_str[0] == 48)
             {
-                // it.reset();
                 cardInDeckAsButtons_.erase(cardInDeckAsButtons_.begin() + i);
-                currentCard_ = deck_->getDeck().getCardsAsVector()[0];
+                if(cardInDeckAsButtons_.empty()){
+                    ui->DeleteCard_B->setDisabled(true);
+                }else{
+                    currentCard_ = deck_->getDeck().getCardsAsVector()[0];
+                }
+                moveCardsOneUp(i);
 
             }
             else{
-                it->setText(QString::fromStdString(id_str));
+                it->setText(QString::fromStdString(id_str));               
             }
             break;
         }
+    }
+}
+
+void DeckWindow::moveCardsOneUp(size_t pos)
+{
+    for(size_t i = pos; i < cardInDeckAsButtons_.size(); i++){
+        auto& it = cardInDeckAsButtons_[i];
+        it->move(it->pos().x(), it->pos().y()-25);
     }
 }
 
@@ -221,10 +239,18 @@ void DeckWindow::on_ResetDeck_B_clicked()
 
 void DeckWindow::on_DeleteCard_B_clicked()
 {
+    for(size_t i = 0; i < cardInDeckAsButtons_.size(); i++){
+        auto& it = cardInDeckAsButtons_[i];
+        std::cerr << i <<" - "<< (CardApi::getCardById(*dataBase_, it->property("Id").toString().toStdString())).value().name << '\n';
+    }
     deck_->removeCard(currentCard_);
     CheckDeckFullfillment();
     CheckDeckStats();
     CheckRemovedCards();
+    for(size_t i = 0; i < cardInDeckAsButtons_.size(); i++){
+        auto& it = cardInDeckAsButtons_[i];
+        std::cerr << i <<" - "<< (CardApi::getCardById(*dataBase_, it->property("Id").toString().toStdString())).value().name<< '\n';
+    }
 }
 
 DeckWindow::~DeckWindow()
