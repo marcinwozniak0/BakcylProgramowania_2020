@@ -239,19 +239,22 @@ void DeckWindow::on_ResetDeck_B_clicked()
 
 void DeckWindow::on_DeleteCard_B_clicked()
 {
-    for(size_t i = 0; i < cardInDeckAsButtons_.size(); i++){
-    }
     deck_->removeCard(currentCard_);
     CheckDeckFullfillment();
     CheckDeckStats();
     CheckRemovedCards();
-    for(size_t i = 0; i < cardInDeckAsButtons_.size(); i++){
-    }
 }
 
 DeckWindow::~DeckWindow()
 {
     delete chart_;
     delete ui;
+}
+
+
+void DeckWindow::on_RemoveStack_B_clicked()
+{
+    std::string toremove = currentCard_.name;
+    for(auto& it :  )
 }
 
