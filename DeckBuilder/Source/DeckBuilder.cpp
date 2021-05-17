@@ -171,7 +171,7 @@ std::string DeckBuilder::getEncodedDeck()
     std::vector<CardApi::Card> cardsVector = deck.getCardsAsVector();
     for (auto& c : cardsVector)
     {
-        stringToEncode = stringToEncode + c.cardCode + "|";
+        stringToEncode += c.cardCode + "|";
     }
 
     if (not stringToEncode.empty())
