@@ -6,7 +6,5 @@ else()
     file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.ui)
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Include)
-
 add_library(QT_LIBS STATIC ${SOURCE_FILES})
 target_include_directories(QT_LIBS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Include)
