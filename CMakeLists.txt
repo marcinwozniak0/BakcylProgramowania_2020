@@ -45,6 +45,19 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/DeckBuilder)
 # QT
 add_subdirectory(${PROJECT_SOURCE_DIR}/QT)
 
+set(PROJECT_SOURCES
+    QT/Source/MainWindow.cpp
+    QT/Include/MainWindow.h
+    QT/Include/CardWindow.h
+    QT/Include/CardsContainer.h
+    QT/Include/DeckWindow.h
+    QT/Source/CardWindow.cpp
+    QT/Source/CardsContainer.cpp
+    QT/Source/DeckWindow.cpp
+    QT/Source/ErrorWindow.cpp
+    )
+
+
 # DATABASE
 add_subdirectory(${PROJECT_SOURCE_DIR}/db/sqlite_helper)
 add_subdirectory(${PROJECT_SOURCE_DIR}/db/db_builder)
@@ -65,7 +78,7 @@ add_custom_target(valgrind COMMAND "${VALGRIND}" --tool=memcheck
 endif()
 
 # MAIN
-add_executable(Deckbuilder ${PROJECT_SOURCE_DIR}/main.cpp)
+add_executable(Deckbuilder ${PROJECT_SOURCE_DIR}/main.cpp ${PROJECT_SOURCES})
     
 target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets 
                                           Qt5::Charts 
