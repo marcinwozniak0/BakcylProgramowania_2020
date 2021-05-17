@@ -27,7 +27,8 @@ class DeckBuilder
     void removeCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode);
     int checkNumberOfCard(CardApi::Card card);
     int getDeckLength(){return deck.length();}
+    std::string getEncodedDeck();
+    void setFromEncoded(SqliteHelper::unique_sqlite3& db, std::string encodedDeck);
 
     Deck getDeck(){return deck;}
 }; 
-

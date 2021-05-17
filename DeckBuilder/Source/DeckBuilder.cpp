@@ -1,6 +1,5 @@
 #include "DeckBuilder.hpp"
 #include "Deck.hpp"
-#include "IllegalCardExceptions.hpp"
 #include "../../ErrorWindow.h"
 
 int DeckBuilder::checkNumberOfCard(CardApi::Card card) 
@@ -165,5 +164,36 @@ void DeckBuilder::removeCardByID (SqliteHelper::unique_sqlite3& db, const std::s
     else
     {
         ErrorWindow("Invalid ID");
+    }
+}
+
+std::string DeckBuilder::getEncodedDeck() {
+    std::string stringToEncode = "";
+    std::vector<CardApi::Card> cardsVector = deck.getCardsAsVector();
+    for (int i = 0; i < cardsVector.size(); i++)
+    {
+        stringToEncode = stringToEncode + cardsVector.at(i).cardCode + "|";
+    }
+    if (stringToEncode.length() > 0)
+    {
+        stringToEncode.substr(0, stringToEncode.length() - 2);
+    }
+
+    return base64_encode(stringToEncode, false);
+}
+
+void DeckBuilder::setFromEncoded(SqliteHelper::unique_sqlite3& db, std::string encodedDeck) 
+{
+    std::string cardID = "";
+    for (int i = 0; i < encodedDeck.length(); i++) 
+    {
+        if (encodedDeck.at(i) == '|') 
+        {
+            addCardByID(db, encodedDeck); //TODO add database
+        } 
+        else 
+        {
+            cardID += encodedDeck.at(i);
+        }
     }
 }
