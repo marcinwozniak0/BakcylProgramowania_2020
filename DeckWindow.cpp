@@ -240,14 +240,12 @@ void DeckWindow::on_ResetDeck_B_clicked()
 void DeckWindow::on_DeleteCard_B_clicked()
 {
     for(size_t i = 0; i < cardInDeckAsButtons_.size(); i++){
-        auto& it = cardInDeckAsButtons_[i];
     }
     deck_->removeCard(currentCard_);
     CheckDeckFullfillment();
     CheckDeckStats();
     CheckRemovedCards();
     for(size_t i = 0; i < cardInDeckAsButtons_.size(); i++){
-        auto& it = cardInDeckAsButtons_[i];
     }
 }
 
