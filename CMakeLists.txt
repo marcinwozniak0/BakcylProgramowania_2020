@@ -27,9 +27,8 @@ if (NOT Qt5_FOUND)
     message(SEND_ERROR "qt5 package not found, please install it")
 endif()
 
-include(External_GTest.cmake)
-
 # GTEST
+include(External_GTest.cmake)
 add_executable(bakcyl_2020_ut "test.cpp")
 target_link_libraries(bakcyl_2020_ut ${GTEST_MAIN_LIBRARY}
                                      ${GTEST_LIBRARY}
@@ -64,3 +63,17 @@ add_custom_target(valgrind COMMAND "${VALGRIND}" --tool=memcheck
                                                  --error-exitcode=1
                                                  $<TARGET_FILE:bakcyl_2020_ut>)
 endif()
+
+# MAIN
+add_executable(Deckbuilder ${PROJECT_SOURCE_DIR}/main.cpp)
+    
+target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets 
+                                          Qt5::Charts 
+                                          ${SQLite3_LIBRARIES} 
+                                          JsonCpp::JsonCpp
+                                          DeckBuilderSources
+                                          QT_LIBS
+                                          db_builder
+                                          card_api
+                                          sqlite_helper
+                                          ${LOGGER_LIB})
