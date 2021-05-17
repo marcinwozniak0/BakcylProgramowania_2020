@@ -254,7 +254,25 @@ DeckWindow::~DeckWindow()
 
 void DeckWindow::on_RemoveStack_B_clicked()
 {
-    std::string toremove = currentCard_.name;
-    for(auto& it :  )
+    deck_->removeCardStack(currentCard_);
+    for(size_t i = 0; i < cardInDeckAsButtons_.size(); i++)
+    {
+        const auto& it = cardInDeckAsButtons_[i];
+
+        if(it->property("Id").toString().toStdString() == currentCard_.cardCode )
+        {
+
+
+            cardInDeckAsButtons_.erase(cardInDeckAsButtons_.begin() + i);
+            if(cardInDeckAsButtons_.empty()){
+                ui->DeleteCard_B->setDisabled(true);
+            }else{
+                currentCard_ = deck_->getDeck().getCardsAsVector()[0];
+            }
+
+            moveCardsOneUp(i);
+            break;
+        }
+    }
 }
 

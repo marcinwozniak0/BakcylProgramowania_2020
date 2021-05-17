@@ -111,7 +111,7 @@ void DeckBuilder::removeCard(CardApi::Card &cardToRemove)
 
                 deck.removeCard(i);
                 cardCount[cardToRemove]--;
-                if (cardCount[cardToRemove] == 0 )
+                if (cardCount[cardToRemove] < 0 )
                 {
                     cardCount.erase(cardToRemove);
                 }
@@ -166,6 +166,15 @@ void DeckBuilder::addCardByID (SqliteHelper::unique_sqlite3& db, const std::stri
     {
         ErrorWindow("Invalid ID");
     }
+}
+
+void DeckBuilder::removeCardStack(CardApi::Card &cardToRemove)
+{
+   while(cardCount[cardToRemove] > 0)
+   {
+    removeCard(cardToRemove);
+   }
+   cardCount.erase(cardToRemove);
 }
 
 void DeckBuilder::removeCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode)

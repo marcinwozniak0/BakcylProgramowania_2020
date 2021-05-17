@@ -215,7 +215,7 @@
      <string>Back</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="RemoveStackCard_B">
+   <widget class="QPushButton" name="RemoveStack_B">
     <property name="geometry">
      <rect>
       <x>40</x>

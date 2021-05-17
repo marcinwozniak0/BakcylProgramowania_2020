@@ -55,6 +55,7 @@ private slots:
     void on_Back_B_clicked();
     void on_ResetDeck_B_clicked();
     void on_DeleteCard_B_clicked();
+    void on_RemoveStack_B_clicked();
 };
 
 

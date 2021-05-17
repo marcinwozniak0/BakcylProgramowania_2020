@@ -24,6 +24,7 @@ class DeckBuilder
     void addCard(CardApi::Card& cardToAdd);
     void removeCard(CardApi::Card& cardToRemove);
     void addCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode);
+    void removeCardStack(CardApi::Card& cardToRemove);
     void removeCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode);
     int checkNumberOfCard(CardApi::Card card);
     int getDeckLength(){return deck.length();}
