@@ -169,11 +169,12 @@ std::string DeckBuilder::getEncodedDeck()
 {
     std::string stringToEncode = "";
     std::vector<CardApi::Card> cardsVector = deck.getCardsAsVector();
-    for (long unsigned int i = 0; i < cardsVector.size(); i++)
+    for (auto& c : cardsVector)
     {
-        stringToEncode = stringToEncode + cardsVector.at(i).cardCode + "|";
+        stringToEncode = stringToEncode + c.cardCode + "|";
     }
-    if (stringToEncode.length() > 0)
+
+    if (not stringToEncode.empty())
     {
         stringToEncode.substr(0, stringToEncode.length() - 2);
     }
@@ -184,15 +185,15 @@ std::string DeckBuilder::getEncodedDeck()
 void DeckBuilder::setFromEncoded(SqliteHelper::unique_sqlite3& db, std::string encodedDeck) 
 {
     std::string cardID = "";
-    for (long unsigned int i = 0; i < encodedDeck.length(); i++) 
+    for (auto& e : encodedDeck) 
     {
-        if (encodedDeck.at(i) == '|') 
+        if (e == '|') 
         {
             addCardByID(db, encodedDeck); //TODO add database
         } 
         else 
         {
-            cardID += encodedDeck.at(i);
+            cardID += e;
         }
     }
 }
