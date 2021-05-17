@@ -32,23 +32,22 @@ private:
     void CheckDeckFullfillment();
     void CreateTypesChart();
     void CheckDeckStats();
-    void CheckCardsTypes(CardsTypes& types);
+    void CheckCardsTypes();
     void CreateDeckDisplay();
     void ConnectCard();
     void ShowDeckDisplay();
     void CheckRemovedCards();
-    void moveCardsOneUp(size_t pos);
-
-    size_t CreateGraph(CardsTypes&);
+    void MoveCardsOneUp(size_t pos);
+    void UpdateGraph();
 
     DeckBuilder* deck_;
     CardApi::Card currentCard_;
     SqliteHelper::unique_sqlite3* dataBase_;
     std::unique_ptr<QScrollArea> scrollArea;
     std::vector<std::shared_ptr<QPushButton>> cardInDeckAsButtons_;
-    QPieSeries* series_;
-    QChart* chart_;
-    QChartView* chartview_;
+    QPieSeries* series_ = nullptr;
+    QChart* chart_ = nullptr;
+    QChartView* chartview_ = nullptr;
     CardsTypes types_;
 private slots:
     void cardClicked();

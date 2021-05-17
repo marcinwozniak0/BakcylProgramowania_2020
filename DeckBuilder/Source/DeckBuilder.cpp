@@ -111,7 +111,7 @@ void DeckBuilder::removeCard(CardApi::Card &cardToRemove)
 
                 deck.removeCard(i);
                 cardCount[cardToRemove]--;
-                if (cardCount[cardToRemove] < 0 )
+                if (cardCount[cardToRemove] <= 0 )
                 {
                     cardCount.erase(cardToRemove);
                 }
