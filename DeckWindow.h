@@ -10,7 +10,7 @@
 struct CardsTypes
 {
     size_t units {};
-    size_t skills {};
+    size_t champions {};
     size_t spells {};
     size_t landmarks {};
 };
@@ -33,9 +33,9 @@ private:
     void CreateTypesChart();
     void CheckDeckStats();
     void CheckCardsTypes(CardsTypes& types);
-    void CreateDeckDysplay();
+    void CreateDeckDisplay();
     void ConnectCard();
-    void ShowDeckDysplay();
+    void ShowDeckDisplay();
     size_t CreateGraph(CardsTypes&);
 
     DeckBuilder* deck_;
@@ -51,6 +51,7 @@ private slots:
     void cardClicked();
     void on_Back_B_clicked();
     void on_ResetDeck_B_clicked();
+    void on_DeleteCard_B_clicked();
 };
 
 

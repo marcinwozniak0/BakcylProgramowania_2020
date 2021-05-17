@@ -18,7 +18,7 @@ DeckWindow::DeckWindow(DeckBuilder* deck, QRect geometry, SqliteHelper::unique_s
     CheckDeckFullfillment();
     CreateTypesChart();
     CheckDeckStats();
-    CreateDeckDysplay();
+    CreateDeckDisplay();
 
     if(deck->getDeck().getCardsAsVector().size() > 0){
         currentCard_ = deck->getDeck().getCardsAsVector().at(0);
@@ -70,14 +70,15 @@ void DeckWindow::CheckCardsTypes(CardsTypes& types)
 {
     for(const auto& card : deck_->getDeck().getCardsAsVector())
     {
-        switch(card.type[0])
+        if(card.supertype != ""){
+            types.champions++;
+        }
+        else
         {
+            switch(card.type[0])
+            {
             case 'J': // "Jednostka"
                 types.units++;
-                break;
-
-            case 'U': // "Umiejętność"
-                types.skills++;
                 break;
 
             case 'Z': // "Zaklęcie"
@@ -87,6 +88,7 @@ void DeckWindow::CheckCardsTypes(CardsTypes& types)
             case 'L': // "Lokacja"
                 types.landmarks++;
                 break;
+            }
         }
     }
 }
@@ -94,14 +96,15 @@ void DeckWindow::CheckCardsTypes(CardsTypes& types)
 size_t DeckWindow::CreateGraph(CardsTypes& types)
 {
     size_t size {};
+    series_->clear();
     if(types.units > 0)
     {
         series_->append(QString::fromStdString("Units: "+std::to_string(types.units)), types.units);
         size++;
     }
-    if(types.skills > 0)
+    if(types.champions > 0)
     {
-        series_->append(QString::fromStdString("Skills: "+std::to_string(types.skills)), types.skills);
+        series_->append(QString::fromStdString("Champions: "+std::to_string(types.champions)), types.champions);
         size++;
     }
     if(types.spells > 0)
@@ -116,6 +119,8 @@ size_t DeckWindow::CreateGraph(CardsTypes& types)
     }
     return size;
 }
+
+
 
 void DeckWindow::CheckDeckStats()
 {
@@ -140,24 +145,23 @@ void DeckWindow::CheckDeckStats()
 void DeckWindow::CheckDeckFullfillment()
 {
     ui->deckFill->setValue(deck_->getDeckLength());
-
 }
 
-void DeckWindow::CreateDeckDysplay()
+void DeckWindow::CreateDeckDisplay()
 {
 
     scrollArea = std::make_unique<QScrollArea>(this);
     scrollArea->setWidget(ui->CardsInDeck);
     scrollArea->setGeometry(10,230,340,290);
     scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ShowDeckDysplay();
+    ShowDeckDisplay();
 
 }
-void DeckWindow::ShowDeckDysplay()
+void DeckWindow::ShowDeckDisplay()
 {
     QRect positionAndSize {5,5,300,20};
 
-    int heigth = 30;
+    int height = 30;
 
     for(const auto& [key, value] : deck_->getCardCountMap())
     {
@@ -165,11 +169,11 @@ void DeckWindow::ShowDeckDysplay()
         button->setText(QString::number(value) + "x " + QString::fromStdString(key.name));
         button->setGeometry(positionAndSize);
         button->setProperty("Id", QString::fromStdString(key.cardCode));
-        positionAndSize.moveTop(heigth);
-        heigth += 25;
+        positionAndSize.moveTop(height);
+        height += 25;
         cardInDeckAsButtons_.push_back(button);
     }
-    ui->CardsInDeck->setGeometry(10,230,340, heigth < 290 ? 286 : heigth - 25);
+    ui->CardsInDeck->setGeometry(0,0,340, height < 290 ? 286 : height - 25);
     cardInDeckAsButtons_.shrink_to_fit();
 }
 
@@ -186,10 +190,18 @@ void DeckWindow::on_Back_B_clicked()
 void DeckWindow::on_ResetDeck_B_clicked()
 {
     deck_->resetDeck();
-    ShowDeckDysplay();
+    ShowDeckDisplay();
     cardInDeckAsButtons_.clear();
     delete chart_;
     CreateTypesChart();
+}
+
+void DeckWindow::on_DeleteCard_B_clicked()
+{
+    deck_->removeCard(currentCard_);
+    delete chartview_;
+    CreateTypesChart();
+    CheckDeckFullfillment();
 }
 
 DeckWindow::~DeckWindow()
