@@ -1,6 +1,4 @@
 #include "DeckBuilder.hpp"
-#include "Deck.hpp"
-#include "../../ErrorWindow.h"
 
 int DeckBuilder::checkNumberOfCard(CardApi::Card card) 
 

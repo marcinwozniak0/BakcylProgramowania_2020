@@ -1,6 +1,6 @@
 #pragma once
 #include "baseCardApi.hpp"
-#include "../../sqlite_helper/Include/sqlite_helper.hpp"
+#include "sqlite_helper.hpp"
 #include <optional>
 #include <string>
 #include <vector>
