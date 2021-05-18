@@ -6,7 +6,7 @@
 
 #include "CardsContainer.h"
 #include "CardWindow.h"
-#include "DeckBuilder.hpp"
+#include "DeckBuilder/Include/DeckBuilder.hpp"
 #include "searchEngine.hpp"
 
 QT_BEGIN_NAMESPACE
