@@ -123,15 +123,14 @@ void FileDownloader::performDownloading(bool checkIfExists)
     {
         if(checkIfExists)
         {    
-            if(isFileDownloaded(fileNames[i]))
-            {   
-                createFileForChecking(i);
+            if(isFileDownloaded(statusFileNames[i]))
+            {            
                 continue;
             }
             else
             {
                 download(i);
-                
+                createFileForChecking(i);
             }
         }
         else 
