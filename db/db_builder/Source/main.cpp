@@ -1,6 +1,7 @@
 #include "iostream"
 #include "jsonInserter.hpp"
 #include "sqlite_helper.hpp"
+#include "filedownloader.h"
 #include <cstring>
 #include <fstream>
 #include <json/json.h>
@@ -15,6 +16,8 @@ void fillAssoc(SqliteHelper::unique_sqlite3& db, const Json::Value& cards, const
                const std::string& arrName);
 void fillAssets(SqliteHelper::unique_sqlite3& db, const Json::Value& cards);
 
+static std::string directoryPath_ = "./data";
+
 bool is_empty(std::ifstream& pFile)
 {
     return pFile.peek() == std::ifstream::traits_type::eof();
@@ -26,10 +29,20 @@ Json::Value getJsonFromFile(const std::string& filename, const std::string& down
     std::ifstream file(filename);
     if (is_empty(file))
     {
-        // ya ya. This sucks, but it is sufficient for this PoC
-        // Besides something tells me that it shouldn't be exception
-        throw std::runtime_error(
-            std::string("There are no json in " + filename + " Download it from " + std::string(download_url)));
+        file.close();
+        
+        fd::FileDownloader downloader;                              
+        downloader.createDirectory(directoryPath_);
+
+        std::vector <std::string> links_;
+        links_.push_back(download_url);
+        std::vector <std::string> fileNames_;
+        fileNames_.push_back(filename);
+        downloader.addLinks(links_, fileNames_);
+        downloader.performDownloading(false);
+        
+        std::string filename_ = directoryPath_ + "/" + filename;
+        file.open(filename_);
     }
     file >> json;
     return json;
@@ -41,15 +54,38 @@ int main()
     sqlite3_exec(db.get(), "BEGIN TRANSACTION;", NULL, NULL, NULL);
     createTables(db);
 
+    fd::FileDownloader downloader;  
+    downloader.addDirectoryPath(directoryPath_);
+    downloader.createDirectory(directoryPath_);
+    
+    // Downloading Zips with images
+    // adding info for downloading (links, file names)
+    std::vector <std::string> links_;
+    std::vector <std::string> fileNames_;
+    
+    links_.push_back("https://dd.b.pvp.net/latest/set1-lite-en_us.zip");
+    links_.push_back("https://dd.b.pvp.net/latest/set2-lite-en_us.zip");
+    links_.push_back("https://dd.b.pvp.net/latest/set3-lite-en_us.zip");
+    links_.push_back("https://dd.b.pvp.net/latest/set4-lite-en_us.zip");
+     
+    fileNames_.push_back("set1-lite-en_us.zip");
+    fileNames_.push_back("set2-lite-en_us.zip");
+    fileNames_.push_back("set3-lite-en_us.zip");
+    fileNames_.push_back("set4-lite-en_us.zip");
+    
+    downloader.addLinks(links_, fileNames_);
+    
+    downloader.performDownloading(true);
+    
     // temporary ugly shit. We are going to abadon it for sake of auto downloading
     Json::Value globalsJson =
-        getJsonFromFile("globals-pl_pl.json", "https://dd.b.pvp.net/latest/core/pl_pl/data/globals-pl_pl.json");
+        getJsonFromFile("globals-en_us.json", "https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json");
     fillGlobals(db, globalsJson);
     for (char i = '1'; i < '5'; ++i)
     {
         const auto setName = std::string("set") + i;
-        const auto fileName = setName + "-pl_pl.json";
-        auto url = "https://dd.b.pvp.net/latest/" + setName + "/pl_pl/data/" + fileName;
+        const auto fileName = setName + "-en_us.json";
+        auto url = "https://dd.b.pvp.net/latest/" + setName + "/en_us/data/" + fileName;
         Json::Value setJson = getJsonFromFile(fileName, url);
         fillSet(db, setJson);
     }

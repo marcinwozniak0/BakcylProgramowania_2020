@@ -22,6 +22,10 @@ find_package(JsonCpp)
 if (NOT JsonCpp_FOUND)
     message(SEND_ERROR "jsoncpp, or jsoncpp-dev package not found, please install it")
 endif()
+find_package(CURL)
+if (NOT CURL_FOUND)
+    message(SEND_ERROR "libcurl4-openssl-dev package not found, please install it")
+endif()
 find_package(Qt5 COMPONENTS Widgets Charts)
 if (NOT Qt5_FOUND)
     message(SEND_ERROR "qt5 package not found, please install it")
@@ -57,7 +61,6 @@ set(PROJECT_SOURCES
     QT/Source/ErrorWindow.cpp
     QT/Assets/resources.qrc
     )
-
 
 # DATABASE
 add_subdirectory(${PROJECT_SOURCE_DIR}/db/sqlite_helper)
@@ -105,6 +108,7 @@ target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets
                                           Qt5::Charts 
                                           ${SQLite3_LIBRARIES} 
                                           JsonCpp::JsonCpp
+                                          CURL::libcurl
                                           DeckBuilderSources
                                           QT_LIBS
                                           db_builder

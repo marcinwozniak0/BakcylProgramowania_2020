@@ -6,4 +6,5 @@ endif()
 
 add_library(db_builder ${SOURCE_FILES})
 target_include_directories(db_builder PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Include)
-target_link_libraries(db_builder JsonCpp::JsonCpp sqlite_helper)
+target_link_libraries(db_builder JsonCpp::JsonCpp sqlite_helper CURL::libcurl)
+
