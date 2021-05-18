@@ -1,19 +1,26 @@
+#pragma once
 #include <string>
 #include <vector>
-#include "Card.hpp"
+#include "baseCardApi.hpp"
 
 class Deck
 {
     private:
-    int numberOfCards;
     int numberOfHeroes;
     std::string firstRegion;
     std::string secondRegion;
-    std::vector <Card> deck;
+    std::vector <CardApi::Card> deck;
+
 
     public:
     Deck();
     ~Deck();
-    friend void addCard(Card &cardToAdd);
-    friend void removeCard(Card &cardToRemove);
+    void addCard(CardApi::Card &cardToAdd);
+    void removeCard(int i);
+    int length();
+    std::vector <CardApi::Card> getCardsAsVector();
+    int getNumberOfHeroes();
+    void increaseNumberOfHeroes();
+    void decreaseNumberOfHeroes();
+    void clearCards(){deck.clear();}
 };
