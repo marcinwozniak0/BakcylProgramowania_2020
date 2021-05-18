@@ -1,2 +1,6 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource prefix="/img">
+        <file alias="test_card">pic.png</file>
+        <file alias="icon">icon.png</file>
+    </qresource>
+</RCC>

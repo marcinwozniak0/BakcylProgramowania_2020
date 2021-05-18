@@ -18,7 +18,7 @@ void CardsContainer::displayCards()
     int i = 10;
     for(auto& it : cards_){  // ty na razie tak zostajesz
 
-        showCard("../../BakcylProgramowania_2020/source/pic.png",it);     //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po buttonach
+        showCard(":/img/test_card",it);     //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po buttonach
         it->setProperty("Id", idstr);                                     //TODO: ID powinno być id karty
         idstr = ("01DE0" + std::to_string(i++)).c_str();
     }

@@ -119,7 +119,7 @@ void MainWindow::displayCardWindow(std::string cardId){
 void MainWindow::setLogo()
 {
     QLabel* icon = ui->SearchEngine->findChild<QLabel*>("Icon");
-    QPixmap picture("../../BakcylProgramowania_2020/source/icon.png");
+    QPixmap picture(":/img/icon");
     int wp = icon->width();
     int hp = icon->height();
     icon->setPixmap(picture.scaled(wp,hp,Qt::KeepAspectRatio));
