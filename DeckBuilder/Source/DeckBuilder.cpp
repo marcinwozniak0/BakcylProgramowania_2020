@@ -3,11 +3,12 @@
 #include "IllegalCardExceptions.hpp"
 #include "../../ErrorWindow.h"
 
+#include <iostream>
 int DeckBuilder::checkNumberOfCard(CardApi::Card card) 
 
 {
     int number = 0;
-    for (auto c : deck.getCardsAsVector()) 
+    for (const auto& c : deck.getCardsAsVector())
     {
         if (c == card) 
         {
@@ -28,7 +29,7 @@ void DeckBuilder::addCard(CardApi::Card &cardToAdd)
         {
             firstRegion = cardToAdd.region;
         } 
-        else if (secondRegion == voidRegion)
+        else if (secondRegion == voidRegion && !(cardToAdd.region == firstRegion))
         {
             secondRegion = cardToAdd.region;
         } 
@@ -51,6 +52,15 @@ void DeckBuilder::addCard(CardApi::Card &cardToAdd)
         else 
         {
             deck.addCard(cardToAdd);
+        }
+
+        if(cardCount[cardToAdd] >= 1)
+        {
+            cardCount[cardToAdd]++;
+        }
+        else
+        {
+            cardCount[cardToAdd] = 1;
         }
     } 
     else if (deckLength >= maxNumberOfCards)
@@ -100,7 +110,11 @@ void DeckBuilder::removeCard(CardApi::Card &cardToRemove)
                 }
 
                 deck.removeCard(i);
-            
+                cardCount[cardToRemove]--;
+                if (cardCount[cardToRemove] <= 0 )
+                {
+                    cardCount.erase(cardToRemove);
+                }
                 int counter = 0;
                 int deckLength = deck.length();
                 for (int j = 0; j < deckLength; j++)
@@ -154,6 +168,16 @@ void DeckBuilder::addCardByID (SqliteHelper::unique_sqlite3& db, const std::stri
     }
 }
 
+void DeckBuilder::removeCardStack(CardApi::Card &cardToRemove)
+{
+    while(cardCount[cardToRemove] > 0)
+    {
+        removeCard(cardToRemove);
+    }
+   
+    cardCount.erase(cardToRemove);
+}
+
 void DeckBuilder::removeCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode)
 {
     std::optional<CardApi::Card> card = CardApi::getCardById(db, cardCode);
@@ -166,4 +190,16 @@ void DeckBuilder::removeCardByID (SqliteHelper::unique_sqlite3& db, const std::s
     {
         ErrorWindow("Invalid ID");
     }
+}
+
+std::map<CardApi::Card,int> DeckBuilder::getCardCountMap()
+{
+  return cardCount;
+}
+void DeckBuilder::resetDeck()
+{
+    cardCount.clear();
+    deck.clearCards();
+    firstRegion.name = "";
+    secondRegion.name = "";
 }

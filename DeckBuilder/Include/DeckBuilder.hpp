@@ -15,19 +15,21 @@ class DeckBuilder
     int maxNumberOfHeroes = 6;
     int maxNumberOfEachCard = 3;
     int heroDef;
-    CardApi::Region firstRegion {};
-    CardApi::Region secondRegion {};
     std::map <CardApi::Card, int> cardCount;
     Deck deck;
 
    public:
+    CardApi::Region firstRegion {};
+    CardApi::Region secondRegion {};
     void addCard(CardApi::Card& cardToAdd);
     void removeCard(CardApi::Card& cardToRemove);
     void addCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode);
+    void removeCardStack(CardApi::Card& cardToRemove);
     void removeCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode);
     int checkNumberOfCard(CardApi::Card card);
     int getDeckLength(){return deck.length();}
-
+    void resetDeck();
+    std::map<CardApi::Card, int> getCardCountMap();
     Deck getDeck(){return deck;}
 }; 
 

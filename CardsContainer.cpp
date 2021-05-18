@@ -9,17 +9,19 @@ CardsContainer::CardsContainer(QWidget* parent) :
 {
 
     createLayout(parent_);
-
     displayCards();
 }
 
 void CardsContainer::displayCards()
 {
-        QVariant i = "01NX014";
-        for(auto& it : cards_){
-            showCard("../../BakcylProgramowania_2020/source/pic.png",it); //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po buttonach
-            it->setProperty("Id", i);                                     //TODO: ID powinno być id karty
-        }
+    QVariant idstr = "01NX014"; //First card from Noxus
+    int i = 10;
+    for(auto& it : cards_){  // ty na razie tak zostajesz
+
+        showCard("../../BakcylProgramowania_2020/source/pic.png",it);     //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po buttonach
+        it->setProperty("Id", idstr);                                     //TODO: ID powinno być id karty
+        idstr = ("01DE0" + std::to_string(i++)).c_str();
+    }
 }
 
 void CardsContainer::createLayout(QWidget* parent)
