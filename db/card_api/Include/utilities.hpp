@@ -23,7 +23,7 @@ const std::string GET_ALL_CARDS_QUERY = R"""(
      levelupDescriptionRaw,
      flavorText,
      supertype,
-     'type',
+     "type",
      sets.name,
      sets.nameRef,
      regions.name,

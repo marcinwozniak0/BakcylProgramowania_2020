@@ -75,7 +75,7 @@ void MainWindow::cardClicked(){
 
 }
 void MainWindow::displayCardWindow(std::string cardId){
-    CardWindow cardWindow(cardId, ui->OptionsAndDeck->findChild<QLabel*>("DeckDisplay"), &deckbuilder, &dataBase, this);
+    CardWindow cardWindow(cardId, ui->OptionsAndDeck->findChild<QPlainTextEdit*>("DeckDisplay"), &deckbuilder, &dataBase, this);
     cardWindow.setModal(true);
     cardWindow.exec();
 }
@@ -163,9 +163,20 @@ void MainWindow::on_NumberOfPage_editingFinished()
 void MainWindow::on_pushButton_clicked()
 {   
         this->hide();
-        DeckWindow deckWindow(&deckbuilder,this->geometry() ,this);
+        DeckWindow deckWindow(&deckbuilder,this->geometry(), &dataBase, this);
         deckWindow.setModal(true);
         deckWindow.exec();
         deckWindow.deleteLater();
+
+        std::string deckText_ = "";
+        for(const auto& [key, value] : deckbuilder.getCardCountMap()){
+
+            deckText_ += std::to_string(value);
+            deckText_ += "x ";
+            deckText_ += key.name;
+            deckText_ += '\n';
+        }
+        ui->OptionsAndDeck->findChild<QPlainTextEdit*>("DeckDisplay")->setPlainText(QString::fromStdString(deckText_));
+
         this->show();
 }
