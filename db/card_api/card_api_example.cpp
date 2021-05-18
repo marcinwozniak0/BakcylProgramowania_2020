@@ -42,12 +42,12 @@ void searchExample(SqliteHelper::unique_sqlite3& db)
     filters.maxCost = 4;
     filters.minHealth = 0;
     filters.maxHealth = 0;
-    auto cards = CardApi::searchCards(db, filters, pagination);
+    auto cards = CardApi::searchCards(db, filters);
     std::cout << "Liczba znalezionych kart: " << cards.size() << "\n";
     for (auto& card : cards)
     {
         std::cout<<"\n--\n";
-        printCard(card);
+        std::cout<<card;
     }
 }
 

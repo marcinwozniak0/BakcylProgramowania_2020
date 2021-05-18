@@ -55,6 +55,7 @@ set(PROJECT_SOURCES
     QT/Source/CardsContainer.cpp
     QT/Source/DeckWindow.cpp
     QT/Source/ErrorWindow.cpp
+    QT/Assets/resources.qrc
     )
 
 

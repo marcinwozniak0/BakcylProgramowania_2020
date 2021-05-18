@@ -9,18 +9,26 @@ CardsContainer::CardsContainer(QWidget* parent) :
 {
 
     createLayout(parent_);
-    displayCards();
+    //displayCards();
 }
 
-void CardsContainer::displayCards()
+void CardsContainer::displayCards(std::vector<std::string> cardsCodes)
 {
-    QVariant idstr = "01NX014"; //First card from Noxus
-    int i = 10;
-    for(auto& it : cards_){  // ty na razie tak zostajesz
 
-        showCard("../../BakcylProgramowania_2020/source/pic.png",it);     //TODO: Zmienić tego statycznego stringa na listę zdjęć i iterować po zdjęciach a nie po buttonach
-        it->setProperty("Id", idstr);                                     //TODO: ID powinno być id karty
-        idstr = ("01DE0" + std::to_string(i++)).c_str();
+    for (size_t i = 0;i < 15; i++) {
+
+        if(cardsCodes.size() > i)
+        {
+            cards_[i]->setDisabled(false);
+            showCard(":/img/test_card",cards_[i]);
+            cards_[i]->setProperty("Id", cardsCodes[i].c_str());
+
+        }else
+        {
+            cards_[i]->setIcon(QIcon());
+            cards_[i]->setDisabled(true);
+        }
+
     }
 }
 
@@ -53,10 +61,7 @@ void CardsContainer::createLayout(QWidget* parent)
         }else{
             posX += cardWight + marginLeftRight;
         }
-
-
    }
-
 }
 
 void CardsContainer::showCard(QString path, QPushButton* button)

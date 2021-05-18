@@ -36,12 +36,12 @@ void DeckBuilder::addCard(CardApi::Card &cardToAdd)
             return;
         }
 
-        if (cardToAdd.type == "hero" && deck.getNumberOfHeroes() < maxNumberOfHeroes) //TODO: correct type of hero, ask SQL(!)
+        if (cardToAdd.supertype != "" && deck.getNumberOfHeroes() < maxNumberOfHeroes) //TODO: correct type of hero, ask SQL(!)
         {       
             deck.increaseNumberOfHeroes();
             deck.addCard(cardToAdd);
         } 
-        else if (cardToAdd.type == "hero" && deck.getNumberOfHeroes() >= maxNumberOfHeroes)
+        else if (cardToAdd.supertype != "" && deck.getNumberOfHeroes() >= maxNumberOfHeroes)
         {
             ErrorWindow("Too many heroes");
             return;
@@ -198,26 +198,37 @@ std::string DeckBuilder::getEncodedDeck()
         stringToEncode += c.cardCode + "|";
     }
 
-    if (not stringToEncode.empty())
-    {
-        stringToEncode.substr(0, stringToEncode.length() - 2);
-    }
+//    if (!stringToEncode.empty())
+//    {
+//        stringToEncode.substr(0, stringToEncode.length() - 2);
+//    }
 
     return base64_encode(stringToEncode, false);
 }
 
 void DeckBuilder::setFromEncoded(SqliteHelper::unique_sqlite3& db, std::string encodedDeck) 
 {
-    std::string cardID = "";
-    for (auto& e : encodedDeck) 
+    std::string deckCode;
+    try {
+    deckCode = base64_decode(encodedDeck);
+    }
+    catch(...)
     {
-        if (e == '|') 
+        ErrorWindow("Invalid deck code");
+        return;
+    }
+    resetDeck();
+    std::string cardID = "";
+    for (const auto& sign : deckCode)
+    {
+        if (sign == '|')
         {
-            addCardByID(db, encodedDeck); //TODO add database
+            addCardByID(db, cardID); //TODO add database
+            cardID = "";
         } 
         else 
         {
-            cardID += e;
+            cardID += sign;
         }
     }
 }

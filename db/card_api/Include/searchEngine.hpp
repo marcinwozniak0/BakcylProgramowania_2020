@@ -39,5 +39,5 @@ struct Filters
 
 // TODO: Sorting
 
-std::vector<Card> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& filters, const Pagination& pagination);
+std::vector<std::string> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& filters);
 } // namespace CardApi

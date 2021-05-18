@@ -31,15 +31,56 @@ MainWindow::MainWindow(QWidget *parent)
         connect(it, &QPushButton::clicked, this, &MainWindow::cardClicked);
     }
 
-    currentRequest = std::make_unique<CardApi::Filters>();
+    currentRequest = std::make_unique<CardApi::Filters>(); 
+
+    readSaveIfExist();
+    setLogo();
 
     dataBase = SqliteHelper::open_db(dataBaseParth.c_str());
-}
-MainWindow::~MainWindow()
-{
-    delete ui;
+
+    cardContainer->displayCards(CardApi::searchCards(dataBase, *currentRequest));
+
 }
 
+MainWindow::~MainWindow()
+{
+    saveFile.open(".savesFile.txt", std::ios::trunc | std::ios::out);
+    if(saveFile.is_open())
+    {
+        saveFile << deckbuilder.getEncodedDeck();
+        saveFile.close();
+    }else{
+        ErrorWindow("Can't find saves file");
+    }
+
+    delete ui;  
+}
+void MainWindow::readSaveIfExist()
+{
+    std::string deckCode;
+    saveFile.open(".savesFile.txt", std::ios::in);
+    if(saveFile.is_open())
+    {
+        getline(saveFile, deckCode);
+        deckbuilder.setFromEncoded(dataBase, deckCode);
+        saveFile.close();
+    }
+    refreshDeckDisplay();
+}
+
+void MainWindow::refreshDeckDisplay()
+{
+    std::string deckText_ = "";
+    for(const auto& [key, value] : deckbuilder.getCardCountMap()){
+
+        deckText_ += std::to_string(value);
+        deckText_ += "x ";
+        deckText_ += key.name;
+        deckText_ += '\n';
+    }
+    ui->OptionsAndDeck->findChild<QPlainTextEdit*>("DeckDisplay")->setPlainText(QString::fromStdString(deckText_));
+
+}
 
 void MainWindow::on_Search_B_clicked(){
 
@@ -57,6 +98,9 @@ void MainWindow::on_Search_B_clicked(){
     currentRequest->rarityNames = convertCheckbox("Rarity_?");
     //currentRequest->cardType_ = convertCheckbox("Typ_?"); //TODO
     currentRequest->regionNames = convertCheckbox("Region_??");
+
+    cardContainer->displayCards(CardApi::searchCards(dataBase, *currentRequest));
+
 }
 std::vector<std::string> MainWindow::convertCheckbox(std::string regex){
     QRegularExpression chexbox_regex(regex.c_str());
@@ -78,6 +122,14 @@ void MainWindow::displayCardWindow(std::string cardId){
     CardWindow cardWindow(cardId, ui->OptionsAndDeck->findChild<QPlainTextEdit*>("DeckDisplay"), &deckbuilder, &dataBase, this);
     cardWindow.setModal(true);
     cardWindow.exec();
+}
+void MainWindow::setLogo()
+{
+    QLabel* icon = ui->SearchEngine->findChild<QLabel*>("Icon");
+    QPixmap picture(":/img/icon");
+    int wp = icon->width();
+    int hp = icon->height();
+    icon->setPixmap(picture.scaled(wp,hp,Qt::KeepAspectRatio));
 }
 
 void centerWindow(QWidget *widget){
@@ -126,9 +178,14 @@ void MainWindow::on_Rarity_B_clicked()
      ui->Options->setCurrentIndex(5);
 }
 
+void MainWindow::on_ImpExpDeck_B_clicked()
+{
+    ui->Options->setCurrentIndex(6);
+}
+
 void MainWindow::on_Region_B_clicked()
 {
-     ui->Options->setCurrentIndex(6);
+     ui->Options->setCurrentIndex(7);
 }
 
 
@@ -143,6 +200,7 @@ void MainWindow::on_GoNext_B_clicked()
         currentRequest->setPage(page);
     }
 
+    cardContainer->displayCards(CardApi::searchCards(dataBase, *currentRequest));
 }
 
 void MainWindow::on_GoBack_B_clicked()
@@ -152,15 +210,18 @@ void MainWindow::on_GoBack_B_clicked()
         ui->NumberOfPage->setText(QString::number(--page));
         currentRequest->setPage(page);
     }
+
+    cardContainer->displayCards(CardApi::searchCards(dataBase, *currentRequest));
 }
 
 
 void MainWindow::on_NumberOfPage_editingFinished()
 {
     currentRequest->setPage(ui->NumberOfPage->text().toInt());
+    cardContainer->displayCards(CardApi::searchCards(dataBase, *currentRequest));
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_ShowDeck_B_clicked()
 {   
         this->hide();
         DeckWindow deckWindow(&deckbuilder,this->geometry(), &dataBase, this);
@@ -179,4 +240,17 @@ void MainWindow::on_pushButton_clicked()
         ui->OptionsAndDeck->findChild<QPlainTextEdit*>("DeckDisplay")->setPlainText(QString::fromStdString(deckText_));
 
         this->show();
+}
+
+
+
+void MainWindow::on_Export_B_clicked()
+{
+    ui->Options->findChild<QPlainTextEdit*>("CodeDisplay")->setPlainText(QString::fromStdString(deckbuilder.getEncodedDeck()));
+}
+
+void MainWindow::on_Import_B_clicked()
+{
+    deckbuilder.setFromEncoded(dataBase, ui->Options->findChild<QPlainTextEdit*>("CodeDisplay")->toPlainText().toStdString());    
+    refreshDeckDisplay();
 }

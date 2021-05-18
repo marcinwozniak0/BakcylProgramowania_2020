@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     sqlite3_open(":memory:", &_db);
     Json::Value root;
     QApplication a(argc, argv);
-    a.setWindowIcon(QIcon("../../BakcylProgramowania_2020/source/icon.png"));
+    a.setWindowIcon(QIcon(":/img/icon"));
     MainWindow w;
     w.show();
 
