@@ -36,12 +36,12 @@ void DeckBuilder::addCard(CardApi::Card &cardToAdd)
             return;
         }
 
-        if (cardToAdd.type == "hero" && deck.getNumberOfHeroes() < maxNumberOfHeroes) //TODO: correct type of hero, ask SQL(!)
+        if (cardToAdd.supertype != "" && deck.getNumberOfHeroes() < maxNumberOfHeroes) //TODO: correct type of hero, ask SQL(!)
         {       
             deck.increaseNumberOfHeroes();
             deck.addCard(cardToAdd);
         } 
-        else if (cardToAdd.type == "hero" && deck.getNumberOfHeroes() >= maxNumberOfHeroes)
+        else if (cardToAdd.supertype != "" && deck.getNumberOfHeroes() >= maxNumberOfHeroes)
         {
             ErrorWindow("Too many heroes");
             return;
@@ -208,7 +208,16 @@ std::string DeckBuilder::getEncodedDeck()
 
 void DeckBuilder::setFromEncoded(SqliteHelper::unique_sqlite3& db, std::string encodedDeck) 
 {
-    std::string deckCode = base64_decode(encodedDeck);
+    std::string deckCode;
+    try {
+    deckCode = base64_decode(encodedDeck);
+    }
+    catch(...)
+    {
+        ErrorWindow("Invalid deck code");
+        return;
+    }
+    resetDeck();
     std::string cardID = "";
     for (const auto& sign : deckCode)
     {

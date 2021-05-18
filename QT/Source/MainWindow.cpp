@@ -59,10 +59,7 @@ void MainWindow::readSaveIfExist()
         getline(saveFile, deckCode);
         deckbuilder.setFromEncoded(dataBase, deckCode);
         saveFile.close();
-    }else{
-        ErrorWindow("Can't create saves file");
     }
-
     refreshDeckDisplay();
 }
 
@@ -234,8 +231,6 @@ void MainWindow::on_Export_B_clicked()
 
 void MainWindow::on_Import_B_clicked()
 {
-    deckbuilder.resetDeck();
-    deckbuilder.setFromEncoded(dataBase, ui->Options->findChild<QPlainTextEdit*>("CodeDisplay")->toPlainText().toStdString());
-
+    deckbuilder.setFromEncoded(dataBase, ui->Options->findChild<QPlainTextEdit*>("CodeDisplay")->toPlainText().toStdString());    
     refreshDeckDisplay();
 }
