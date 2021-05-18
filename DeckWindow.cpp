@@ -186,7 +186,7 @@ void DeckWindow::ShowDeckDisplay()
 
 void DeckWindow::CheckRemovedCards()
 {
-    char zero = 48 //ASCII 0 = 48
+    char zero = 48; //ASCII 0 = 48
     for(size_t i = 0; i < cardInDeckAsButtons_.size(); i++)
     {
 
@@ -205,7 +205,7 @@ void DeckWindow::CheckRemovedCards()
                 }else{
                     currentCard_ = deck_->getDeck().getCardsAsVector()[0];
                 }
-                moveCardsOneUp(i);
+                MoveCardsOneUp(i);
 
             }
             else{
@@ -216,7 +216,7 @@ void DeckWindow::CheckRemovedCards()
     }
 }
 
-void DeckWindow::moveCardsOneUp(size_t pos)
+void DeckWindow::MoveCardsOneUp(size_t pos)
 {
     for(size_t i = pos; i < cardInDeckAsButtons_.size(); i++){
         auto& it = cardInDeckAsButtons_[i];
@@ -255,22 +255,23 @@ void DeckWindow::on_DeleteCard_B_clicked()
 }
 void DeckWindow::on_RemoveStack_B_clicked()
 {
+    int count = 0;
     deck_->removeCardStack(currentCard_);
     for(const auto& it : cardInDeckAsButtons_)
     {
-
+        count++;
         if(it->property("Id").toString().toStdString() == currentCard_.cardCode )
         {
 
 
-            cardInDeckAsButtons_.erase(cardInDeckAsButtons_.begin() + i);
+            cardInDeckAsButtons_.erase(cardInDeckAsButtons_.begin() + count);
             if(cardInDeckAsButtons_.empty()){
                 ui->DeleteCard_B->setDisabled(true);
             }else{
                 currentCard_ = deck_->getDeck().getCardsAsVector()[0];
             }
 
-            moveCardsOneUp(i);
+            MoveCardsOneUp(count);
             break;
         }
     }
