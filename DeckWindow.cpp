@@ -62,12 +62,13 @@ void DeckWindow::CheckCardsTypes()
     types_.units     = 0;
     for(const auto& card : deck_->getDeck().getCardsAsVector())
     {
+        char firstLetterOfTypeCard = card.type[0];
         if(card.supertype != ""){
             types_.champions++;
         }
         else
         {
-            switch(card.type[0])
+            switch(firstLetterOfTypeCard)
             {
             case 'J': // "Jednostka"
                 types_.units++;
@@ -185,7 +186,7 @@ void DeckWindow::ShowDeckDisplay()
 
 void DeckWindow::CheckRemovedCards()
 {
-
+    char zero = 48 //ASCII 0 = 48
     for(size_t i = 0; i < cardInDeckAsButtons_.size(); i++)
     {
 
@@ -196,7 +197,7 @@ void DeckWindow::CheckRemovedCards()
 
             std::string id_str = it->text().toStdString();
             id_str[0]--;
-            if(id_str[0] == 48)
+            if(id_str[0] == zero)
             {
                 cardInDeckAsButtons_.erase(cardInDeckAsButtons_.begin() + i);
                 if(cardInDeckAsButtons_.empty()){
@@ -223,18 +224,17 @@ void DeckWindow::moveCardsOneUp(size_t pos)
     }
 }
 
-
-
-
 void DeckWindow::cardClicked()
 {
     QPushButton *button = (QPushButton *)sender();
     currentCard_ = (CardApi::getCardById(*dataBase_, button->property("Id").toString().toStdString())).value();
 }
+
 void DeckWindow::on_Back_B_clicked()
 {
     close();
 }
+
 void DeckWindow::on_ResetDeck_B_clicked()
 {
     deck_->resetDeck();
@@ -256,9 +256,8 @@ void DeckWindow::on_DeleteCard_B_clicked()
 void DeckWindow::on_RemoveStack_B_clicked()
 {
     deck_->removeCardStack(currentCard_);
-    for(size_t i = 0; i < cardInDeckAsButtons_.size(); i++)
+    for(const auto& it : cardInDeckAsButtons_)
     {
-        const auto& it = cardInDeckAsButtons_[i];
 
         if(it->property("Id").toString().toStdString() == currentCard_.cardCode )
         {
