@@ -5,8 +5,8 @@
 #include <optional>
 
 #include "Deck.hpp"
-
-
+#include "ErrorWindow.h"
+#include "base64.h"
 
 class DeckBuilder 
 {
@@ -28,8 +28,9 @@ class DeckBuilder
     void removeCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode);
     int checkNumberOfCard(CardApi::Card card);
     int getDeckLength(){return deck.length();}
+    std::string getEncodedDeck();
+    void setFromEncoded(SqliteHelper::unique_sqlite3& db, std::string encodedDeck);
     void resetDeck();
     std::map<CardApi::Card, int> getCardCountMap();
     Deck getDeck(){return deck;}
 }; 
-
