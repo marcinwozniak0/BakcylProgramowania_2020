@@ -1,6 +1,6 @@
 #pragma once
 #include "baseCardApi.hpp"
-#include "../../sqlite_helper/Include/sqlite_helper.hpp"
+#include "sqlite_helper.hpp"
 #include <string>
 
 // Internal helper. This should be private header. TODO
