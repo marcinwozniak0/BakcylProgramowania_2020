@@ -42,7 +42,7 @@ void DeckBuilder::addCard(CardApi::Card &cardToAdd)
         if (cardToAdd.type == "hero" && deck.getNumberOfHeroes() < maxNumberOfHeroes) //TODO: correct type of hero, ask SQL(!)
         {       
             deck.increaseNumberOfHeroes();
-            deck.addCard(cardToAdd);          
+            deck.addCard(cardToAdd);
         } 
         else if (cardToAdd.type == "hero" && deck.getNumberOfHeroes() >= maxNumberOfHeroes)
         {
@@ -170,11 +170,12 @@ void DeckBuilder::addCardByID (SqliteHelper::unique_sqlite3& db, const std::stri
 
 void DeckBuilder::removeCardStack(CardApi::Card &cardToRemove)
 {
-   while(cardCount[cardToRemove] > 0)
-   {
-    removeCard(cardToRemove);
-   }
-   cardCount.erase(cardToRemove);
+    while(cardCount[cardToRemove] > 0)
+    {
+        removeCard(cardToRemove);
+    }
+   
+    cardCount.erase(cardToRemove);
 }
 
 void DeckBuilder::removeCardByID (SqliteHelper::unique_sqlite3& db, const std::string& cardCode)
