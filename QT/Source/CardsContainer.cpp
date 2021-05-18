@@ -68,7 +68,8 @@ void CardsContainer::showCard(QString path, QPushButton* button)
 }
 CardsContainer::~CardsContainer()
 {
-    for(auto& it : cards_){
+    for(auto& it : cards_)
+    {
         delete it;
     }
 }
