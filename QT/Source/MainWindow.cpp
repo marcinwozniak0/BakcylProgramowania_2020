@@ -31,13 +31,17 @@ MainWindow::MainWindow(QWidget *parent)
         connect(it, &QPushButton::clicked, this, &MainWindow::cardClicked);
     }
 
-    currentRequest = std::make_unique<CardApi::Filters>();
-
-    dataBase = SqliteHelper::open_db(dataBaseParth.c_str());   
+    currentRequest = std::make_unique<CardApi::Filters>(); 
 
     readSaveIfExist();
     setLogo();
+
+    dataBase = SqliteHelper::open_db(dataBaseParth.c_str());
+
+    cardContainer->displayCards(CardApi::searchCards(dataBase, *currentRequest));
+
 }
+
 MainWindow::~MainWindow()
 {
     saveFile.open(".savesFile.txt", std::ios::trunc | std::ios::out);
@@ -94,6 +98,9 @@ void MainWindow::on_Search_B_clicked(){
     currentRequest->rarityNames = convertCheckbox("Rarity_?");
     //currentRequest->cardType_ = convertCheckbox("Typ_?"); //TODO
     currentRequest->regionNames = convertCheckbox("Region_??");
+
+    cardContainer->displayCards(CardApi::searchCards(dataBase, *currentRequest));
+
 }
 std::vector<std::string> MainWindow::convertCheckbox(std::string regex){
     QRegularExpression chexbox_regex(regex.c_str());
@@ -193,6 +200,7 @@ void MainWindow::on_GoNext_B_clicked()
         currentRequest->setPage(page);
     }
 
+    cardContainer->displayCards(CardApi::searchCards(dataBase, *currentRequest));
 }
 
 void MainWindow::on_GoBack_B_clicked()
@@ -202,12 +210,15 @@ void MainWindow::on_GoBack_B_clicked()
         ui->NumberOfPage->setText(QString::number(--page));
         currentRequest->setPage(page);
     }
+
+    cardContainer->displayCards(CardApi::searchCards(dataBase, *currentRequest));
 }
 
 
 void MainWindow::on_NumberOfPage_editingFinished()
 {
     currentRequest->setPage(ui->NumberOfPage->text().toInt());
+    cardContainer->displayCards(CardApi::searchCards(dataBase, *currentRequest));
 }
 
 void MainWindow::on_ShowDeck_B_clicked()

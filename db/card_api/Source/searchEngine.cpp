@@ -114,15 +114,20 @@ void bindParamQueue(SqliteHelper::unique_stmt& stmt, const std::vector<std::stri
     }
 }
 
-std::vector<Card> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& filters, const Pagination& pagination)
+std::vector<std::string> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& filters)
 {
     DynamicQuery dynQuery;
     dynQuery.queryText = GET_ALL_CARDS_QUERY;
     dynQuery.addFilters(filters);
-    dynQuery.addPagination(pagination);
+    dynQuery.addPagination(filters.pagination);
     auto stmt = prepare_stmt(db, dynQuery.queryText.c_str());
     bindParamQueue(stmt, dynQuery.paramQueue);
-    return getCardsFromStatement(db, stmt);
+
+    std::vector<std::string> cardsCodes;
+    for(const auto& it : getCardsFromStatement(db, stmt)){
+        cardsCodes.push_back(it.cardCode);
+    }
+    return cardsCodes;
 }
 
 void Filters::setPage(const int page){
