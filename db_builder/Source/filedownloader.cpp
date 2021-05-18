@@ -52,10 +52,18 @@ void FileDownloader::createDirectory(std::string directoryPath_)
     }
 }
 
-void FileDownloader::addLinks(std::vector <std::string> links_, std::vector <std::string> fileNames_, int numberOfLinks)
+void FileDownloader::addLinks(std::vector <std::string> links_, std::vector <std::string> fileNames_)
 {
     links = links_;
     fileNames = fileNames_;
+    
+    for(unsigned int i = 0; i < fileNames.size(); i++)
+    {
+        std::string newName = fileNames[i];
+        newName.erase(newName.end() - 4, newName.end());
+        std::string statusFileName = newName + ".txt";
+        statusFileNames.push_back(statusFileName);
+    }
 }
 
 void FileDownloader::download(int i)
@@ -96,6 +104,19 @@ void FileDownloader::download(int i)
     curl_easy_cleanup(curl);
 }
 
+void FileDownloader::createFileForChecking(int i)
+{
+    std::ofstream statusFile(statusFileNames[i]);
+    statusFile << ".";
+    statusFile.close();
+    
+    std::string newPath = directoryPath + "/" + statusFileNames[i];
+    if(rename(statusFileNames[i].c_str(), newPath.c_str()) < 0)
+    {
+        printf("ERROR! There's probly no directory 'data'. \n");
+    }
+}
+
 void FileDownloader::performDownloading(bool checkIfExists)
 {
     for(unsigned int i = 0; i < links.size(); i++)
@@ -103,12 +124,14 @@ void FileDownloader::performDownloading(bool checkIfExists)
         if(checkIfExists)
         {    
             if(isFileDownloaded(fileNames[i]))
-            {
+            {   
+                createFileForChecking(i);
                 continue;
             }
             else
             {
                 download(i);
+                
             }
         }
         else 

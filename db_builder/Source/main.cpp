@@ -36,7 +36,7 @@ Json::Value getJsonFromFile(const std::string& filename, const std::string& down
         links_.push_back(download_url);
         std::vector <std::string> fileNames_;
         fileNames_.push_back(filename);
-        downloader.addLinks(links_, fileNames_, links_.size());
+        downloader.addLinks(links_, fileNames_);
         downloader.performDownloading(false);
         
         std::string filename_ = directoryPath_ + "/" + filename;
@@ -58,18 +58,19 @@ int main()
     // Downloading Zips with images
     // adding info for downloading (links, file names)
     std::vector <std::string> links_;
+    std::vector <std::string> fileNames_;
+    
     links_.push_back("https://dd.b.pvp.net/latest/set1-lite-en_us.zip");
     links_.push_back("https://dd.b.pvp.net/latest/set2-lite-en_us.zip");
     links_.push_back("https://dd.b.pvp.net/latest/set3-lite-en_us.zip");
     links_.push_back("https://dd.b.pvp.net/latest/set4-lite-en_us.zip");
-    
-    std::vector <std::string> fileNames_;
+     
     fileNames_.push_back("set1-lite-en_us.zip");
     fileNames_.push_back("set2-lite-en_us.zip");
     fileNames_.push_back("set3-lite-en_us.zip");
     fileNames_.push_back("set4-lite-en_us.zip");
     
-    downloader.addLinks(links_, fileNames_, links_.size());
+    downloader.addLinks(links_, fileNames_);
     
     downloader.performDownloading(true);
     
