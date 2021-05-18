@@ -33,12 +33,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     currentRequest = std::make_unique<CardApi::Filters>(); 
 
-    readSaveIfExist();
-    setLogo();
 
     dataBase = SqliteHelper::open_db(dataBaseParth.c_str());
 
     cardContainer->displayCards(CardApi::searchCards(dataBase, *currentRequest));
+
+    readSaveIfExist();
+    setLogo();
 
 }
 
