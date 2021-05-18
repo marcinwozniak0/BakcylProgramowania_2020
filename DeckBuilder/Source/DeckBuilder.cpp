@@ -220,6 +220,8 @@ void DeckBuilder::setFromEncoded(SqliteHelper::unique_sqlite3& db, std::string e
             cardID += e;
         }
     }
+}
+
 std::map<CardApi::Card,int> DeckBuilder::getCardCountMap()
 {
     return cardCount;
