@@ -1,13 +1,5 @@
 #include "Deck.hpp"
 
-Deck::Deck()
-{
-    int numberOfHeroes = 0;
-    std::string firstRegion = "";
-    std::string secondRegion = "";
-    std::vector <CardApi::Card> deck;
-}
-
 void Deck::addCard(CardApi::Card &cardToAdd) 
 {
     deck.push_back(cardToAdd);
@@ -41,5 +33,3 @@ void Deck::decreaseNumberOfHeroes()
 {
     numberOfHeroes--;
 }
-
-Deck::~Deck() {}
