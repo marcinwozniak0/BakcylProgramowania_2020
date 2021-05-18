@@ -3,6 +3,7 @@
 #include <QDesktopWidget>
 #include <QMainWindow>
 #include <memory>
+#include <fstream>
 
 #include "CardsContainer.h"
 #include "CardWindow.h"
@@ -26,12 +27,15 @@ private:
 
     void createCards();
     void displayCards();
+    void readSaveIfExist();
+    void refreshDeckDisplay();
 
     std::vector<std::string> convertCheckbox(std::string);
     std::unique_ptr<CardsContainer> cardContainer;
     std::unique_ptr<CardApi::Filters> currentRequest;
     DeckBuilder deckbuilder;
     SqliteHelper::unique_sqlite3 dataBase;
+    std::fstream saveFile;
 
 private slots:
 

@@ -33,13 +33,52 @@ MainWindow::MainWindow(QWidget *parent)
 
     currentRequest = std::make_unique<CardApi::Filters>();
 
-    dataBase = SqliteHelper::open_db(dataBaseParth.c_str());
+    dataBase = SqliteHelper::open_db(dataBaseParth.c_str());   
+
+    readSaveIfExist();
 }
 MainWindow::~MainWindow()
 {
-    delete ui;
+    saveFile.open(".savesFile.txt", std::ios::trunc | std::ios::out);
+    if(saveFile.is_open())
+    {
+        saveFile << deckbuilder.getEncodedDeck();
+        saveFile.close();
+    }else{
+        ErrorWindow("Can't find saves file");
+    }
+
+    delete ui;  
+}
+void MainWindow::readSaveIfExist()
+{
+    std::string deckCode;
+    saveFile.open(".savesFile.txt", std::ios::in);
+    if(saveFile.is_open())
+    {
+        getline(saveFile, deckCode);
+        deckbuilder.setFromEncoded(dataBase, deckCode);
+        saveFile.close();
+    }else{
+        ErrorWindow("Can't create saves file");
+    }
+
+    refreshDeckDisplay();
 }
 
+void MainWindow::refreshDeckDisplay()
+{
+    std::string deckText_ = "";
+    for(const auto& [key, value] : deckbuilder.getCardCountMap()){
+
+        deckText_ += std::to_string(value);
+        deckText_ += "x ";
+        deckText_ += key.name;
+        deckText_ += '\n';
+    }
+    ui->OptionsAndDeck->findChild<QPlainTextEdit*>("DeckDisplay")->setPlainText(QString::fromStdString(deckText_));
+
+}
 
 void MainWindow::on_Search_B_clicked(){
 
@@ -198,14 +237,5 @@ void MainWindow::on_Import_B_clicked()
     deckbuilder.resetDeck();
     deckbuilder.setFromEncoded(dataBase, ui->Options->findChild<QPlainTextEdit*>("CodeDisplay")->toPlainText().toStdString());
 
-    std::string deckText_ = "";
-    for(const auto& [key, value] : deckbuilder.getCardCountMap()){
-
-        deckText_ += std::to_string(value);
-        deckText_ += "x ";
-        deckText_ += key.name;
-        deckText_ += '\n';
-    }
-    ui->OptionsAndDeck->findChild<QPlainTextEdit*>("DeckDisplay")->setPlainText(QString::fromStdString(deckText_));
-
+    refreshDeckDisplay();
 }
