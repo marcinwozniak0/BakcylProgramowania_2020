@@ -259,7 +259,7 @@ void DeckWindow::on_RemoveStack_B_clicked()
     deck_->removeCardStack(currentCard_);
     for(const auto& it : cardInDeckAsButtons_)
     {
-        count++;
+
         if(it->property("Id").toString().toStdString() == currentCard_.cardCode )
         {
 
@@ -274,6 +274,7 @@ void DeckWindow::on_RemoveStack_B_clicked()
             MoveCardsOneUp(count);
             break;
         }
+        count++;
     }
     CheckDeckFullfillment();
     CheckDeckStats();
