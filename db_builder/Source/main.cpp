@@ -54,6 +54,7 @@ int main()
 
     fd::FileDownloader downloader;  
     downloader.addDirectoryPath(directoryPath_);
+    downloader.createDirectory(directoryPath_);
     
     // Downloading Zips with images
     // adding info for downloading (links, file names)
