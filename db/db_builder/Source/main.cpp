@@ -91,6 +91,7 @@ int main()
     }
 
     sqlite3_exec(db.get(), "END TRANSACTION;", NULL, NULL, NULL);
+    extractZipFolders();
 }
 
 void fillGlobals(SqliteHelper::unique_sqlite3& db, const Json::Value& json)

@@ -1,11 +1,3 @@
-#include <iostream>
-#include <stdlib.h>
-#include <fstream>
-#include <stdio.h>
-#include <string>
-#include <filesystem>
-#include <curl/curl.h>
-
 #include "filedownloader.h"
 
 using namespace fd;
@@ -137,6 +129,16 @@ void FileDownloader::performDownloading(bool checkIfExists)
         {
             download(i);
         }
+    }
+}
+
+
+void extractZipFolders() {
+    std::vector<std::string> linksToZip = {"set1-lite-en_us.zip", "set2-lite-en_us.zip", "set3-lite-en_us.zip", "set4-lite-en_us.zip"};
+    for (auto &link : linksToZip ) {
+        std::cout << "Unzipping " << link << "..."; 
+        system((std::string("unzip -qo ./data/") + link + " -d data").c_str());
+        std::remove((std::string("./data/") + link).c_str());
     }
 }
 

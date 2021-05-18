@@ -4,6 +4,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stdlib.h>
+#include <fstream>
+#include <stdio.h>
+#include <filesystem>
 
 namespace fd
 {
@@ -25,6 +29,7 @@ namespace fd
         void addLinks(std::vector <std::string> links_, std::vector <std::string> fileNames_);
         bool isFileDownloaded(std::string fileName_); 
         void download(int i);
+        void extractZipFolders();
         // this funtction creates a .txt file for a downloaded file
         // the .txt file is empty and it exists just so we can check if the file 
         //has been already downloaded (the .zip is deleted after unpacking)
