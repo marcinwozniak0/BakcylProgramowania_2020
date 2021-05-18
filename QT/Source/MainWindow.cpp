@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     dataBase = SqliteHelper::open_db(dataBaseParth.c_str());   
 
     readSaveIfExist();
+    setLogo();
 }
 MainWindow::~MainWindow()
 {
@@ -117,6 +118,14 @@ void MainWindow::displayCardWindow(std::string cardId){
     CardWindow cardWindow(cardId, ui->OptionsAndDeck->findChild<QPlainTextEdit*>("DeckDisplay"), &deckbuilder, &dataBase, this);
     cardWindow.setModal(true);
     cardWindow.exec();
+}
+void MainWindow::setLogo()
+{
+    QLabel* icon = ui->SearchEngine->findChild<QLabel*>("Icon");
+    QPixmap picture("../../BakcylProgramowania_2020/source/icon.png");
+    int wp = icon->width();
+    int hp = icon->height();
+    icon->setPixmap(picture.scaled(wp,hp,Qt::KeepAspectRatio));
 }
 
 void centerWindow(QWidget *widget){

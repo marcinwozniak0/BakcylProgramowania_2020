@@ -21,84 +21,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QGroupBox" name="Cards">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>600</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>Card</string>
-      </property>
-      <widget class="QPushButton" name="GoBack_B">
-       <property name="geometry">
-        <rect>
-         <x>320</x>
-         <y>540</y>
-         <width>61</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>&lt;—</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="GoNext_B">
-       <property name="geometry">
-        <rect>
-         <x>510</x>
-         <y>540</y>
-         <width>61</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>—&gt;</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="page">
-       <property name="geometry">
-        <rect>
-         <x>390</x>
-         <y>545</y>
-         <width>41</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>page</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_2">
-       <property name="geometry">
-        <rect>
-         <x>462</x>
-         <y>545</y>
-         <width>41</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>of 50</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="NumberOfPage">
-       <property name="geometry">
-        <rect>
-         <x>426</x>
-         <y>547</y>
-         <width>31</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>1</string>
-       </property>
-      </widget>
-     </widget>
-    </item>
     <item row="0" column="0" colspan="2">
      <widget class="QGroupBox" name="SearchEngine">
       <property name="minimumSize">
@@ -231,7 +153,7 @@
       <widget class="QPushButton" name="Search_B">
        <property name="geometry">
         <rect>
-         <x>850</x>
+         <x>770</x>
          <y>70</y>
          <width>231</width>
          <height>41</height>
@@ -244,7 +166,7 @@
       <widget class="QComboBox" name="Sort_DB">
        <property name="geometry">
         <rect>
-         <x>848</x>
+         <x>770</x>
          <y>30</y>
          <width>231</width>
          <height>28</height>
@@ -272,6 +194,19 @@
        </property>
        <property name="text">
         <string>Import/Export Deck</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="Icon">
+       <property name="geometry">
+        <rect>
+         <x>1042</x>
+         <y>19</y>
+         <width>121</width>
+         <height>101</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </widget>
@@ -851,6 +786,84 @@
        </property>
        <property name="readOnly">
         <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QGroupBox" name="Cards">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>600</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Card</string>
+      </property>
+      <widget class="QPushButton" name="GoBack_B">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>540</y>
+         <width>61</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>&lt;—</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="GoNext_B">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>540</y>
+         <width>61</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>—&gt;</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="page">
+       <property name="geometry">
+        <rect>
+         <x>390</x>
+         <y>545</y>
+         <width>41</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>page</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>462</x>
+         <y>545</y>
+         <width>41</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>of 50</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="NumberOfPage">
+       <property name="geometry">
+        <rect>
+         <x>426</x>
+         <y>547</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>1</string>
        </property>
       </widget>
      </widget>

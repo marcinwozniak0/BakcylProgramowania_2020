@@ -29,6 +29,7 @@ private:
     void displayCards();
     void readSaveIfExist();
     void refreshDeckDisplay();
+    void setLogo();
 
     std::vector<std::string> convertCheckbox(std::string);
     std::unique_ptr<CardsContainer> cardContainer;
