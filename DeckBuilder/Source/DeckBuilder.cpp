@@ -198,26 +198,28 @@ std::string DeckBuilder::getEncodedDeck()
         stringToEncode += c.cardCode + "|";
     }
 
-    if (not stringToEncode.empty())
-    {
-        stringToEncode.substr(0, stringToEncode.length() - 2);
-    }
+//    if (!stringToEncode.empty())
+//    {
+//        stringToEncode.substr(0, stringToEncode.length() - 2);
+//    }
 
     return base64_encode(stringToEncode, false);
 }
 
 void DeckBuilder::setFromEncoded(SqliteHelper::unique_sqlite3& db, std::string encodedDeck) 
 {
+    std::string deckCode = base64_decode(encodedDeck);
     std::string cardID = "";
-    for (auto& e : encodedDeck) 
+    for (const auto& sign : deckCode)
     {
-        if (e == '|') 
+        if (sign == '|')
         {
-            addCardByID(db, encodedDeck); //TODO add database
+            addCardByID(db, cardID); //TODO add database
+            cardID = "";
         } 
         else 
         {
-            cardID += e;
+            cardID += sign;
         }
     }
 }

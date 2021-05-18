@@ -49,6 +49,9 @@ private slots:
     void on_GoBack_B_clicked();
 
     void on_NumberOfPage_editingFinished();
-    void on_pushButton_clicked();
+    void on_ShowDeck_B_clicked();
+    void on_ImpExpDeck_B_clicked();
+    void on_Export_B_clicked();
+    void on_Import_B_clicked();
 };
 

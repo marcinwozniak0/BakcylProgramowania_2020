@@ -261,6 +261,19 @@
         </property>
        </item>
       </widget>
+      <widget class="QPushButton" name="ImpExpDeck_B">
+       <property name="geometry">
+        <rect>
+         <x>610</x>
+         <y>30</y>
+         <width>141</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Import/Export Deck</string>
+       </property>
+      </widget>
      </widget>
     </item>
     <item row="1" column="1">
@@ -279,7 +292,7 @@
         <rect>
          <x>10</x>
          <y>0</y>
-         <width>231</width>
+         <width>261</width>
          <height>281</height>
         </rect>
        </property>
@@ -591,6 +604,44 @@
          </property>
         </widget>
        </widget>
+       <widget class="QWidget" name="InOutDeckCode">
+        <widget class="QPlainTextEdit" name="CodeDisplay">
+         <property name="geometry">
+          <rect>
+           <x>-7</x>
+           <y>50</y>
+           <width>281</width>
+           <height>131</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="Import_B">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>200</y>
+           <width>86</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Import</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="Export_B">
+         <property name="geometry">
+          <rect>
+           <x>170</x>
+           <y>200</y>
+           <width>86</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Export</string>
+         </property>
+        </widget>
+       </widget>
        <widget class="QWidget" name="Region">
         <widget class="QLabel" name="title_Reg">
          <property name="geometry">
@@ -776,7 +827,7 @@
         </widget>
        </widget>
       </widget>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="ShowDeck_B">
        <property name="geometry">
         <rect>
          <x>80</x>

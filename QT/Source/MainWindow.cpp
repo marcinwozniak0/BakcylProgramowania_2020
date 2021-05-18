@@ -126,9 +126,14 @@ void MainWindow::on_Rarity_B_clicked()
      ui->Options->setCurrentIndex(5);
 }
 
+void MainWindow::on_ImpExpDeck_B_clicked()
+{
+    ui->Options->setCurrentIndex(6);
+}
+
 void MainWindow::on_Region_B_clicked()
 {
-     ui->Options->setCurrentIndex(6);
+     ui->Options->setCurrentIndex(7);
 }
 
 
@@ -160,7 +165,7 @@ void MainWindow::on_NumberOfPage_editingFinished()
     currentRequest->setPage(ui->NumberOfPage->text().toInt());
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_ShowDeck_B_clicked()
 {   
         this->hide();
         DeckWindow deckWindow(&deckbuilder,this->geometry(), &dataBase, this);
@@ -179,4 +184,28 @@ void MainWindow::on_pushButton_clicked()
         ui->OptionsAndDeck->findChild<QPlainTextEdit*>("DeckDisplay")->setPlainText(QString::fromStdString(deckText_));
 
         this->show();
+}
+
+
+
+void MainWindow::on_Export_B_clicked()
+{
+    ui->Options->findChild<QPlainTextEdit*>("CodeDisplay")->setPlainText(QString::fromStdString(deckbuilder.getEncodedDeck()));
+}
+
+void MainWindow::on_Import_B_clicked()
+{
+    deckbuilder.resetDeck();
+    deckbuilder.setFromEncoded(dataBase, ui->Options->findChild<QPlainTextEdit*>("CodeDisplay")->toPlainText().toStdString());
+
+    std::string deckText_ = "";
+    for(const auto& [key, value] : deckbuilder.getCardCountMap()){
+
+        deckText_ += std::to_string(value);
+        deckText_ += "x ";
+        deckText_ += key.name;
+        deckText_ += '\n';
+    }
+    ui->OptionsAndDeck->findChild<QPlainTextEdit*>("DeckDisplay")->setPlainText(QString::fromStdString(deckText_));
+
 }
