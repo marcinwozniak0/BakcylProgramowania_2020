@@ -61,10 +61,6 @@ set(PROJECT_SOURCES
     QT/Source/ErrorWindow.cpp
     )
 
-add_executable(Deckbuilder ${PROJECT_SOURCES})
-    
-target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets ${SQLite3_LIBRARIES} JsonCpp::JsonCpp CURL::libcurl)
-
 # DATABASE
 add_subdirectory(${PROJECT_SOURCE_DIR}/db/sqlite_helper)
 add_subdirectory(${PROJECT_SOURCE_DIR}/db/db_builder)
@@ -91,6 +87,7 @@ target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets
                                           Qt5::Charts 
                                           ${SQLite3_LIBRARIES} 
                                           JsonCpp::JsonCpp
+                                          CURL::libcurl
                                           DeckBuilderSources
                                           QT_LIBS
                                           db_builder
