@@ -20,7 +20,7 @@ void CardsContainer::displayCards(std::vector<std::string> cardsCodes)
         if(cardsCodes.size() > i)
         {
             cards_[i]->setDisabled(false);
-            showCard("../../BakcylProgramowania_2020/source/pic.png",cards_[i]);
+            showCard(":/img/test_card",cards_[i]);
             cards_[i]->setProperty("Id", cardsCodes[i].c_str());
 
         }else
