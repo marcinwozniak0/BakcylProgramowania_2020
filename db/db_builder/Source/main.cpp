@@ -170,7 +170,7 @@ bool doesFileExists(std::string fileName)
     std::ifstream ifexfile(fileName.c_str()); 
     if(ifexfile)
     {
-        std::string msg = fileName + " already exists!";
+        std::string msg = "Database already exists. If there was an update, delete 'database.sql' and data catalog";
         std::cout<<msg<<std::endl;
         
         return true;        
