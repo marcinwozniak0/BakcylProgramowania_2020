@@ -36,18 +36,19 @@ void searchExample(SqliteHelper::unique_sqlite3& db)
     CardApi::Filters filters;
     /* filters.cardName = "niemoż"; */
     filters.regionNames = {"Ionia"};
-    filters.setNames = {"Zew Góry"};
-    filters.spellSpeedNames = {"Szybkie", "Błyskawiczne"};
+    /* filters.setNames = {"Zew Góry"}; */
+    /* filters.spellSpeedNames = {"Szybkie", "Błyskawiczne"}; */
     filters.minCost = 2;
     filters.maxCost = 4;
     filters.minHealth = 0;
     filters.maxHealth = 0;
-    auto cards = CardApi::searchCards(db, filters);
-    std::cout << "Liczba znalezionych kart: " << cards.size() << "\n";
-    for (auto& card : cards)
+    auto cardsCodes = CardApi::searchCards(db, filters);
+    std::cout << "Liczba znalezionych kart: " << cardsCodes.size() << "\n";
+    for (auto& cardCode : cardsCodes)
     {
         std::cout<<"\n--\n";
-        std::cout<<card;
+        std::cout << cardCode << "\n";
+        std::cout << "Icon path: " << CardApi::getBasicCardIconPath("en_us", cardCode) << "\n";
     }
 }
 

@@ -64,4 +64,16 @@ struct Card
 
 std::optional<Card> getCardById(SqliteHelper::unique_sqlite3& db, const std::string& cardCode);
 // exact match
+
+std::string getBasicCardIconPath(std::string langCode, std::string cardCode);
+// Returns relative path to basic card icon. We ignore alternative icons
+//
+// lang code should be something like "en_us" or "pl_pl". Check it in Riot's docs
+//
+// We assume that all icons are stored in directory "data/<lang_code>/img/cards/"
+// If you want to store "data" directory elsewhere, just prefix returned path
+// with your location
+//
+// Example output: data/en_us/img/cards/04SI017.png
+
 } // namespace CardApi

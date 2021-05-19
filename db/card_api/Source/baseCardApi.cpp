@@ -82,4 +82,11 @@ std::optional<Card> getCardById(SqliteHelper::unique_sqlite3& db, const std::str
     }
     throw std::invalid_argument("Not unique card ids"); // That should never possibly happen. Maybe assert?
 }
+
+std::string getBasicCardIconPath(std::string langCode, std::string cardCode)
+{
+    const std::string path = "data/" + langCode + "/img/cards/" + cardCode + ".png";
+    return path;
+}
+
 } // namespace CardApi
