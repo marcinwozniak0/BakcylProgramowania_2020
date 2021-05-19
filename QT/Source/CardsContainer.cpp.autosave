@@ -67,8 +67,7 @@ void CardsContainer::createLayout(QWidget* parent)
 
 void CardsContainer::showCard(QString path, QPushButton* button)
 {
-    std::system("pwd");
-    std::cerr<<"../"<<path.toStdString() << '\n';
+  
 
     QPixmap picture(QString("../")+path);
     QIcon buttonIcon(picture);

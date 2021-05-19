@@ -16,7 +16,7 @@ CardWindow::CardWindow(std::string cardId, QPlainTextEdit* DeckDisplay, DeckBuil
     DataBase_(DataBase)
 {
     ui->setupUi(this);
-    QPixmap picture(":/img/test_card");
+    QPixmap picture("../" + QString::fromStdString(CardApi::getBasicCardIconPath("en_us", cardId_)));
     int wp = ui->label->width();
     int hp = ui->label->height();
     ui->label->setPixmap(picture.scaled(wp,hp,Qt::KeepAspectRatio));

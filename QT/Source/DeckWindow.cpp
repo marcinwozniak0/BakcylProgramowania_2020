@@ -228,6 +228,13 @@ void DeckWindow::cardClicked()
 {
     QPushButton *button = (QPushButton *)sender();
     currentCard_ = (CardApi::getCardById(*dataBase_, button->property("Id").toString().toStdString())).value();
+
+
+//    QPixmap picture("../" + QString::fromStdString(CardApi::getBasicCardIconPath("en_us", button->property("Id").toString().toStdString())))));
+//    int wp = ui->groupBox_2->findChild<QLabel*>("pic")->width();
+//    int hp = ui->groupBox_2->findChild<QLabel*>("pic")->height();
+
+//    ui->groupBox_2->findChild<QLabel*>("pic")->setPixmap(picture.scaled(wp,hp,Qt::KeepAspectRatio));
 }
 
 void DeckWindow::on_Back_B_clicked()
@@ -243,6 +250,8 @@ void DeckWindow::on_ResetDeck_B_clicked()
     CheckDeckFullfillment();
     CheckDeckStats();
     UpdateGraph();
+    ui->DeleteCard_B->setDisabled(true);
+
 }
 
 void DeckWindow::on_DeleteCard_B_clicked()
