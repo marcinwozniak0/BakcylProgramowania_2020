@@ -79,9 +79,14 @@ int main()
     downloader.performDownloading(true);
     
     // temporary ugly shit. We are going to abadon it for sake of auto downloading          
-    const std::string dbName = "database.sql";
-        
-    if(false == doesFileExists(dbName))
+    const std::string dbName = "databaseStatus.txt";
+            
+    if(doesFileExists(dbName))
+    {
+        std::string msg = "Database already exists. If there was an update, delete 'database.sql', 'databaseStatus.txt' and data catalog";
+        std::cout<<msg<<std::endl;
+    }
+    else
     {
         Json::Value globalsJson =
         getJsonFromFile("globals-en_us.json", "https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json"); 
@@ -93,8 +98,15 @@ int main()
             const auto fileName = setName + "-en_us.json";
             auto url = "https://dd.b.pvp.net/latest/" + setName + "/en_us/data/" + fileName;
             Json::Value setJson = getJsonFromFile(fileName, url);
-
+            fillSet(db, setJson);
         }
+        
+        std::string msg = "Created the database";
+        std::cout<<msg<<std::endl;
+        
+        std::ofstream dbStatusFile(dbName);
+        dbStatusFile << ".";
+        dbStatusFile.close();
     }
 
     sqlite3_exec(db.get(), "END TRANSACTION;", NULL, NULL, NULL);
@@ -170,9 +182,6 @@ bool doesFileExists(std::string fileName)
     std::ifstream ifexfile(fileName.c_str()); 
     if(ifexfile)
     {
-        std::string msg = "Database already exists. If there was an update, delete 'database.sql' and data catalog";
-        std::cout<<msg<<std::endl;
-        
         return true;        
     }
     else 

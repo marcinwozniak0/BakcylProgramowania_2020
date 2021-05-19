@@ -4,12 +4,15 @@ using namespace fd;
 namespace fs = std::filesystem;
 
 bool FileDownloader::isFileDownloaded(std::string fileName_)
-{  
+{   
     std::string c = directoryPath + "/" + fileName_;
     std::ifstream ifexfile(c.c_str()); 
     if(ifexfile)
     {
-        std::string msg = fileName_ + " already exists!";
+        fileName_.erase(fileName_.end() - 4, fileName_.end());
+        fileName_ += ".zip";
+        
+        std::string msg = fileName_ + " has already been downloaded";
         std::cout<<msg<<std::endl;
         
         return true;        
