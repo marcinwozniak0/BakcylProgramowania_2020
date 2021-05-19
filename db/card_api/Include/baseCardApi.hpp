@@ -70,7 +70,7 @@ std::string getBasicCardIconPath(std::string langCode, std::string cardCode);
 //
 // lang code should be something like "en_us" or "pl_pl". Check it in Riot's docs
 //
-// We assume that all icons are stored in directory "data/<lang_code>/img/cards/"
+// We assume that all icons are stored in "data/<lang_code>/img/cards/<cardCode>.png"
 // If you want to store "data" directory elsewhere, just prefix returned path
 // with your location
 //

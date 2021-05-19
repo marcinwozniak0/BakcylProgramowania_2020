@@ -5,14 +5,15 @@
 #include <string>
 #include <vector>
 
-const size_t limitOfCard = 15;
+constexpr size_t maxCardsOnPage = 15;
+// default limit of cards returned by searchCards()
 
 namespace CardApi
 {
 
 struct Pagination
 {
-    int limit = limitOfCard;
+    int limit = maxCardsOnPage;
     std::optional<int> offset;
     // offset is ignored if limit is empty
 };
@@ -40,4 +41,6 @@ struct Filters
 // TODO: Sorting
 
 std::vector<std::string> searchCards(SqliteHelper::unique_sqlite3& db, const Filters& filters);
+// returns card codes of matched cards
+
 } // namespace CardApi
