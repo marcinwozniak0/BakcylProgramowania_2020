@@ -111,7 +111,6 @@ target_link_libraries(Deckbuilder PRIVATE Qt5::Widgets
                                           CURL::libcurl
                                           DeckBuilderSources
                                           QT_LIBS
-                                          db_builder
                                           card_api
                                           sqlite_helper
                                           ${LOGGER_LIB})
