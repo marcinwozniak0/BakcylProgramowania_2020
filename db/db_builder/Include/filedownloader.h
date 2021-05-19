@@ -10,16 +10,15 @@ namespace fd
     class FileDownloader
     {
         //for jsons
-        CURL *curl;
         FILE *fp;
              
         std::vector <std::string> links;
         std::vector <std::string> fileNames;
-        std::vector <std::string> statusFileNames;
         std::string directoryPath = "";
                                          
         public:
-        FileDownloader();
+        std::vector <std::string> statusFileNames;
+        
         void addDirectoryPath(std::string directoryPath_);
         void createDirectory(std::string directoryPath_);
         void addLinks(std::vector <std::string> links_, std::vector <std::string> fileNames_);

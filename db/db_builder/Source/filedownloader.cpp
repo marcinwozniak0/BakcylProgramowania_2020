@@ -11,11 +11,6 @@
 using namespace fd;
 namespace fs = std::filesystem;
 
-FileDownloader::FileDownloader()
-{ 
-    curl = curl_easy_init();
-}
-
 bool FileDownloader::isFileDownloaded(std::string fileName_)
 {  
     std::string c = directoryPath + "/" + fileName_;
@@ -68,6 +63,8 @@ void FileDownloader::addLinks(std::vector <std::string> links_, std::vector <std
 
 void FileDownloader::download(int i)
 {   
+    CURL *curl = curl_easy_init();
+
     CURLcode res;
 
     std::string msg = "Downloading " + fileNames[i] + ", please be patient";
