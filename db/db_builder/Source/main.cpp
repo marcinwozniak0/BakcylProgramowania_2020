@@ -15,6 +15,7 @@ void fillSet(SqliteHelper::unique_sqlite3& db, const Json::Value& set);
 void fillAssoc(SqliteHelper::unique_sqlite3& db, const Json::Value& cards, const std::string& table_name,
                const std::string& arrName);
 void fillAssets(SqliteHelper::unique_sqlite3& db, const Json::Value& cards);
+bool doesFileExists(std::string fileName);
 
 static std::string directoryPath_ = "./data";
 
@@ -39,7 +40,7 @@ Json::Value getJsonFromFile(const std::string& filename, const std::string& down
         std::vector <std::string> fileNames_;
         fileNames_.push_back(filename);
         downloader.addLinks(links_, fileNames_);
-        downloader.performDownloading(false);
+        downloader.performDownloading(true);
         
         std::string filename_ = directoryPath_ + "/" + filename;
         file.open(filename_);
@@ -80,14 +81,25 @@ int main()
     // temporary ugly shit. We are going to abadon it for sake of auto downloading
     Json::Value globalsJson =
         getJsonFromFile("globals-en_us.json", "https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json");
-    fillGlobals(db, globalsJson);
+        
+    const std::string dbName = "database.sql";
+        
+    if(false == doesFileExists(dbName))
+    {
+        fillGlobals(db, globalsJson);
+    }
+    
     for (char i = '1'; i < '5'; ++i)
     {
         const auto setName = std::string("set") + i;
         const auto fileName = setName + "-en_us.json";
         auto url = "https://dd.b.pvp.net/latest/" + setName + "/en_us/data/" + fileName;
         Json::Value setJson = getJsonFromFile(fileName, url);
-        fillSet(db, setJson);
+
+        if(false == doesFileExists(dbName))
+        {
+            fillSet(db, setJson);
+        }
     }
 
     sqlite3_exec(db.get(), "END TRANSACTION;", NULL, NULL, NULL);
@@ -156,6 +168,22 @@ std::string getJsonMemberNameWithoutNuls(Json::ValueIteratorBase it)
         throw std::invalid_argument("Json string must not have embedded NUL characters");
     }
     return memberName;
+}
+
+bool doesFileExists(std::string fileName)
+{       
+    std::ifstream ifexfile(fileName.c_str()); 
+    if(ifexfile)
+    {
+        std::string msg = fileName + " already exists!";
+        std::cout<<msg<<std::endl;
+        
+        return true;        
+    }
+    else 
+    {
+        return false;
+    }
 }
 
 void createTables(SqliteHelper::unique_sqlite3& db)
