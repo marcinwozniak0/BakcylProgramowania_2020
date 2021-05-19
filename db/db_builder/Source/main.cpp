@@ -1,4 +1,5 @@
 #include "iostream"
+#include <exception>
 #include "jsonInserter.hpp"
 #include "sqlite_helper.hpp"
 #include "filedownloader.h"
@@ -80,8 +81,7 @@ int main()
     
     // temporary ugly shit. We are going to abadon it for sake of auto downloading          
     const std::string dbName = "database.sql";
-        
-    if(false == doesFileExists(dbName))
+    if(!doesFileExists(dbName))
     {
         Json::Value globalsJson =
         getJsonFromFile("globals-en_us.json", "https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json"); 
@@ -170,10 +170,7 @@ bool doesFileExists(std::string fileName)
     std::ifstream ifexfile(fileName.c_str()); 
     if(ifexfile)
     {
-        std::string msg = "Database already exists. If there was an update, delete 'database.sql' and data catalog";
-        std::cout<<msg<<std::endl;
-        
-        return true;        
+        std::throw_with_nested(std::runtime_error("Database already exists. If there was an update, delete 'database.sql' and data catalog, and then re-run"));
     }
     else 
     {
