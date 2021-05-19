@@ -33,12 +33,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     currentRequest = std::make_unique<CardApi::Filters>(); 
 
-    readSaveIfExist();
-    setLogo();
 
     dataBase = SqliteHelper::open_db(dataBaseParth.c_str());
 
     cardContainer->displayCards(CardApi::searchCards(dataBase, *currentRequest));
+
+    readSaveIfExist();
+    setLogo();
 
 }
 
@@ -79,20 +80,62 @@ void MainWindow::refreshDeckDisplay()
         deckText_ += '\n';
     }
     ui->OptionsAndDeck->findChild<QPlainTextEdit*>("DeckDisplay")->setPlainText(QString::fromStdString(deckText_));
-
 }
 
 void MainWindow::on_Search_B_clicked(){
+    if (ui->HealthFrom->text().isEmpty())
+    {
+        currentRequest->minHealth.reset();
+    }
+    else
+    {
+       currentRequest->minHealth = ui->HealthFrom->text().toInt();
+    }
 
-    currentRequest->minHealth = ui->HealthFrom->text().toInt();
-    currentRequest->maxHealth = ui->HealthTo->text().toInt();
+    if (ui->HealthTo->text().isEmpty())
+    {
+        currentRequest->maxHealth.reset();
+    }
+    else
+    {
+       currentRequest->maxHealth = ui->HealthTo->text().toInt();
+    }
 
-    currentRequest->minCost = ui->CostFrom->text().toInt();
-    currentRequest->maxCost = ui->CostTo->text().toInt();
+    if (ui->CostFrom->text().isEmpty())
+    {
+        currentRequest->minCost.reset();
+    }
+    else
+    {
+       currentRequest->minCost = ui->CostFrom->text().toInt();
+    }
 
-    currentRequest->minAttack = ui->AttackFrom->text().toInt();
-    currentRequest->maxAttack = ui->AttackTo->text().toInt();
+    if (ui->CostTo->text().isEmpty())
+    {
+        currentRequest->maxCost.reset();
+    }
+    else
+    {
+       currentRequest->maxCost = ui->CostFrom->text().toInt();
+    }
 
+    if (ui->AttackFrom->text().isEmpty())
+    {
+        currentRequest->minAttack.reset();
+    }
+    else
+    {
+       currentRequest->minAttack = ui->AttackFrom->text().toInt();
+    }
+
+    if (ui->AttackTo->text().isEmpty())
+    {
+        currentRequest->maxAttack.reset();
+    }
+    else
+    {
+       currentRequest->maxAttack = ui->AttackTo->text().toInt();
+    }
     currentRequest->cardName = ui->Name_T->text().toStdString();
 
     currentRequest->rarityNames = convertCheckbox("Rarity_?");
