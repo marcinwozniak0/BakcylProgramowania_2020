@@ -130,7 +130,7 @@ void FileDownloader::performDownloading(bool checkIfExists)
 }
 
 
-void extractZipFolders() {
+void FileDownloader::extractZipFolders() {
     std::vector<std::string> linksToZip = {"set1-lite-en_us.zip", "set2-lite-en_us.zip", "set3-lite-en_us.zip", "set4-lite-en_us.zip"};
     for (auto &link : linksToZip ) {
         std::cout << "Unzipping " << link << "..."; 
