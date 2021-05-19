@@ -78,27 +78,22 @@ int main()
     
     downloader.performDownloading(true);
     
-    // temporary ugly shit. We are going to abadon it for sake of auto downloading
-    Json::Value globalsJson =
-        getJsonFromFile("globals-en_us.json", "https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json");
-        
+    // temporary ugly shit. We are going to abadon it for sake of auto downloading          
     const std::string dbName = "database.sql";
         
     if(false == doesFileExists(dbName))
     {
+        Json::Value globalsJson =
+        getJsonFromFile("globals-en_us.json", "https://dd.b.pvp.net/latest/core/en_us/data/globals-en_us.json"); 
+   
         fillGlobals(db, globalsJson);
-    }
-    
-    for (char i = '1'; i < '5'; ++i)
-    {
-        const auto setName = std::string("set") + i;
-        const auto fileName = setName + "-en_us.json";
-        auto url = "https://dd.b.pvp.net/latest/" + setName + "/en_us/data/" + fileName;
-        Json::Value setJson = getJsonFromFile(fileName, url);
-
-        if(false == doesFileExists(dbName))
+        for (char i = '1'; i < '5'; ++i)
         {
-            fillSet(db, setJson);
+            const auto setName = std::string("set") + i;
+            const auto fileName = setName + "-en_us.json";
+            auto url = "https://dd.b.pvp.net/latest/" + setName + "/en_us/data/" + fileName;
+            Json::Value setJson = getJsonFromFile(fileName, url);
+
         }
     }
 
