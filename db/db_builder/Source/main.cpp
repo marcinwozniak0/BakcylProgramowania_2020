@@ -1,4 +1,5 @@
 #include "iostream"
+#include <exception>
 #include "jsonInserter.hpp"
 #include "sqlite_helper.hpp"
 #include "filedownloader.h"
@@ -79,6 +80,7 @@ int main()
     downloader.performDownloading(true);
     
     // temporary ugly shit. We are going to abadon it for sake of auto downloading          
+
     const std::string dbName = "databaseStatus.txt";
             
     if(doesFileExists(dbName))
