@@ -60,24 +60,7 @@ int main()
     downloader.addDirectoryPath(directoryPath_);
     downloader.createDirectory(directoryPath_);
     
-    // Downloading Zips with images
-    // adding info for downloading (links, file names)
-    std::vector <std::string> links_;
-    std::vector <std::string> fileNames_;
     
-    links_.push_back("https://dd.b.pvp.net/latest/set1-lite-en_us.zip");
-    links_.push_back("https://dd.b.pvp.net/latest/set2-lite-en_us.zip");
-    links_.push_back("https://dd.b.pvp.net/latest/set3-lite-en_us.zip");
-    links_.push_back("https://dd.b.pvp.net/latest/set4-lite-en_us.zip");
-     
-    fileNames_.push_back("set1-lite-en_us.zip");
-    fileNames_.push_back("set2-lite-en_us.zip");
-    fileNames_.push_back("set3-lite-en_us.zip");
-    fileNames_.push_back("set4-lite-en_us.zip");
-    
-    downloader.addLinks(links_, fileNames_);
-    
-    downloader.performDownloading(true);
     
     // temporary ugly shit. We are going to abadon it for sake of auto downloading          
 
@@ -109,6 +92,42 @@ int main()
         std::ofstream dbStatusFile(dbName);
         dbStatusFile << ".";
         dbStatusFile.close();
+    }
+
+    char answer = ' ';
+    const char answerYes = 'y';
+    const char answerNo = 'n';
+    std::cout<<"Do you want to download the '.zip' files with images?   [y\n]"<<std::endl;
+    std::cin>>answer;
+    
+    if(answerYes == answer)
+    {
+        // Downloading Zips with images
+        // adding info for downloading (links, file names)
+        std::vector <std::string> links_;
+        std::vector <std::string> fileNames_;
+    
+        links_.push_back("https://dd.b.pvp.net/latest/set1-lite-en_us.zip");
+        links_.push_back("https://dd.b.pvp.net/latest/set2-lite-en_us.zip");
+        links_.push_back("https://dd.b.pvp.net/latest/set3-lite-en_us.zip");
+        links_.push_back("https://dd.b.pvp.net/latest/set4-lite-en_us.zip");
+     
+        fileNames_.push_back("set1-lite-en_us.zip");
+        fileNames_.push_back("set2-lite-en_us.zip");
+        fileNames_.push_back("set3-lite-en_us.zip");
+        fileNames_.push_back("set4-lite-en_us.zip");
+    
+        downloader.addLinks(links_, fileNames_);
+    
+        downloader.performDownloading(true);
+    }
+    else if(answerNo == answer)
+    {
+        std::cout<<"Ok, I won't download anything :)"<<std::endl;
+    }
+    else 
+    {
+        std::cout<<"Idk what that means, so I won't download anything :)"<<std::endl;
     }
 
     sqlite3_exec(db.get(), "END TRANSACTION;", NULL, NULL, NULL);
